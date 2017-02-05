@@ -1,0 +1,25 @@
+#mybatis相关配置
+mybatis:
+    #mybatis自动扫描javabean所在目录
+    type-aliases-package: com.github.oneone1995.mzhiyuan.domain
+    #mybatis自动扫描mapper所在目录
+    mapper-locations: classpath:mapper/*.xml
+
+#通用mapper相关配置
+mapper:
+    mappers:
+        - com.github.oneone1995.mzhiyuan.util.MyMapper
+    not-empty: false
+    identity: MYSQL
+
+spring:
+  #spring数据源配置
+  datasource:
+    name: m_volunteer
+    #数据库连接地址
+    url: jdbc:mysql://127.0.0.1:3306/m_volunteer
+    #数据库连接用户名和密码
+    username: m_volunteer
+    password: mvolunteer
+    #使用数据连接池
+    type: com.zaxxer.hikari.HikariDataSource
