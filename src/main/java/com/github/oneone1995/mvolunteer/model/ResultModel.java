@@ -1,6 +1,6 @@
 package com.github.oneone1995.mvolunteer.model;
 
-import com.github.oneone1995.mvolunteer.config.Result.ResultStatus;
+import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 
 /**
  * Created by wangl on 2017/2/7.

@@ -1,4 +1,4 @@
-package com.github.oneone1995.mvolunteer.config.Result;
+package com.github.oneone1995.mvolunteer.config.result;
 
 /**
  * Created by wangl on 2017/2/7.
