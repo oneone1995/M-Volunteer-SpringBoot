@@ -1,52 +1,71 @@
 package com.github.oneone1995.mvolunteer.domain;
 
-/**
- * Created by wangl on 2017/2/5.
- */
-public class User {
-    private int id;
-    private String username;
-    private String password;
-    private String email;
-    private int role;
+import javax.persistence.*;
 
-    public int getId() {
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String username;
+
+    private String password;
+
+    private String email;
+
+    /**
+     * @return id
+     */
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    /**
+     * @param id
+     */
+    public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * @return password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
     }
 }
