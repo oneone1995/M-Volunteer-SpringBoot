@@ -23,3 +23,8 @@ spring:
     password: mvolunteer
     #使用数据连接池
     type: com.zaxxer.hikari.HikariDataSource
+
+#日志配置
+logging:
+    level:
+        com.github.oneone1995: TRACE
