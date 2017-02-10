@@ -1,7 +1,19 @@
 package com.github.oneone1995.mvolunteer.mapper;
 
 import com.github.oneone1995.mvolunteer.domain.User;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface UserMapper extends Mapper<User> {
+import java.util.List;
+
+@Mapper
+public interface UserMapper {
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(User record);
+
+    User selectByPrimaryKey(Integer id);
+
+    List<User> selectAll();
+
+    int updateByPrimaryKey(User record);
 }
