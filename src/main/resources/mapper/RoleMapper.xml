@@ -32,18 +32,4 @@
     select id, name, type
     from role
   </select>
-
-  <select id="getUserRolesByUserId" resultType="com.github.oneone1995.mvolunteer.domain.Role">
-    SELECT
-      user_role.user_id user_id,
-      role.id role_id,
-      role.`name` role_name,
-      role.type role_type
-    FROM
-      user_role,
-      role
-    WHERE
-      user_role.user_id = #{userId}
-      AND user_role.role_id = role.id
-  </select>
 </mapper>
