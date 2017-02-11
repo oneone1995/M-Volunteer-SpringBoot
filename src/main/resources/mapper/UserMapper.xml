@@ -7,6 +7,21 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
   </resultMap>
+
+  <!-- 查询包装有role的CustomUserDetails的ResultMap -->
+  <resultMap id="CustomUserDetailsResultMap"
+             type="com.github.oneone1995.mvolunteer.domain.CustomUserDetails"
+             extends="BaseResultMap">
+    <!-- 用户信息使用继承 -->
+
+    <!-- role信息 -->
+    <collection property="roles" ofType="com.github.oneone1995.mvolunteer.domain.Role">
+      <id column="role_id" property="id" />
+      <result column="name" property="name"/>
+      <result column="type" property="type" />
+    </collection>
+  </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
@@ -36,4 +51,22 @@
     select id, username, password, email
     from user
   </select>
+
+  <select id="selectCustomUserDetailsByUsername" resultMap="CustomUserDetailsResultMap">
+    SELECT
+      `user`.id user_id,
+      `user`.username,
+      `user`.`password`,
+      `user`.email,
+      role.id role_id,
+      role.`name`,
+      role.type
+    FROM
+      user_role
+      JOIN `user` ON `user`.id = user_role.user_id
+      JOIN role ON role.id = user_role.role_id
+    WHERE
+      `user`.username = #{username}
+  </select>
+
 </mapper>
