@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ResultModel> queryUser(@PathVariable Integer id){
-        User user = userService.findUserById(id);
+        User user = userService.getUserById(id);
         if (user == null) {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.USER_NOT_FOUND), HttpStatus.BAD_REQUEST);
         }
