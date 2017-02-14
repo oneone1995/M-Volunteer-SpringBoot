@@ -6,6 +6,7 @@ import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_VOL')")
     public ResponseEntity<ResultModel> queryUser(@PathVariable Integer id){
         User user = userService.getUserById(id);
         if (user == null) {
