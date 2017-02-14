@@ -27,8 +27,8 @@
 		<!-- mybatis -->
 		<mybatis-spring-boot-starter.version>1.2.0</mybatis-spring-boot-starter.version>
 
-		<!-- mybatis通用mapper -->
-		<mapper-spring-boot-starter.version>1.0.0</mapper-spring-boot-starter.version>
+		<!-- Swagger版本号 -->
+		<springfox.version>2.6.1</springfox.version>
 
 	</properties>
 
@@ -96,6 +96,17 @@
 			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
 
+		<!-- swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
