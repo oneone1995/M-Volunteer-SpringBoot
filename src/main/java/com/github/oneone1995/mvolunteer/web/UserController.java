@@ -4,6 +4,8 @@ import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 import com.github.oneone1995.mvolunteer.domain.User;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_VOL')")
+    @ApiOperation(value="获取用户详细信息", notes="根据url的id来获取用户详细信息")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer")
     public ResponseEntity<ResultModel> queryUser(@PathVariable Integer id){
         User user = userService.getUserById(id);
         if (user == null) {
