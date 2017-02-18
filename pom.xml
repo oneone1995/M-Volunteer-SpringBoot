@@ -27,6 +27,9 @@
 		<!-- mybatis -->
 		<mybatis-spring-boot-starter.version>1.2.0</mybatis-spring-boot-starter.version>
 
+		<!-- page-helper -->
+		<pagehelper-spring-boot-starter.version>1.1.0</pagehelper-spring-boot-starter.version>
+
 		<!-- Swagger版本号 -->
 		<springfox.version>2.6.1</springfox.version>
 
@@ -94,6 +97,13 @@
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>${mybatis-spring-boot-starter.version}</version>
+		</dependency>
+
+		<!-- pageHelper -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>${pagehelper-spring-boot-starter.version}</version>
 		</dependency>
 
 		<!-- swagger -->
