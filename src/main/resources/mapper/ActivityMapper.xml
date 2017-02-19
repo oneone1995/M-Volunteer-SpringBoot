@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.oneone1995.mvolunteer.mapper.ActivityMapper">
+    <!-- 根据活动添加时间排序查询活动列表返回
+        并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
+    <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
+        SELECT
+            activity.id id,
+            activity.address_district district ,
+            activity.coord_long coordLong,
+            activity.coord_lat coordLat,
+            activity.recruit_person_number recruitPersonNumber,
+            activity.picture picture,
+            COUNT(if(activity_user.activity_user_status_id=2, TRUE, NULL) AS recruitedPersonNumber,
+            ROUND(
+                    6378.138 * 2 * ASIN(
+                            SQRT(
+                                    POW(
+                                            SIN(
+                                                    (
+                                                        #{coordLat} * PI() / 180 - activity.coord_lat * PI() / 180
+                                                    ) / 2
+                                            ),
+                                            2
+                                    ) + COS(#{coordLat} * PI() / 180) * COS(activity.coord_lat * PI() / 180) * POW(
+                                            SIN(
+                                                    (
+                                                        #{coordLong} * PI() / 180 - activity.coord_long * PI() / 180
+                                                    ) / 2
+                                            ),
+                                            2
+                                    )
+                            )
+                    )
+            ) AS distance
+        FROM
+            activity_user
+            RIGHT OUTER JOIN activity ON activity_id = activity.id
+        GROUP BY
+            activity.id
+        ORDER BY
+            activity.`timestamp`
+    </select>
+</mapper>
