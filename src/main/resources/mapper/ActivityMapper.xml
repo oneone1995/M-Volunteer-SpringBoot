@@ -11,7 +11,7 @@
             activity.coord_lat coordLat,
             activity.recruit_person_number recruitPersonNumber,
             activity.picture picture,
-            COUNT(if(activity_user.activity_user_status_id=2, TRUE, NULL) AS recruitedPersonNumber,
+            COUNT(if(activity_user.activity_user_status_id=2, TRUE, NULL)) AS recruitedPersonNumber,
             ROUND(
                     6378.138 * 2 * ASIN(
                             SQRT(

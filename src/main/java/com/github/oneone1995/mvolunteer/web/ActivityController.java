@@ -32,7 +32,7 @@ public class ActivityController {
             @RequestParam(value = "coordLong") double coordLong,
             @RequestParam(value = "coordLat") double coordLat) {
         PageInfo<List<HomeActivity>> homeActivityPageInfo = activityService.getHomeActivityPageInfo(
-                page, rows, coordLong, coordLong);
+                page, rows, coordLong, coordLat);
         if (homeActivityPageInfo == null) {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.BAD_REQUEST);
         }
