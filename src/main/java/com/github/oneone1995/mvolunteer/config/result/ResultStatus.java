@@ -9,7 +9,9 @@ public enum ResultStatus {
     USERNAME_OR_PASSWORD_ERROR(-1001, "用户名或密码错误"),
     USER_NOT_FOUND(-1002, "用户不存在"),
     USER_NOT_LOGIN(-1003, "用户未登录"),
-    ACTIVITY_NOT_FOUNT(-1004, "活动列表为空");
+    ACTIVITY_NOT_FOUNT(-1004, "活动列表为空"),
+    FILE_IS_EMPTY(-1005, "文件为空"),
+    FILE_UPLOAD_ERROR(-1006, "文件上传失败");
 
     /**
      * 返回码
