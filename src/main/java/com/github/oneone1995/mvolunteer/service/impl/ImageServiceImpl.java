@@ -43,11 +43,11 @@ public class ImageServiceImpl implements ImageService {
 
         // 解决中文问题，linux下中文路径，图片显示问题
         filename = UUID.randomUUID() + suffixName;
-        File dest = new File(path + dir + filename);
+        File dest = new File(path + filename);
         try {
             file.transferTo(dest);
             //上传成功则返回服务器地址和文件名共同组成的字符串
-            return "http://" + address + ":" + port + "/" + path + dir + filename;
+            return "http://" + address + ":" + port + "/" + dir + filename;
         } catch (IOException e) {
             return null;
         }
