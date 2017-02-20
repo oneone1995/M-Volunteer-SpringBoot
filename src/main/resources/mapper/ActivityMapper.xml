@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.oneone1995.mvolunteer.mapper.ActivityMapper">
-    <!-- 根据活动添加时间排序查询活动列表返回
-        并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
-    <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
+
+    <sql id="selectActivityOderByTimeSql">
         SELECT
             activity.id id,
             activity.address_district district ,
@@ -40,5 +39,17 @@
             activity.id
         ORDER BY
             activity.`timestamp`
+        <if test="activityName!=null">
+            AND activity.name LIKE #{activityName}
+        </if>
+    </sql>
+    <!-- 根据活动添加时间排序查询活动列表返回
+        并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
+    <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
+        <include refid="selectActivityOderByTimeSql"/>
+    </select>
+
+    <select id="selectByActivityName" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
+        <include refid="selectActivityOderByTimeSql"/>
     </select>
 </mapper>

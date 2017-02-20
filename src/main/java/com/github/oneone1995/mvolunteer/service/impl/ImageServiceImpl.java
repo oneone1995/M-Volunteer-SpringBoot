@@ -22,7 +22,7 @@ public class ImageServiceImpl implements ImageService {
     private String dir;
 
     //服务器地址
-    @Value("${server.address}")
+    @Value("${server.host}")
     private String address;
 
     //服务器端口

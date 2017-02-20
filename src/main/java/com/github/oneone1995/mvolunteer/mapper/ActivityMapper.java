@@ -20,4 +20,9 @@ public interface ActivityMapper {
      */
     List<HomeActivity> selectAllOderByTime(
             @Param("coordLong") double coordLong, @Param("coordLat") double coordLat);
+
+    List<HomeActivity> selectByActivityName(
+            @Param("coordLong") double coordLong, @Param("coordLat") double coordLat,
+            @Param("activityName") String activityName
+    );
 }

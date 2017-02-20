@@ -28,4 +28,14 @@ public class ActivityServiceImpl implements ActivityService {
         PageInfo homeActivityPageInfo = new PageInfo<>(homeActivityList);
         return homeActivityPageInfo;
     }
+
+    @Override
+    public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+            Integer page, Integer rows, double coordLong, double coordLat, String activityName) {
+        PageHelper.startPage(page, rows);
+        List<HomeActivity> searchActivityList = activityMapper.selectByActivityName(coordLong, coordLat, activityName);
+
+        PageInfo searchActivityPageInfo = new PageInfo<>(searchActivityList);
+        return searchActivityPageInfo;
+    }
 }
