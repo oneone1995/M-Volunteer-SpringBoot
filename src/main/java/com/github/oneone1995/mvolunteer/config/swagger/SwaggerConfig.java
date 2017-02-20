@@ -31,7 +31,6 @@ public class SwaggerConfig {
                 .title("swagger2")
                 .description("Spring Boot中使用Swagger2构建RESTful APIs")
                 .termsOfServiceUrl("https://www.github.com/oneone1995")
-                .contact("wangl")
                 .version("1.0")
                 .build();
     }
