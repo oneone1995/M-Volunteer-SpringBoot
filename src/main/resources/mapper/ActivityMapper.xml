@@ -35,21 +35,32 @@
         FROM
             activity_user
             RIGHT OUTER JOIN activity ON activity_id = activity.id
+    </sql>
+    
+    <sql id="groupByAndOrderBy">
         GROUP BY
-            activity.id
+        activity.id
         ORDER BY
-            activity.`timestamp`
-        <if test="activityName!=null">
-            AND activity.name LIKE #{activityName}
-        </if>
+        activity.`timestamp`
+    </sql>
+    
+    <sql id="conditionByActivityName">
+        <where>
+            <if test="activityName!=null">
+                AND activity.name LIKE '%${activityName}%'
+            </if>
+        </where>
     </sql>
     <!-- 根据活动添加时间排序查询活动列表返回
         并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
     <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
         <include refid="selectActivityOderByTimeSql"/>
+        <include refid="groupByAndOrderBy"/>
     </select>
 
     <select id="selectByActivityName" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
         <include refid="selectActivityOderByTimeSql"/>
+        <include refid="conditionByActivityName"/>
+        <include refid="groupByAndOrderBy"/>
     </select>
 </mapper>
