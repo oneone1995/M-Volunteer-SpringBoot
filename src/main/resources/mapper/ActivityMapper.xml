@@ -54,6 +54,15 @@
             </if>
         </where>
     </sql>
+
+    <!-- 根据活动用户关系表id更新 -->
+    <update id="updateSignStatusByPrimaryKey">
+        UPDATE activity_user
+        SET sign_in_status = 1
+        WHERE
+            id = #{id}
+    </update>
+
     <!-- 根据活动添加时间排序查询活动列表返回
         并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
     <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
@@ -67,5 +76,18 @@
         <include refid="selectActivitySql"/>
         <include refid="conditionByActivityNameSql"/>
         <include refid="groupByAndOrderBySql"/>
+    </select>
+
+    <!-- 根据活动code和用户id返回该记录在活动用户关系表中的主键id -->
+    <select id="selectByCode" resultType="java.lang.Integer">
+        SELECT
+            activity_user.id
+        FROM
+            activity
+            JOIN activity_user ON activity_id = activity.id
+        WHERE
+            CODE = #{code}
+            AND user_id = #{id}
+            AND activity_user_status_id = 2
     </select>
 </mapper>
