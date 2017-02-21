@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.oneone1995.mvolunteer.mapper.ActivityMapper">
+    <!-- 查询包装有志愿者信息的活动详情的ResultMap -->
+    <resultMap id="ActivityResultMap"
+               type="com.github.oneone1995.mvolunteer.domain.Activity">
+        <!-- 活动信息 -->
+        <id column="activity_id" property="id"/>
+        <result column="name" property="organization"/>
+        <result column="description" property="description"/>
+        <result column="recruit_time" property="recruitTime"/>
+        <result column="time" property="time"/>
+        <result column="address" property="address"/>
+        <result column="activity_working_hours" property="workingHours"/>
+        <result column="principal_name" property="principalName"/>
+        <result column="principal_contact" property="principalContact"/>
+        <result column="service_type" property="serviceType"/>
+
+        <!-- 志愿者信息 -->
+        <collection property="volunteers" ofType="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
+            <id column="id" jdbcType="INTEGER" property="id" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+            <result column="sex" jdbcType="INTEGER" property="sex" />
+            <result column="age" jdbcType="INTEGER" property="age" />
+            <result column="birthday" jdbcType="DATE" property="birthday" />
+            <result column="political_status" jdbcType="VARCHAR" property="politicalStatus" />
+            <result column="address" jdbcType="VARCHAR" property="address" />
+            <result column="address_province" jdbcType="VARCHAR" property="addressProvince" />
+            <result column="address_city" jdbcType="VARCHAR" property="addressCity" />
+            <result column="working_hours" jdbcType="DOUBLE" property="workingHours" />
+            <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        </collection>
+    </resultMap>
 
     <!-- 查询所有活动的sql片段 -->
     <sql id="selectActivitySql">
@@ -102,6 +133,30 @@
             ORDER BY
             distance
         </if>
+    </select>
+
+    <!-- 根据活动id返回活动详情 -->
+    <select id="selectByPrimaryKey" resultMap="ActivityResultMap">
+        SELECT
+            activity_id,
+            organization_info.`name`,
+            activity.description,
+            activity.recruit_time,
+            activity.time,
+            activity.address,
+            activity.working_hours activity_working_hours,
+            activity.principal_name,
+            activity.principal_contact,
+            activity.service_type,
+            volunteer_info.*
+        FROM
+            activity
+            JOIN activity_user ON activity_user.activity_id = activity.id
+            JOIN organization_info ON activity.organization_id = organization_info.id
+            JOIN volunteer_info ON activity_user.user_id = volunteer_info.id
+        WHERE
+            activity.id = #{id}
+            AND activity_user_status_id = 2
     </select>
 
     <!-- 根据活动code和用户id返回该记录在活动用户关系表中的主键id -->
