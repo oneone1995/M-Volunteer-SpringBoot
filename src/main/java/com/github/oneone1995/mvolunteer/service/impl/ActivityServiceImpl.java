@@ -23,7 +23,11 @@ public class ActivityServiceImpl implements ActivityService {
             Integer page, Integer rows, double coordLong, double coordLat) {
 
         PageHelper.startPage(page, rows);
-        List<HomeActivity> homeActivityList = activityMapper.selectAllOderByTime(coordLong, coordLat);
+        List<HomeActivity> homeActivityList = activityMapper.selectAllOderByTime(
+                coordLong, coordLat);
+
+        if (homeActivityList == null || homeActivityList.isEmpty())
+            return null;
 
         PageInfo homeActivityPageInfo = new PageInfo<>(homeActivityList);
         return homeActivityPageInfo;
@@ -31,11 +35,33 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
-            Integer page, Integer rows, double coordLong, double coordLat, String activityName) {
+            Integer page, Integer rows, double coordLong, double coordLat,
+            String activityName) {
+
         PageHelper.startPage(page, rows);
-        List<HomeActivity> searchActivityList = activityMapper.selectByActivityName(coordLong, coordLat, activityName);
+        List<HomeActivity> searchActivityList = activityMapper.selectByActivityName(
+                coordLong, coordLat, activityName);
+
+        if (searchActivityList == null || searchActivityList.isEmpty())
+            return null;
 
         PageInfo searchActivityPageInfo = new PageInfo<>(searchActivityList);
         return searchActivityPageInfo;
+    }
+
+    @Override
+    public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+            Integer page, Integer rows, double coordLong, double coordLat,
+            String category, Integer collation) {
+
+        PageHelper.startPage(page, rows);
+        List<HomeActivity> categoryActivityList = activityMapper.selectByCategory(
+                coordLong, coordLat, category, collation);
+
+        if (categoryActivityList == null || categoryActivityList.isEmpty())
+            return null;
+
+        PageInfo categoryActivityPageInfo = new PageInfo<>(categoryActivityList);
+        return categoryActivityPageInfo;
     }
 }
