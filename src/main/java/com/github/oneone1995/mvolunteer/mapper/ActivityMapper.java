@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.mapper;
 
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +31,14 @@ public interface ActivityMapper {
             @Param("coordLong") double coordLong, @Param("coordLat") double coordLat,
             @Param("category") String category, @Param("collation") Integer collation
     );
+
+    /**
+     * 根据活动id返回活动详情的mapper接口
+     * @param id    活动id
+     * @return  活动详情
+     */
+    Activity selectByPrimaryKey(
+            @Param("id") Integer id);
 
     /**
      *
