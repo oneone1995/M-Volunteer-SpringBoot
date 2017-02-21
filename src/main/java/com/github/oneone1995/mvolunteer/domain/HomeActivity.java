@@ -3,7 +3,7 @@ package com.github.oneone1995.mvolunteer.domain;
 /**
  * Created by wangl on 2017/2/18.
  * 首页展示的活动列表对应的实体类
- * 包含了id，距离（km），区，已经招募人数，总人数，图片的地址
+ * 包含了id，距离（km），区，已经招募人数，总人数，图片的地址，活动名字
  */
 public class HomeActivity {
     private Integer id;
@@ -17,6 +17,8 @@ public class HomeActivity {
     private Integer recruitPersonNumber;
 
     private String picture;
+
+    private String name;
 
     public Integer getId() {
         return id;
@@ -64,5 +66,13 @@ public class HomeActivity {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
