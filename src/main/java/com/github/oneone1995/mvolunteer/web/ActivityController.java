@@ -8,10 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class ActivityController {
             @RequestParam(value = "coordLong") double coordLong,
             @RequestParam(value = "coordLat") double coordLat) {
 
-        PageInfo<List<HomeActivity>> homeActivityPageInfo = activityService.getHomeActivityPageInfo(
+        PageInfo<HomeActivity> homeActivityPageInfo = activityService.getHomeActivityPageInfo(
                 page, rows, coordLong, coordLat);
 
         if (homeActivityPageInfo == null) {
@@ -52,7 +49,7 @@ public class ActivityController {
             @RequestParam(value = "category") String category,
             @RequestParam(value = "collation", defaultValue = "0") Integer collation
     ) {
-        PageInfo<List<HomeActivity>> categoryActivityPageInfo = activityService.getHomeActivityPageInfo(
+        PageInfo<HomeActivity> categoryActivityPageInfo = activityService.getHomeActivityPageInfo(
                 page, rows, coordLong, coordLat, category, collation);
 
         if (categoryActivityPageInfo == null) {
@@ -61,4 +58,10 @@ public class ActivityController {
         return new ResponseEntity<>(ResultModel.ok(categoryActivityPageInfo), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getActivityById(
+            @PathVariable Integer id
+    ) {
+        return null;
+    }
 }

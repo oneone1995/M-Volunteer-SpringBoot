@@ -10,18 +10,18 @@ import java.util.List;
  */
 public interface ActivityService {
     //分页展示首页的活动列表的接口
-    PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat);
 
     //搜索活动列表
     //分页返回搜索结果
-    PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat,
             String activityName);
 
     //根据活动类别返回对应活动列表
     //分页返回结果
-    PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat,
             String category, Integer collation);
 

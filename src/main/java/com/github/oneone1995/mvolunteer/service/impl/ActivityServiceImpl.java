@@ -19,7 +19,7 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityMapper activityMapper;
 
     @Override
-    public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    public PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat) {
 
         PageHelper.startPage(page, rows);
@@ -29,12 +29,11 @@ public class ActivityServiceImpl implements ActivityService {
         if (homeActivityList == null || homeActivityList.isEmpty())
             return null;
 
-        PageInfo homeActivityPageInfo = new PageInfo<>(homeActivityList);
-        return homeActivityPageInfo;
+        return new PageInfo<>(homeActivityList);
     }
 
     @Override
-    public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    public PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat,
             String activityName) {
 
@@ -45,12 +44,11 @@ public class ActivityServiceImpl implements ActivityService {
         if (searchActivityList == null || searchActivityList.isEmpty())
             return null;
 
-        PageInfo searchActivityPageInfo = new PageInfo<>(searchActivityList);
-        return searchActivityPageInfo;
+        return new PageInfo<>(searchActivityList);
     }
 
     @Override
-    public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    public PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat,
             String category, Integer collation) {
 
@@ -61,7 +59,6 @@ public class ActivityServiceImpl implements ActivityService {
         if (categoryActivityList == null || categoryActivityList.isEmpty())
             return null;
 
-        PageInfo categoryActivityPageInfo = new PageInfo<>(categoryActivityList);
-        return categoryActivityPageInfo;
+        return new PageInfo<>(categoryActivityList);
     }
 }

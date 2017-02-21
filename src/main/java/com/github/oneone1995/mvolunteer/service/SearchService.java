@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface SearchService {
     //分页返回搜索结果
-    PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+    PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat, String activityName);
 }

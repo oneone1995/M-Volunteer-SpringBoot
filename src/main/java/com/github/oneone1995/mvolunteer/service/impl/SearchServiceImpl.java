@@ -18,7 +18,7 @@ public class SearchServiceImpl implements SearchService {
     private ActivityService activityService;
 
     @Override
-    public PageInfo<List<HomeActivity>> getHomeActivityPageInfo(Integer page, Integer rows, double coordLong, double coordLat, String activityName) {
+    public PageInfo<HomeActivity> getHomeActivityPageInfo(Integer page, Integer rows, double coordLong, double coordLat, String activityName) {
         return activityService.getHomeActivityPageInfo(page, rows, coordLong, coordLat, activityName);
     }
 }

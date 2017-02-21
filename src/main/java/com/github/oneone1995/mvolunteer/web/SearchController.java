@@ -32,7 +32,7 @@ public class SearchController {
             @RequestParam(value = "coordLat") double coordLat,
             @RequestParam(value = "activityName") String activityName
     ) {
-        PageInfo<List<HomeActivity>> searchActivityPageInfo = searchService.getHomeActivityPageInfo(
+        PageInfo<HomeActivity> searchActivityPageInfo = searchService.getHomeActivityPageInfo(
                 page, rows, coordLong, coordLat, activityName);
         if (searchActivityPageInfo == null) {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.BAD_REQUEST);
