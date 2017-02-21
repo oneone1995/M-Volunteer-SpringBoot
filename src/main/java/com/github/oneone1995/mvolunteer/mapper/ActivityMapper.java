@@ -25,4 +25,22 @@ public interface ActivityMapper {
             @Param("coordLong") double coordLong, @Param("coordLat") double coordLat,
             @Param("activityName") String activityName
     );
+
+    /**
+     *
+     * @param code  活动代码
+     * @param id    用户id
+     * @return  根据活动code和用户id返回该记录在活动用户关系表中的主键id
+     */
+    Integer selectByCode(
+            @Param("code") Integer code, @Param("id") Integer id);
+
+    /**
+     * 根据活动用户关系表主键更新签到状态
+     * @param id    用户id
+     * @return  更新记录
+     */
+    Integer updateSignStatusByPrimaryKey(
+            @Param("id") Integer id
+    );
 }
