@@ -6,5 +6,5 @@ package com.github.oneone1995.mvolunteer.service;
  */
 public interface SignInService {
     //根据活动签到码进行签到
-    String signIn(String code);
+    String signIn(Integer code);
 }
