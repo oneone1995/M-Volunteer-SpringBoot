@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.oneone1995.mvolunteer.mapper.ActivityMapper">
 
-    <sql id="selectActivityOderByTimeSql">
+    <!-- 查询所有活动的sql片段 -->
+    <sql id="selectActivitySql">
         SELECT
             activity.id id,
             activity.address_district district ,
@@ -36,15 +37,17 @@
             activity_user
             RIGHT OUTER JOIN activity ON activity_id = activity.id
     </sql>
-    
-    <sql id="groupByAndOrderBy">
+
+    <!-- 根据活动id分组并依时间戳排序的sql片段 -->
+    <sql id="groupByAndOrderBySql">
         GROUP BY
         activity.id
         ORDER BY
         activity.`timestamp`
     </sql>
-    
-    <sql id="conditionByActivityName">
+
+    <!-- 根据活动名字模糊搜索的where条件sql片段 -->
+    <sql id="conditionByActivityNameSql">
         <where>
             <if test="activityName!=null">
                 AND activity.name LIKE '%${activityName}%'
@@ -54,13 +57,15 @@
     <!-- 根据活动添加时间排序查询活动列表返回
         并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
     <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
-        <include refid="selectActivityOderByTimeSql"/>
-        <include refid="groupByAndOrderBy"/>
+        <include refid="selectActivitySql"/>
+        <include refid="groupByAndOrderBySql"/>
     </select>
 
+    <!-- 根据活动名字模糊搜索对应的活动列表返回
+         并根据参数中的经纬度求出距离并将其包装进HomeActivity中-->
     <select id="selectByActivityName" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
-        <include refid="selectActivityOderByTimeSql"/>
-        <include refid="conditionByActivityName"/>
-        <include refid="groupByAndOrderBy"/>
+        <include refid="selectActivitySql"/>
+        <include refid="conditionByActivityNameSql"/>
+        <include refid="groupByAndOrderBySql"/>
     </select>
 </mapper>
