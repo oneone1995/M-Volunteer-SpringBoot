@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.service;
 
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.pagehelper.PageInfo;
 
@@ -25,4 +26,6 @@ public interface ActivityService {
             Integer page, Integer rows, double coordLong, double coordLat,
             String category, Integer collation);
 
+    //根据活动id返回活动详情
+    Activity getActivityById(Integer id);
 }
