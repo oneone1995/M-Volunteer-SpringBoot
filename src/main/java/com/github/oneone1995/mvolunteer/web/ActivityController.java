@@ -38,4 +38,18 @@ public class ActivityController {
         }
         return new ResponseEntity<>(ResultModel.ok(homeActivityPageInfo), HttpStatus.OK);
     }
+
+    
+    @GetMapping("/category")
+    public ResponseEntity<?> getActivitiesByCategory(
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows,
+            @RequestParam(value = "coordLong") double coordLong,
+            @RequestParam(value = "coordLat") double coordLat,
+            @RequestParam(value = "category") String category,
+            @RequestParam(value = "collation", defaultValue = "0") Integer collation
+    ) {
+        return null;
+    }
+
 }
