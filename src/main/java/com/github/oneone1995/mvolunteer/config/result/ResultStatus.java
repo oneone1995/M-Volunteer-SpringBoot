@@ -11,7 +11,8 @@ public enum ResultStatus {
     USER_NOT_LOGIN(-1003, "用户未登录"),
     ACTIVITY_NOT_FOUNT(-1004, "活动列表为空"),
     FILE_IS_EMPTY(-1005, "文件为空"),
-    FILE_UPLOAD_ERROR(-1006, "文件上传失败");
+    FILE_UPLOAD_ERROR(-1006, "文件上传失败"),
+    SIGN_IN_FAIL(-1007, "签到失败");
 
     /**
      * 返回码
