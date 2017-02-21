@@ -26,6 +26,11 @@ public interface ActivityMapper {
             @Param("activityName") String activityName
     );
 
+    List<HomeActivity> selectByCategory(
+            @Param("coordLong") double coordLong, @Param("coordLat") double coordLat,
+            @Param("category") String category, @Param("collation") Integer collation
+    );
+
     /**
      *
      * @param code  活动代码
