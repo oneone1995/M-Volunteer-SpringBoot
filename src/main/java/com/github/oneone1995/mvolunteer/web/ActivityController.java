@@ -1,6 +1,7 @@
 package com.github.oneone1995.mvolunteer.web;
 
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
@@ -62,6 +63,11 @@ public class ActivityController {
     public ResponseEntity<?> getActivityById(
             @PathVariable Integer id
     ) {
-        return null;
+        Activity activity = activityService.getActivityById(id);
+
+        if (activity == null) {
+            return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ResultModel.ok(activity), HttpStatus.OK);
     }
 }
