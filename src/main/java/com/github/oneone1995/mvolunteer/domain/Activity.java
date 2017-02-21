@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by wangl on 2017/2/21.
  * 用于活动详情的实体
- * 包含了该活动的发起组织、活动内容描述、招募时间、活动开始时间、提供时长、活动联系人、联系人电话、服务类别、已报名的人
+ * 包含了该活动的发起组织、活动内容描述、招募时间、活动开始时间、提供时长、活动联系人、联系人电话、服务类别、已报名的志愿者
  * id、活动名字、与当地的距离、已报名的人数和总人数由前一个页面传入
  */
 public class Activity {
@@ -25,7 +25,7 @@ public class Activity {
 
     private String serviceType;
 
-    private List<User> volunteers;
+    private List<VolunteerInfo> volunteers;
 
     public String getOrganization() {
         return organization;
@@ -91,11 +91,11 @@ public class Activity {
         this.serviceType = serviceType;
     }
 
-    public List<User> getVolunteers() {
+    public List<VolunteerInfo> getVolunteers() {
         return volunteers;
     }
 
-    public void setVolunteers(List<User> volunteers) {
+    public void setVolunteers(List<VolunteerInfo> volunteers) {
         this.volunteers = volunteers;
     }
 }
