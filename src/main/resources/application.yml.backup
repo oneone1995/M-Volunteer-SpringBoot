@@ -28,3 +28,9 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+#静态资源配置
+upload.path: E:/myresources/public/img/
+
+#访问目录
+upload.dir: /public/img/
