@@ -93,6 +93,9 @@
             <if test="category!=null">
                 AND activity.service_type = #{category}
             </if>
+            <if test="district!=null">
+                AND activity.address_district = #{district}
+            </if>
         </where>
     </sql>
 

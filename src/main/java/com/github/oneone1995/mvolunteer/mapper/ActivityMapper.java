@@ -29,7 +29,8 @@ public interface ActivityMapper {
 
     List<HomeActivity> selectByCategory(
             @Param("coordLong") double coordLong, @Param("coordLat") double coordLat,
-            @Param("category") String category, @Param("collation") Integer collation
+            @Param("category") String category, @Param("collation") Integer collation,
+            @Param("district") String district
     );
 
     /**

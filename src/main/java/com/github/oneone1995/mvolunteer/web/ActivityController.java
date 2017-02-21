@@ -48,10 +48,11 @@ public class ActivityController {
             @RequestParam(value = "coordLong") double coordLong,
             @RequestParam(value = "coordLat") double coordLat,
             @RequestParam(value = "category") String category,
-            @RequestParam(value = "collation", defaultValue = "0") Integer collation
+            @RequestParam(value = "collation", defaultValue = "0") Integer collation,
+            @RequestParam(value = "district", required = false) String district
     ) {
         PageInfo<HomeActivity> categoryActivityPageInfo = activityService.getHomeActivityPageInfo(
-                page, rows, coordLong, coordLat, category, collation);
+                page, rows, coordLong, coordLat, category, collation, district);
 
         if (categoryActivityPageInfo == null) {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);

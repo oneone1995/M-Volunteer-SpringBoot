@@ -7,6 +7,7 @@ import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import springfox.documentation.service.ApiListing;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -51,11 +52,11 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat,
-            String category, Integer collation) {
+            String category, Integer collation, String district) {
 
         PageHelper.startPage(page, rows);
         List<HomeActivity> categoryActivityList = activityMapper.selectByCategory(
-                coordLong, coordLat, category, collation);
+                coordLong, coordLat, category, collation, district);
 
         if (categoryActivityList == null || categoryActivityList.isEmpty())
             return null;

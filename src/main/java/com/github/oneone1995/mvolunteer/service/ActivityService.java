@@ -24,7 +24,7 @@ public interface ActivityService {
     //分页返回结果
     PageInfo<HomeActivity> getHomeActivityPageInfo(
             Integer page, Integer rows, double coordLong, double coordLat,
-            String category, Integer collation);
+            String category, Integer collation, String district);
 
     //根据活动id返回活动详情
     Activity getActivityById(Integer id);
