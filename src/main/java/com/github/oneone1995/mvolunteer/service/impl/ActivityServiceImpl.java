@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.service.impl;
 
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
@@ -60,5 +61,15 @@ public class ActivityServiceImpl implements ActivityService {
             return null;
 
         return new PageInfo<>(categoryActivityList);
+    }
+
+    @Override
+    public Activity getActivityById(Integer id) {
+        Activity activity = activityMapper.selectByPrimaryKey(id);
+
+        if (activity == null) {
+            return null;
+        }
+        return activity;
     }
 }
