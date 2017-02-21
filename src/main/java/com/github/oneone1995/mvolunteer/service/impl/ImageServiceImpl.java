@@ -13,26 +13,18 @@ import java.util.UUID;
  */
 @Service
 public class ImageServiceImpl implements ImageService {
-    //文件上传目录的根路径
+    //文件上传完整目录
     @Value("${upload.path}")
     private String path;
 
-    //文件上传具体目录
+    //文件上传目录，不包括根目录
     @Value("${upload.dir}")
     private String dir;
-
-    //服务器地址
-    @Value("${server.host}")
-    private String address;
-
-    //服务器端口
-    @Value("${server.port}")
-    private String port;
 
     /**
      * 将上传的图片保存到服务器指定目录
      * @param file  客户端传输的文件
-     * @return  服务器地址和文件名共同组成的字符串
+     * @return  保存目录和文件名共同组成的字符串
      */
     @Override
     public String imageUpload(MultipartFile file) {
@@ -47,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             file.transferTo(dest);
             //上传成功则返回服务器地址和文件名共同组成的字符串
-            return "http://" + address + ":" + port + "/" + dir + filename;
+            return dir + filename;
         } catch (IOException e) {
             return null;
         }
