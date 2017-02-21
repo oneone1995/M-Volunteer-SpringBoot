@@ -55,6 +55,15 @@
         </where>
     </sql>
 
+    <!-- 根据活动类别查询的where条件sql片段 -->
+    <sql id="conditionByCategorySql">
+        <where>
+            <if test="category!=null">
+                AND activity.service_type = #{category}
+            </if>
+        </where>
+    </sql>
+
     <!-- 根据活动用户关系表id更新 -->
     <update id="updateSignStatusByPrimaryKey">
         UPDATE activity_user
@@ -76,6 +85,22 @@
         <include refid="selectActivitySql"/>
         <include refid="conditionByActivityNameSql"/>
         <include refid="groupByAndOrderBySql"/>
+    </select>
+
+    <!-- 根据活动category查询对应的活动列表返回
+         并根据参数中的经纬度求出距离并将其包装进HomeActivity中-->
+    <select id="selectByCategory" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
+        <include refid="selectActivitySql"/>
+        <include refid="conditionByCategorySql"/>
+        <if test="collation==0">
+            <include refid="groupByAndOrderBySql"/>
+        </if>
+        <if test="collation==1">
+            GROUP BY
+            activity.id
+            ORDER BY
+            distance
+        </if>
     </select>
 
     <!-- 根据活动code和用户id返回该记录在活动用户关系表中的主键id -->
