@@ -31,15 +31,18 @@ public class ActivityController {
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "coordLong") double coordLong,
             @RequestParam(value = "coordLat") double coordLat) {
+
         PageInfo<List<HomeActivity>> homeActivityPageInfo = activityService.getHomeActivityPageInfo(
                 page, rows, coordLong, coordLat);
+
         if (homeActivityPageInfo == null) {
-            return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
         }
+
         return new ResponseEntity<>(ResultModel.ok(homeActivityPageInfo), HttpStatus.OK);
     }
 
-    
+
     @GetMapping("/category")
     public ResponseEntity<?> getActivitiesByCategory(
             @RequestParam(value = "page") Integer page,
@@ -49,7 +52,13 @@ public class ActivityController {
             @RequestParam(value = "category") String category,
             @RequestParam(value = "collation", defaultValue = "0") Integer collation
     ) {
-        return null;
+        PageInfo<List<HomeActivity>> categoryActivityPageInfo = activityService.getHomeActivityPageInfo(
+                page, rows, coordLong, coordLat, category, collation);
+
+        if (categoryActivityPageInfo == null) {
+            return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ResultModel.ok(categoryActivityPageInfo), HttpStatus.OK);
     }
 
 }
