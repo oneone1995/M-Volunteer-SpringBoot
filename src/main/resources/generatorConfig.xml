@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
     <!-- 通过配置文件加载数据库连接信息 -->
-    <properties resource="config.properties"/>
+    <properties resource="application.yml"/>
 
     <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
         <property name="beginningDelimiter" value="`"/>
@@ -18,22 +18,22 @@
 
         <!-- 数据库连接信息 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="${data_source_url}"
-                        userId="${data_source_username}"
-                        password="${data_source_password}">
+                        connectionURL="${url}"
+                        userId="${username}"
+                        password="${password}">
         </jdbcConnection>
 
         <!-- 生成的model目录 -->
-        <javaModelGenerator targetPackage="com.github.oneone1995.excel2db.domain" targetProject="src/main/java"/>
+        <javaModelGenerator targetPackage="com.github.oneone1995.mvolunteer.domain" targetProject="src/main/java"/>
 
         <!-- 生成的.xml目录 -->
         <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources"/>
 
         <!-- 生成的mapper接口目录 -->
-        <javaClientGenerator targetPackage="com.github.oneone1995.excel2db.mapper" targetProject="src/main/java" type="XMLMAPPER" />
+        <javaClientGenerator targetPackage="com.github.oneone1995.mvolunteer.mapper" targetProject="src/main/java" type="XMLMAPPER" />
 
         <!-- 根据哪张表生成 -->
-        <table tableName="activity" >
+        <table tableName="volunteer_info" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>
