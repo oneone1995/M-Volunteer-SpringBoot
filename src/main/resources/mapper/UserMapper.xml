@@ -54,7 +54,7 @@
 
   <select id="selectCustomUserDetailsByUsername" resultMap="CustomUserDetailsResultMap">
     SELECT
-      `user`.id user_id,
+      `user`.id,
       `user`.username,
       `user`.`password`,
       `user`.email,
