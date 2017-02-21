@@ -16,5 +16,13 @@ public interface ActivityService {
     //搜索活动列表
     //分页返回搜索结果
     PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
-            Integer page, Integer rows, double coordLong, double coordLat, String activityName);
+            Integer page, Integer rows, double coordLong, double coordLat,
+            String activityName);
+
+    //根据活动类别返回对应活动列表
+    //分页返回结果
+    PageInfo<List<HomeActivity>> getHomeActivityPageInfo(
+            Integer page, Integer rows, double coordLong, double coordLat,
+            String category, Integer collation);
+
 }
