@@ -6,6 +6,7 @@ import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
 import com.github.oneone1995.mvolunteer.domain.VolunteerInfo;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.VolunteerService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,5 +39,13 @@ public class VolunteerController {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.USER_NOT_FOUND), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(ResultModel.ok(volunteerInfo), HttpStatus.OK);
+    }
+
+    @GetMapping("/volunteer")
+    @PreAuthorize("hasRole('ROLE_VOL')")
+    public ResponseEntity<?> getActivitiesOfCurrentUser() {
+        CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer id = currentUser.getId();
+        return null;
     }
 }
