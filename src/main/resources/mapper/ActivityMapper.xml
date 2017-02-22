@@ -174,4 +174,68 @@
             AND user_id = #{id}
             AND activity_user_status_id = 2
     </select>
+
+
+    <!-- 查询出所有的活动代码 -->
+    <select id="selectAllCode" resultType="Integer">
+        SELECT
+            code
+        FROM
+            activity
+    </select>
+
+    <!-- 插入活动 -->
+    <insert id="insertActivity" parameterType="com.github.oneone1995.mvolunteer.domain.Activity">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO activity
+        (
+            address_province,
+            address_city,
+            address_district,
+            address_street,
+            address,
+            coord_long,
+            coord_lat,
+            service_type,
+            service_object,
+            recruit_time,
+            recruit_person_number,
+            name,
+            time,
+            principal_name,
+            principal_contact,
+            activity_status_id,
+            working_hours,
+            picture,
+            code,
+            organization_id,
+            description
+        )
+        VALUES
+        (
+            #{addressProvince,jdbcType=VARCHAR},
+            #{addressCity,jdbcType=VARCHAR},
+            #{addressDistrict,jdbcType=VARCHAR},
+            #{addressStreet,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR},
+            #{coordLong,jdbcType=DOUBLE},
+            #{coordLat,jdbcType=DOUBLE},
+            #{serviceType,jdbcType=VARCHAR},
+            #{serviceObject,jdbcType=VARCHAR},
+            #{recruitTime,jdbcType=VARCHAR},
+            #{recruitPersonNumber,jdbcType=INTEGER},
+            #{name,jdbcType=VARCHAR},
+            #{time,jdbcType=VARCHAR},
+            #{principalName,jdbcType=VARCHAR},
+            #{principalContact,jdbcType=VARCHAR},
+            #{activityStatusId,jdbcType=INTEGER},
+            #{workingHours,jdbcType=DOUBLE},
+            #{picture,jdbcType=VARCHAR},
+            #{code,jdbcType=INTEGER},
+            #{organizationId,jdbcType=INTEGER},
+            #{description,jdbcType=LONGVARCHAR}
+        )
+    </insert>
 </mapper>
