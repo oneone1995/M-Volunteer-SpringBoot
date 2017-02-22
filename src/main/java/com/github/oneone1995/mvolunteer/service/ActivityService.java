@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.service;
 
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +25,9 @@ public interface ActivityService {
             Integer page, Integer rows, double coordLong, double coordLat,
             String category, Integer collation, String district);
 
-    //根据活动id返回活动详情
+    //根据活动id返回包装有志愿者信息的活动详情
     ActivityDetails getActivityById(Integer id);
+
+    //创建活动
+    boolean createActivity(Activity activity);
 }
