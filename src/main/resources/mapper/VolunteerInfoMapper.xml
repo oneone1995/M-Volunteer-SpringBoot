@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.oneone1995.mvolunteer.mapper.VolunteerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="political_status" jdbcType="VARCHAR" property="politicalStatus" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="address_province" jdbcType="VARCHAR" property="addressProvince" />
+    <result column="address_city" jdbcType="VARCHAR" property="addressCity" />
+    <result column="working_hours" jdbcType="DOUBLE" property="workingHours" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from volunteer_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into volunteer_info (name, id_card, sex, 
+      age, birthday, political_status, 
+      address, address_province, address_city, 
+      working_hours, avatar)
+    values (#{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{politicalStatus,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{addressProvince,jdbcType=VARCHAR}, #{addressCity,jdbcType=VARCHAR}, 
+      #{workingHours,jdbcType=DOUBLE}, #{avatar,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
+    update volunteer_info
+    set name = #{name,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      political_status = #{politicalStatus,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      address_province = #{addressProvince,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      working_hours = #{workingHours,jdbcType=DOUBLE},
+      avatar = #{avatar,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, id_card, sex, age, birthday, political_status, address, address_province, 
+    address_city, working_hours, avatar
+    from volunteer_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, id_card, sex, age, birthday, political_status, address, address_province, 
+    address_city, working_hours, avatar
+    from volunteer_info
+  </select>
+</mapper>
