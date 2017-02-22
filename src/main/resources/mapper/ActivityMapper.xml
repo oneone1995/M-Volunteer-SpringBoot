@@ -6,7 +6,7 @@
                type="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
         <!-- 活动信息 -->
         <id column="activity_id" property="id"/>
-        <result column="name" property="organization"/>
+        <result column="organization" property="organization"/>
         <result column="description" property="description"/>
         <result column="recruit_time" property="recruitTime"/>
         <result column="time" property="time"/>
@@ -142,7 +142,7 @@
     <select id="selectByPrimaryKey" resultMap="ActivityResultMap">
         SELECT
             activity_id,
-            organization_info.`name`,
+            organization_info.`name` organization,
             activity.description,
             activity.recruit_time,
             activity.time,
