@@ -1,6 +1,7 @@
 package com.github.oneone1995.mvolunteer.web;
 
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
@@ -68,5 +69,15 @@ public class ActivityController {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(ResultModel.ok(activityDetails), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> postActivity(@RequestBody Activity activity) {
+        boolean result = activityService.createActivity(activity);
+
+        if (!result) {
+            return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_CREATE_FAIL), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(ResultModel.ok("创建活动成功"), HttpStatus.OK);
     }
 }
