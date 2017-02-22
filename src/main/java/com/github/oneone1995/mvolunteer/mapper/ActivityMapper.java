@@ -1,11 +1,13 @@
 package com.github.oneone1995.mvolunteer.mapper;
 
+import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wangl on 2017/2/19.
@@ -58,4 +60,17 @@ public interface ActivityMapper {
     Integer updateSignStatusByPrimaryKey(
             @Param("id") Integer id
     );
+
+    /**
+     * 根据活动实体插入活动
+     * @param activity  活动实体
+     * @return  更新记录数
+     */
+    Integer insertActivity(Activity activity);
+
+    /**
+     * 查询所有活动代码
+     * @return 所有活动代码的集合
+     */
+    Set<Integer> selectAllCode();
 }
