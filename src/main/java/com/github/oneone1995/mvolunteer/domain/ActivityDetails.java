@@ -13,6 +13,12 @@ public class ActivityDetails extends Activity{
 
     private String organization;
 
+    //面试状态
+    private String interviewStatus;
+
+    //活动状态
+    private String activityStatus;
+
     private List<VolunteerInfo> volunteers;
 
     public String getOrganization() {
@@ -21,6 +27,22 @@ public class ActivityDetails extends Activity{
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public String getInterviewStatus() {
+        return interviewStatus;
+    }
+
+    public void setInterviewStatus(String interviewStatus) {
+        this.interviewStatus = interviewStatus;
+    }
+
+    public String getActivityStatus() {
+        return activityStatus;
+    }
+
+    public void setActivityStatus(String activityStatus) {
+        this.activityStatus = activityStatus;
     }
 
     public List<VolunteerInfo> getVolunteers() {
