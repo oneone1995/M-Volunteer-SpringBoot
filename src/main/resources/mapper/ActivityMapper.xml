@@ -10,7 +10,7 @@
         <result column="description" property="description"/>
         <result column="recruit_time" property="recruitTime"/>
         <result column="time" property="time"/>
-        <result column="address" property="address"/>
+        <result column="activity_address" property="address"/>
         <result column="activity_working_hours" property="workingHours"/>
         <result column="principal_name" property="principalName"/>
         <result column="principal_contact" property="principalContact"/>
@@ -146,7 +146,7 @@
             activity.description,
             activity.recruit_time,
             activity.time,
-            activity.address,
+            activity.address activity_address,
             activity.working_hours activity_working_hours,
             activity.principal_name,
             activity.principal_contact,
