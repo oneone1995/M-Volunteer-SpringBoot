@@ -12,7 +12,7 @@ public class Role {
         return id;
     }
 
-    public void setId(Integer roleId) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
