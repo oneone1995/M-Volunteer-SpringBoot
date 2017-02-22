@@ -47,11 +47,21 @@
       avatar = #{avatar,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 根据id查询志愿者的指定信息 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, name, id_card, sex, age, birthday, political_status, address, address_province, 
-    address_city, working_hours, avatar
-    from volunteer_info
-    where id = #{id,jdbcType=INTEGER}
+    SELECT
+      volunteer_info.id,
+      `user`.email,
+      volunteer_info.`name`,
+      volunteer_info.age,
+      volunteer_info.working_hours,
+      volunteer_info.avatar
+    FROM
+      volunteer_info
+      JOIN `user` ON `user`.id = volunteer_info.id
+    WHERE
+      volunteer_info.id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, id_card, sex, age, birthday, political_status, address, address_province, 
