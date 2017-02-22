@@ -92,4 +92,17 @@ public class ActivityServiceImpl implements ActivityService {
 
         return activityMapper.insertActivity(activity) > 0;
     }
+
+    @Override
+    public PageInfo<ActivityDetails> getActivityPageInfoByVolunteerId(
+            Integer page, Integer rows, Integer id) {
+
+        PageHelper.startPage(page, rows);
+        List<ActivityDetails> activityDetailsList = activityMapper.selectByVolunteerId(id);
+
+        if (activityDetailsList == null || activityDetailsList.isEmpty()) {
+            return null;
+        }
+        return new PageInfo<>(activityDetailsList);
+    }
 }
