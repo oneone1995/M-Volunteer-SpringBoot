@@ -162,6 +162,27 @@
             AND activity_user_status_id = 2
     </select>
 
+    <!-- 根据志愿者ID返回活动列表 -->
+    <select id="selectByVolunteerId" resultType="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
+        SELECT
+            activity.id,
+            activity.`name`,
+            activity.picture,
+            activity_status.description activityStatus,
+            activity_user_status.description interviewStatus
+        FROM
+            activity
+            JOIN activity_status ON activity.activity_status_id = activity_status.id
+            JOIN activity_user ON activity.id = activity_user.id
+            JOIN activity_user_status ON activity_user.activity_user_status_id = activity_user_status.id
+        WHERE
+            activity_user.user_id = #{id}
+            AND activity.activity_status_id != 3
+        ORDER BY
+            activity.`timestamp`
+        DESC
+    </select>
+
     <!-- 根据活动code和用户id返回该记录在活动用户关系表中的主键id -->
     <select id="selectByCode" resultType="java.lang.Integer">
         SELECT
