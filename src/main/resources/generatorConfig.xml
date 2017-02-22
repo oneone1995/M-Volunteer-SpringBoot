@@ -33,7 +33,7 @@
         <javaClientGenerator targetPackage="com.github.oneone1995.mvolunteer.mapper" targetProject="src/main/java" type="XMLMAPPER" />
 
         <!-- 根据哪张表生成 -->
-        <table tableName="volunteer_info" >
+        <table tableName="activity_status" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>
