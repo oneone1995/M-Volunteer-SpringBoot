@@ -46,7 +46,7 @@ public class ActivityController {
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "coordLong") double coordLong,
             @RequestParam(value = "coordLat") double coordLat,
-            @RequestParam(value = "category") String category,
+            @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "collation", defaultValue = "0") Integer collation,
             @RequestParam(value = "district", required = false) String district
     ) {
