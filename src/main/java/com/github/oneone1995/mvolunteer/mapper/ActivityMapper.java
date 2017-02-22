@@ -1,6 +1,6 @@
 package com.github.oneone1995.mvolunteer.mapper;
 
-import com.github.oneone1995.mvolunteer.domain.Activity;
+import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,7 +38,7 @@ public interface ActivityMapper {
      * @param id    活动id
      * @return  活动详情
      */
-    Activity selectByPrimaryKey(
+    ActivityDetails selectByPrimaryKey(
             @Param("id") Integer id);
 
     /**

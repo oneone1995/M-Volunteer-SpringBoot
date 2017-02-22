@@ -1,13 +1,12 @@
 package com.github.oneone1995.mvolunteer.service.impl;
 
-import com.github.oneone1995.mvolunteer.domain.Activity;
+import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import springfox.documentation.service.ApiListing;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -65,12 +64,12 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Activity getActivityById(Integer id) {
-        Activity activity = activityMapper.selectByPrimaryKey(id);
+    public ActivityDetails getActivityById(Integer id) {
+        ActivityDetails activityDetails = activityMapper.selectByPrimaryKey(id);
 
-        if (activity == null) {
+        if (activityDetails == null) {
             return null;
         }
-        return activity;
+        return activityDetails;
     }
 }

@@ -1,10 +1,8 @@
 package com.github.oneone1995.mvolunteer.service;
 
-import com.github.oneone1995.mvolunteer.domain.Activity;
+import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 /**
  * Created by wangl on 2017/2/18.
@@ -27,5 +25,5 @@ public interface ActivityService {
             String category, Integer collation, String district);
 
     //根据活动id返回活动详情
-    Activity getActivityById(Integer id);
+    ActivityDetails getActivityById(Integer id);
 }

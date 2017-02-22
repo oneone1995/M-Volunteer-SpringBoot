@@ -8,7 +8,7 @@ import java.util.List;
  * 包含了该活动的id、发起组织、活动内容描述、招募时间、活动开始时间、活动地点、提供时长、活动联系人、联系人电话、服务类别、已报名的志愿者
  * 活动名字、与当地的距离、已报名的人数和总人数由前一个页面传入
  */
-public class Activity {
+public class ActivityDetails {
 
     private Integer id;
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.github.oneone1995.mvolunteer.mapper.ActivityMapper">
     <!-- 查询包装有志愿者信息的活动详情的ResultMap -->
     <resultMap id="ActivityResultMap"
-               type="com.github.oneone1995.mvolunteer.domain.Activity">
+               type="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
         <!-- 活动信息 -->
         <id column="activity_id" property="id"/>
         <result column="name" property="organization"/>

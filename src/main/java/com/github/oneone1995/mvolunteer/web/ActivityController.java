@@ -1,7 +1,7 @@
 package com.github.oneone1995.mvolunteer.web;
 
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
-import com.github.oneone1995.mvolunteer.domain.Activity;
+import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by wangl on 2017/2/18.
@@ -64,11 +62,11 @@ public class ActivityController {
     public ResponseEntity<?> getActivityById(
             @PathVariable Integer id
     ) {
-        Activity activity = activityService.getActivityById(id);
+        ActivityDetails activityDetails = activityService.getActivityById(id);
 
-        if (activity == null) {
+        if (activityDetails == null) {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(ResultModel.ok(activity), HttpStatus.OK);
+        return new ResponseEntity<>(ResultModel.ok(activityDetails), HttpStatus.OK);
     }
 }
