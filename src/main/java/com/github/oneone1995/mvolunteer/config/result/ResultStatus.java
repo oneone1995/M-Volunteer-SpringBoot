@@ -12,7 +12,8 @@ public enum ResultStatus {
     ACTIVITY_NOT_FOUNT(-1004, "活动列表为空"),
     FILE_IS_EMPTY(-1005, "文件为空"),
     FILE_UPLOAD_ERROR(-1006, "文件上传失败"),
-    SIGN_IN_FAIL(-1007, "签到失败");
+    SIGN_IN_FAIL(-1007, "签到失败"),
+    ACTIVITY_CREATE_FAIL(-1008, "创建活动失败");
 
     /**
      * 返回码
