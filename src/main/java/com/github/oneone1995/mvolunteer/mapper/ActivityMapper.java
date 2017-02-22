@@ -73,4 +73,11 @@ public interface ActivityMapper {
      * @return 所有活动代码的集合
      */
     Set<Integer> selectAllCode();
+
+    /**
+     * 根据志愿者id查询其参加的未结束的活动
+     * @param id    志愿者id
+     * @return  当前登录用户其参加的未结束的活动列表
+     */
+    List<ActivityDetails> selectByVolunteerId(@Param("id") Integer id);
 }
