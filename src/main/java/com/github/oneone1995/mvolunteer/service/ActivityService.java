@@ -30,4 +30,8 @@ public interface ActivityService {
 
     //创建活动
     boolean createActivity(Activity activity);
+
+    //根据志愿者id返回该志愿者参与的活动列表
+    PageInfo<ActivityDetails> getActivityPageInfoByVolunteerId(
+            Integer page, Integer rows, Integer id);
 }
