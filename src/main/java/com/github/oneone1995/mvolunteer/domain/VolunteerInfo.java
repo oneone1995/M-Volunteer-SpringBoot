@@ -2,7 +2,7 @@ package com.github.oneone1995.mvolunteer.domain;
 
 import java.util.Date;
 
-public class VolunteerInfo {
+public class VolunteerInfo extends User {
     private Integer id;
 
     private String name;
