@@ -63,5 +63,20 @@ public class VolunteerController {
         return new ResponseEntity<>(ResultModel.ok(activityDetailsPageInfo), HttpStatus.OK);
     }
 
+    @GetMapping("/history")
+    public ResponseEntity<?> getHistoricalActivityOfCurrentUser(
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows
+    ) {
+        CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer id = currentUser.getId();
+
+        PageInfo<ActivityDetails> historicalActivitiesPageInfo = activityService.getHistoricalActivityPageInfo(
+                page, rows, id);
+        if (historicalActivitiesPageInfo == null) {
+            return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ResultModel.ok(historicalActivitiesPageInfo), HttpStatus.OK);
+    }
 
 }
