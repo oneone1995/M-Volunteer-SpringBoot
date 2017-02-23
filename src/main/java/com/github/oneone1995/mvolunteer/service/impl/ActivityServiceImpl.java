@@ -105,4 +105,17 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return new PageInfo<>(activityDetailsList);
     }
+
+    @Override
+    public PageInfo<ActivityDetails> getHistoricalActivityPageInfo(
+            Integer page, Integer rows, Integer id) {
+
+        PageHelper.startPage(page, rows);
+        List<ActivityDetails> historicalActivities = activityMapper.selectHistoryByVolunteerId(id);
+
+        if (historicalActivities == null || historicalActivities.isEmpty()) {
+            return null;
+        }
+        return new PageInfo<>(historicalActivities);
+    }
 }
