@@ -9,6 +9,7 @@
         <result column="organization" property="organization"/>
         <result column="organization_id" property="organizationId"/>
         <result column="description" property="description"/>
+        <result column="address_street" property="addressStreet"/>
         <result column="recruit_time" property="recruitTime"/>
         <result column="time" property="time"/>
         <result column="activity_address" property="address"/>
@@ -146,6 +147,7 @@
             activity.organization_id,
             organization_info.`name` organization,
             activity.description,
+            activity.address_street,
             activity.recruit_time,
             activity.time,
             activity.address activity_address,
