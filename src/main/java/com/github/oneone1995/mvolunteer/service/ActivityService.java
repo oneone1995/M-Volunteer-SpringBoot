@@ -34,4 +34,8 @@ public interface ActivityService {
     //根据志愿者id返回该志愿者参与的活动列表
     PageInfo<ActivityDetails> getActivityPageInfoByVolunteerId(
             Integer page, Integer rows, Integer id);
+
+    //根据志愿者id返回该志愿者的服务历史
+    PageInfo<ActivityDetails> getHistoricalActivityPageInfo(
+            Integer page, Integer rows, Integer id);
 }
