@@ -2,11 +2,15 @@ package com.github.oneone1995.mvolunteer.service.impl;
 
 import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
+import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
 import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
+import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +26,9 @@ import java.util.Set;
 public class ActivityServiceImpl implements ActivityService {
     @Resource
     private ActivityMapper activityMapper;
+
+    @Resource
+    private ActivityUserMapper activityUserMapper;
 
     @Override
     public PageInfo<HomeActivity> getHomeActivityPageInfo(
@@ -68,12 +75,32 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ActivityDetails getActivityById(Integer id) {
-        ActivityDetails activityDetails = activityMapper.selectByPrimaryKey(id);
+    public ActivityDetails getActivityById(
+            Integer id, double coordLong, double coordLat) {
+        ActivityDetails activityDetails = activityMapper.selectByPrimaryKey(
+                id, coordLong, coordLat);
 
         if (activityDetails == null) {
             return null;
         }
+
+        activityDetails.setRecruitedPersonNumber(activityDetails.getVolunteers().size());
+
+        //查询当前用户是否报名了活动
+        //获取当前用户
+        CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        //获取当前用户的id
+        Integer userId = currentUser.getId();
+
+        //获取当前用户id和活动id在关系表中的记录id
+        Integer activityUserId = activityUserMapper.selectPrimaryKeyByUserIdAndActivityId(
+                id, userId);
+        //若已经报名，则返回true
+        if (activityUserId != null) {
+            activityDetails.setSignUp(true);
+        }
+
         return activityDetails;
     }
 
