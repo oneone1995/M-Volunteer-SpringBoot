@@ -6,8 +6,8 @@ import java.util.List;
  * Created by wangl on 2017/2/21.
  * 继承自Activity
  * 用于活动详情的实体
- * 包含了该活动的id、发起组织、活动内容描述、招募时间、活动开始时间、活动地点、提供时长、活动联系人、联系人电话、服务类别、已报名的志愿者
- * 活动名字、与当地的距离、已报名的人数和总人数由前一个页面传入
+ * 包含了该活动的id、发起组织、活动内容描述、招募时间、活动开始时间、活动地点、提供时长、
+ * 活动联系人、联系人电话、服务类别、活动名字、与当地的距离、已报名的人数、已报名的志愿者
  */
 public class ActivityDetails extends Activity{
 
@@ -18,6 +18,15 @@ public class ActivityDetails extends Activity{
 
     //活动状态
     private String activityStatus;
+
+    //与当地的距离
+    private double distance;
+
+    //已报名的人数
+    private Integer recruitedPersonNumber;
+
+    //是否已经报名或已经推荐
+    private boolean isSignUpOrRecommend;
 
     private List<VolunteerInfo> volunteers;
 
@@ -43,6 +52,30 @@ public class ActivityDetails extends Activity{
 
     public void setActivityStatus(String activityStatus) {
         this.activityStatus = activityStatus;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public Integer getRecruitedPersonNumber() {
+        return recruitedPersonNumber;
+    }
+
+    public void setRecruitedPersonNumber(Integer recruitedPersonNumber) {
+        this.recruitedPersonNumber = recruitedPersonNumber;
+    }
+
+    public boolean isSignUpOrRecommend() {
+        return isSignUpOrRecommend;
+    }
+
+    public void setSignUpOrRecommend(boolean signUpOrRecommend) {
+        isSignUpOrRecommend = signUpOrRecommend;
     }
 
     public List<VolunteerInfo> getVolunteers() {
