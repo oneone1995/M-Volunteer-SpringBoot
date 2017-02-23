@@ -40,4 +40,15 @@
     select id, activity_id, user_id, activity_user_status_id, star, sign_in_status
     from activity_user
   </select>
+  <!-- 根据用户id和活动id查询出关系表中符合条件的记录的id -->
+  <select id="selectPrimaryKeyByUserIdAndActivityId" resultType="java.lang.Integer">
+    SELECT
+      activity_user.id
+    FROM
+      activity_user
+    WHERE
+      activity_id = #{activityId}
+    AND
+      user_id = #{userId}
+  </select>
 </mapper>
