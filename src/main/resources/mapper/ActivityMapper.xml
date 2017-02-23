@@ -173,13 +173,16 @@
             activity.id,
             activity.`name`,
             activity.picture,
+            activity.timestamp,
             activity_status.description activityStatus,
-            activity_user_status.description interviewStatus
+            activity_user_status.description interviewStatus,
+            organization_info.name organization
         FROM
             activity_user
             JOIN activity ON activity.id = activity_user.activity_id
             JOIN activity_status ON activity_status.id = activity.id
             JOIN activity_user_status ON activity_user_status.id = activity_user.activity_user_status_id
+            JOIN organization_info ON organization_info.id = activity.organization_id
         WHERE
             activity_user.user_id = #{id}
             AND
