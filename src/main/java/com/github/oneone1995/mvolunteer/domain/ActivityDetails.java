@@ -25,8 +25,8 @@ public class ActivityDetails extends Activity{
     //已报名的人数
     private Integer recruitedPersonNumber;
 
-    //是否已经报名或已经推荐
-    private boolean isSignUpOrRecommend;
+    //是否已经报名
+    private boolean isSignUp;
 
     private List<VolunteerInfo> volunteers;
 
@@ -71,11 +71,11 @@ public class ActivityDetails extends Activity{
     }
 
     public boolean isSignUpOrRecommend() {
-        return isSignUpOrRecommend;
+        return isSignUp;
     }
 
-    public void setSignUpOrRecommend(boolean signUpOrRecommend) {
-        isSignUpOrRecommend = signUpOrRecommend;
+    public void setSignUpOrRecommend(boolean signUp) {
+        isSignUp = signUp;
     }
 
     public List<VolunteerInfo> getVolunteers() {
