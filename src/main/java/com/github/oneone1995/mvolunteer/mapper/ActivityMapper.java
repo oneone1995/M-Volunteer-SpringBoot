@@ -80,4 +80,11 @@ public interface ActivityMapper {
      * @return  当前登录用户其参加的未结束的活动列表
      */
     List<ActivityDetails> selectByVolunteerId(@Param("id") Integer id);
+
+    /**
+     * 根据志愿者id查询他的服务历史
+     * @param id    志愿者id
+     * @return  当前登录用户的已完成活动，即服务历史
+     */
+    List<ActivityDetails> selectHistoryByVolunteerId(@Param("id") Integer id);
 }
