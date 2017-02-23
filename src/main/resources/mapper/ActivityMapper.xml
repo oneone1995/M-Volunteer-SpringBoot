@@ -142,7 +142,7 @@
     <!-- 根据活动id返回活动详情 -->
     <select id="selectByPrimaryKey" resultMap="ActivityResultMap">
         SELECT
-            activity_id,
+            activity.id activity_id,
             activity.organization_id,
             organization_info.`name` organization,
             activity.description,
@@ -156,12 +156,12 @@
             volunteer_info.*
         FROM
             activity
-            JOIN activity_user ON activity_user.activity_id = activity.id
-            JOIN organization_info ON activity.organization_id = organization_info.id
-            JOIN volunteer_info ON activity_user.user_id = volunteer_info.id
+            LEFT OUTER JOIN activity_user ON activity_user.activity_id = activity.id AND activity_user_status_id = 2
+            LEFT OUTER JOIN organization_info ON activity.organization_id = organization_info.id
+            LEFT OUTER JOIN volunteer_info ON activity_user.user_id = volunteer_info.id
         WHERE
             activity.id = #{id}
-            AND activity_user_status_id = 2
+
     </select>
 
     <!-- 根据志愿者ID返回活动列表 -->
