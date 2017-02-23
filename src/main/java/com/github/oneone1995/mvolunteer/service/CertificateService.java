@@ -8,5 +8,5 @@ import com.github.oneone1995.mvolunteer.domain.Certificate;
  */
 public interface CertificateService {
     //申请证书
-    boolean applyForCertificate(Certificate certificate);
+    String applyForCertificate(Certificate certificate);
 }
