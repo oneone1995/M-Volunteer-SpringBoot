@@ -6,6 +6,7 @@
                type="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
         <!-- 活动信息 -->
         <id column="activity_id" property="id"/>
+        <result column="name" property="name"/>
         <result column="organization" property="organization"/>
         <result column="organization_id" property="organizationId"/>
         <result column="description" property="description"/>
@@ -17,6 +18,7 @@
         <result column="principal_name" property="principalName"/>
         <result column="principal_contact" property="principalContact"/>
         <result column="service_type" property="serviceType"/>
+        <result column="distance" property="distance"/>
 
         <!-- 志愿者信息 -->
         <collection property="volunteers" ofType="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
@@ -39,7 +41,7 @@
     <sql id="selectActivitySql">
         SELECT
             activity.id id,
-            activity.address_district district ,
+            activity.address_district district,
             activity.coord_long coordLong,
             activity.coord_lat coordLat,
             activity.recruit_person_number recruitPersonNumber,
@@ -144,6 +146,7 @@
     <select id="selectByPrimaryKey" resultMap="ActivityResultMap">
         SELECT
             activity.id activity_id,
+            activity.name,
             activity.organization_id,
             organization_info.`name` organization,
             activity.description,
@@ -156,7 +159,28 @@
             activity.principal_contact,
             activity.service_type,
             volunteer_info.id,
-            volunteer_info.avatar
+            volunteer_info.avatar,
+            ROUND(
+                    6378.138 * 2 * ASIN(
+                            SQRT(
+                                    POW(
+                                            SIN(
+                                                    (
+                                                        #{coordLat} * PI() / 180 - activity.coord_lat * PI() / 180
+                                                    ) / 2
+                                            ),
+                                            2
+                                    ) + COS(#{coordLat} * PI() / 180) * COS(activity.coord_lat * PI() / 180) * POW(
+                                            SIN(
+                                                    (
+                                                        #{coordLong} * PI() / 180 - activity.coord_long * PI() / 180
+                                                    ) / 2
+                                            ),
+                                            2
+                                    )
+                            )
+                    )
+            ) AS distance
         FROM
             activity
             LEFT OUTER JOIN activity_user ON activity_user.activity_id = activity.id AND activity_user_status_id = 2
