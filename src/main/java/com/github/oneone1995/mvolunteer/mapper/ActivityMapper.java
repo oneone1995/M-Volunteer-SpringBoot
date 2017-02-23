@@ -36,12 +36,16 @@ public interface ActivityMapper {
     );
 
     /**
-     * 根据活动id返回活动详情的mapper接口
+     * 根据活动id和经纬度返回活动详情的mapper接口
      * @param id    活动id
+     * @param coordLong 经度
+     * @param coordLat  纬度
      * @return  活动详情
      */
     ActivityDetails selectByPrimaryKey(
-            @Param("id") Integer id);
+            @Param("id") Integer id,
+            @Param("coordLong") double coordLong,
+            @Param("coordLat") double coordLat);
 
     /**
      *
