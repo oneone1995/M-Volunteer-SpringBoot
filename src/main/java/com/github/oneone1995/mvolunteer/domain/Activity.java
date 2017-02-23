@@ -2,7 +2,7 @@ package com.github.oneone1995.mvolunteer.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Date;
+import java.sql.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Activity {
