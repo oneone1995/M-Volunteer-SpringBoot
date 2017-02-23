@@ -25,8 +25,9 @@ public interface ActivityService {
             Integer page, Integer rows, double coordLong, double coordLat,
             String category, Integer collation, String district);
 
-    //根据活动id返回包装有志愿者信息的活动详情
-    ActivityDetails getActivityById(Integer id);
+    //根据活动id和经纬度返回包装有志愿者等信息的活动详情
+    ActivityDetails getActivityById(
+            Integer id, double coordLong, double coordLat);
 
     //创建活动
     boolean createActivity(Activity activity);

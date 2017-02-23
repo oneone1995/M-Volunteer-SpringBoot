@@ -84,6 +84,7 @@ public class ActivityServiceImpl implements ActivityService {
             return null;
         }
 
+        //报名志愿者的人数
         activityDetails.setRecruitedPersonNumber(activityDetails.getVolunteers().size());
 
         //查询当前用户是否报名了活动
