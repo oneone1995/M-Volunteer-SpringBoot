@@ -175,13 +175,14 @@
             activity_status.description activityStatus,
             activity_user_status.description interviewStatus
         FROM
-            activity
-            JOIN activity_status ON activity.activity_status_id = activity_status.id
-            JOIN activity_user ON activity.id = activity_user.id
-            JOIN activity_user_status ON activity_user.activity_user_status_id = activity_user_status.id
+            activity_user
+            JOIN activity ON activity.id = activity_user.activity_id
+            JOIN activity_status ON activity_status.id = activity.id
+            JOIN activity_user_status ON activity_user_status.id = activity_user.activity_user_status_id
         WHERE
             activity_user.user_id = #{id}
-            AND activity.activity_status_id != 3
+            AND
+            activity.activity_status_id != 3
         ORDER BY
             activity.`timestamp`
         DESC
