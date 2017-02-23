@@ -61,9 +61,12 @@ public class ActivityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getActivityById(
-            @PathVariable Integer id
+            @PathVariable Integer id,
+            @RequestParam(value = "coordLong") double coordLong,
+            @RequestParam(value = "coordLat") double coordLat
     ) {
-        ActivityDetails activityDetails = activityService.getActivityById(id);
+        ActivityDetails activityDetails = activityService.getActivityById(
+                id, coordLong, coordLat);
 
         if (activityDetails == null) {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NO_CONTENT);
