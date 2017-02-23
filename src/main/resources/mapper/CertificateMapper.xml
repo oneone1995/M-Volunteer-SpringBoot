@@ -10,20 +10,38 @@
     <result column="receiver" jdbcType="VARCHAR" property="receiver" />
     <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
   </resultMap>
+  <!-- 根据user_id判断重复不插入的sql片段 -->
+  <sql id="insertDistinctSql">
+    <where>
+      NOT EXISTS
+      (
+        SELECT
+          user_id
+        FROM
+          certificate
+        WHERE
+          user_id = #{userId}
+      )
+    </where>
+  </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from certificate
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!-- 重写insert语句，重复则不插入 -->
   <insert id="insert" parameterType="com.github.oneone1995.mvolunteer.domain.Certificate">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into certificate (user_id, certificate_status_id, timestamp, 
+    insert into certificate (user_id, certificate_status_id,
       address, receiver, receiver_phone
       )
-    values (#{userId,jdbcType=INTEGER}, #{certificateStatusId,jdbcType=INTEGER}, #{timestamp,jdbcType=TIMESTAMP}, 
+    SELECT #{userId,jdbcType=INTEGER}, #{certificateStatusId,jdbcType=INTEGER},
       #{address,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, #{receiverPhone,jdbcType=VARCHAR}
-      )
+    FROM
+      DUAL
+    <include refid="insertDistinctSql"/>
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.github.oneone1995.mvolunteer.domain.Certificate">
     update certificate
