@@ -155,7 +155,8 @@
             activity.principal_name,
             activity.principal_contact,
             activity.service_type,
-            volunteer_info.*
+            volunteer_info.id,
+            volunteer_info.avatar
         FROM
             activity
             LEFT OUTER JOIN activity_user ON activity_user.activity_id = activity.id AND activity_user_status_id = 2
