@@ -183,6 +183,26 @@
         DESC
     </select>
 
+    <!-- 根据志愿者ID返回该用户的服务记录 -->
+    <select id="selectHistoryByVolunteerId"
+            resultType="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
+        SELECT
+            activity_id,
+            activity.`name`,
+            activity.picture,
+            activity.working_hours
+        FROM
+            activity
+            JOIN activity_user ON activity.id = activity_user.id
+        WHERE
+            activity_user.id = #{id}
+            AND
+            activity_user.sign_in_status = 1
+            AND
+            activity.activity_status_id = 3
+    </select>
+
+
     <!-- 根据活动code和用户id返回该记录在活动用户关系表中的主键id -->
     <select id="selectByCode" resultType="java.lang.Integer">
         SELECT
@@ -204,6 +224,7 @@
         FROM
             activity
     </select>
+
 
     <!-- 插入活动 -->
     <insert id="insertActivity" parameterType="com.github.oneone1995.mvolunteer.domain.Activity">
