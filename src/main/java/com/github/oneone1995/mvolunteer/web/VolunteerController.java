@@ -1,6 +1,5 @@
 package com.github.oneone1995.mvolunteer.web;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
@@ -9,7 +8,6 @@ import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.oneone1995.mvolunteer.service.VolunteerService;
 import com.github.pagehelper.PageInfo;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by wangl on 2017/2/22.
@@ -65,4 +62,6 @@ public class VolunteerController {
         }
         return new ResponseEntity<>(ResultModel.ok(activityDetailsPageInfo), HttpStatus.OK);
     }
+
+
 }
