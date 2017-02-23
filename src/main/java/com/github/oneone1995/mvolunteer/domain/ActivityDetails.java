@@ -70,11 +70,11 @@ public class ActivityDetails extends Activity{
         this.recruitedPersonNumber = recruitedPersonNumber;
     }
 
-    public boolean isSignUpOrRecommend() {
+    public boolean isSignUp() {
         return isSignUp;
     }
 
-    public void setSignUpOrRecommend(boolean signUp) {
+    public void setSignUp(boolean signUp) {
         isSignUp = signUp;
     }
 
