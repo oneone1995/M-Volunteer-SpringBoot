@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.oneone1995.mvolunteer.mapper.ActivityMapper">
+    <resultMap id="BaseResultMap" type="com.github.oneone1995.mvolunteer.domain.Activity">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="address_province" jdbcType="VARCHAR" property="addressProvince" />
+        <result column="address_city" jdbcType="VARCHAR" property="addressCity" />
+        <result column="address_district" jdbcType="VARCHAR" property="addressDistrict" />
+        <result column="address_street" jdbcType="VARCHAR" property="addressStreet" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="coord_long" jdbcType="DOUBLE" property="coordLong" />
+        <result column="coord_lat" jdbcType="DOUBLE" property="coordLat" />
+        <result column="service_type" jdbcType="VARCHAR" property="serviceType" />
+        <result column="service_object" jdbcType="VARCHAR" property="serviceObject" />
+        <result column="recruit_time" jdbcType="VARCHAR" property="recruitTime" />
+        <result column="recruit_person_number" jdbcType="INTEGER" property="recruitPersonNumber" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="time" jdbcType="VARCHAR" property="time" />
+        <result column="principal_name" jdbcType="VARCHAR" property="principalName" />
+        <result column="principal_contact" jdbcType="VARCHAR" property="principalContact" />
+        <result column="activity_status_id" jdbcType="INTEGER" property="activityStatusId" />
+        <result column="working_hours" jdbcType="DOUBLE" property="workingHours" />
+        <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp" />
+        <result column="picture" jdbcType="VARCHAR" property="picture" />
+        <result column="code" jdbcType="INTEGER" property="code" />
+        <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+        <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    </resultMap>
+
     <!-- 查询包装有志愿者信息的活动详情的ResultMap -->
     <resultMap id="ActivityResultMap"
                type="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
@@ -104,7 +130,7 @@
     </sql>
 
     <!-- 指定id的活动的所有信息 -->
-    <select id="selectAllInfoByPrimaryKey" resultType="com.github.oneone1995.mvolunteer.domain.Activity">
+    <select id="selectAllInfoByPrimaryKey" resultMap="BaseResultMap">
         SELECT
             *
         FROM
