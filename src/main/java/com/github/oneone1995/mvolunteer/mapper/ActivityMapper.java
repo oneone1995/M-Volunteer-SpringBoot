@@ -91,4 +91,11 @@ public interface ActivityMapper {
      * @return  当前登录用户的已完成活动，即服务历史
      */
     List<ActivityDetails> selectHistoryByVolunteerId(@Param("id") Integer id);
+
+    /**
+     * 根据组织id查询该组织的所有活动
+     * @param id    组织id
+     * @return  当前登录的组织账号的活动列表
+     */
+    List<ActivityDetails> selectByOrganizationId(@Param("id") Integer id);
 }
