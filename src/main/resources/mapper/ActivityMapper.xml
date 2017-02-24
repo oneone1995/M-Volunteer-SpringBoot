@@ -239,6 +239,22 @@
             activity.`timestamp` DESC
     </select>
 
+    <!-- 根据组织id返回该组织的活动 -->
+    <select id="selectByOrganizationId" resultType="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
+        SELECT
+            activity.id,
+            activity.`name`,
+            activity.picture,
+            activity.TIMESTAMP,
+            activity_status.description
+        FROM
+            activity
+            JOIN activity_status ON activity_status.id = activity.activity_status_id
+        WHERE
+            activity.organization_id = #{id}
+        ORDER BY
+            activity.`timestamp` DESC
+    </select>
 
     <!-- 根据活动code和用户id返回该记录在活动用户关系表中的主键id -->
     <select id="selectByCode" resultType="java.lang.Integer">
