@@ -204,7 +204,7 @@
         FROM
             activity_user
             JOIN activity ON activity.id = activity_user.activity_id
-            JOIN activity_status ON activity_status.id = activity.id
+            JOIN activity_status ON activity_status.id = activity.activity_status_id
             JOIN activity_user_status ON activity_user_status.id = activity_user.activity_user_status_id
             JOIN organization_info ON organization_info.id = activity.organization_id
         WHERE
