@@ -103,6 +103,43 @@
         </where>
     </sql>
 
+    <!-- 指定id的活动的所有信息 -->
+    <select id="selectAllInfoByPrimaryKey" resultType="com.github.oneone1995.mvolunteer.domain.Activity">
+        SELECT
+            *
+        FROM
+            activity
+        WHERE
+            id = #{id}
+    </select>
+
+    <update id="updateByPrimaryKey">
+        update activity
+        set address_province = #{addressProvince,jdbcType=VARCHAR},
+            address_city = #{addressCity,jdbcType=VARCHAR},
+            address_district = #{addressDistrict,jdbcType=VARCHAR},
+            address_street = #{addressStreet,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            coord_long = #{coordLong,jdbcType=DOUBLE},
+            coord_lat = #{coordLat,jdbcType=DOUBLE},
+            service_type = #{serviceType,jdbcType=VARCHAR},
+            service_object = #{serviceObject,jdbcType=VARCHAR},
+            recruit_time = #{recruitTime,jdbcType=VARCHAR},
+            recruit_person_number = #{recruitPersonNumber,jdbcType=INTEGER},
+            name = #{name,jdbcType=VARCHAR},
+            time = #{time,jdbcType=VARCHAR},
+            principal_name = #{principalName,jdbcType=VARCHAR},
+            principal_contact = #{principalContact,jdbcType=VARCHAR},
+            activity_status_id = #{activityStatusId,jdbcType=INTEGER},
+            working_hours = #{workingHours,jdbcType=DOUBLE},
+            timestamp = #{timestamp,jdbcType=TIMESTAMP},
+            picture = #{picture,jdbcType=VARCHAR},
+            code = #{code,jdbcType=INTEGER},
+            organization_id = #{organizationId,jdbcType=INTEGER},
+            description = #{description,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
     <!-- 根据活动用户关系表id更新 -->
     <update id="updateSignStatusByPrimaryKey">
         UPDATE activity_user

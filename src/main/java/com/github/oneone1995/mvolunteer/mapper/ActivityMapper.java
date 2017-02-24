@@ -14,6 +14,21 @@ import java.util.Set;
  */
 @Mapper
 public interface ActivityMapper {
+
+    /**
+     * 根据活动id查出所有活动信息
+     * @param id    活动id
+     * @return  对应活动的全部信息
+     */
+    Activity selectAllInfoByPrimaryKey(@Param("id") Integer id);
+
+    /**
+     * 根据活动id更新
+     * @param record Activity实体
+     * @return  更新记录
+     */
+    int updateByPrimaryKey(Activity record);
+
     /**
      * 根据活动添加时间排序查询活动列表返回
      * 并根据参数中的经纬度求出距离并将其包装进HomeActivity中的mapper接口
