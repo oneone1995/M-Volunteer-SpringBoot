@@ -28,4 +28,12 @@ public interface ActivityUserMapper {
             @Param("activityId") Integer activityId,
             @Param("userId") Integer userId
     );
+
+    /**
+     * 根据活动id和报名此次活动的用户的签到状态查询关系表记录
+     * @param id    活动id
+     * @return  参加该活动的用户id列表
+     */
+    List<Integer> selectAllByActivityId(
+            @Param("activityId") Integer id);
 }

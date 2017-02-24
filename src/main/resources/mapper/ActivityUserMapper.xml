@@ -51,4 +51,16 @@
     AND
       user_id = #{userId}
   </select>
+
+  <!-- 根据活动id和签到状态返回活动参加该活动的用户id列表 -->
+  <select id="selectAllByActivityId" resultType="Integer">
+    SELECT
+      activity_user.user_id
+    FROM
+      activity_user
+    WHERE
+      activity_user.activity_id = #{activityId}
+    AND
+      activity_user.sign_in_status = 1
+  </select>
 </mapper>
