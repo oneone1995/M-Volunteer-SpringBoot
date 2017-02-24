@@ -220,19 +220,23 @@
     <select id="selectHistoryByVolunteerId"
             resultType="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
         SELECT
-            activity_id,
+            activity.id,
             activity.`name`,
             activity.picture,
-            activity.working_hours
+            activity. TIMESTAMP,
+            activity_status.description activityStatus,
+            activity.working_hours,
+            organization_info. NAME organization
         FROM
-            activity
-            JOIN activity_user ON activity.id = activity_user.id
+            activity_user
+            JOIN activity ON activity.id = activity_user.activity_id
+            JOIN activity_status ON activity_status.id = activity.activity_status_id
+            JOIN organization_info ON organization_info.id = activity.organization_id
         WHERE
-            activity_user.id = #{id}
-            AND
-            activity_user.sign_in_status = 1
-            AND
-            activity.activity_status_id = 3
+            activity_user.user_id = #{id}
+            AND activity.activity_status_id = 3
+        ORDER BY
+            activity.`timestamp` DESC
     </select>
 
 
