@@ -44,4 +44,7 @@ public interface ActivityService {
     PageInfo<ActivityDetails> getActivityPageInfoByOrganizationId(
             Integer page, Integer rows, Integer id);
 
+    //根据活动id和状态id更新活动
+    String updateActivityStatusById(
+            Integer id, Integer activityStatusId);
 }

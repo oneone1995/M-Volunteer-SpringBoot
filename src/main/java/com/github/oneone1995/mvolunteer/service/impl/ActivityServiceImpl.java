@@ -1,11 +1,9 @@
 package com.github.oneone1995.mvolunteer.service.impl;
 
-import com.github.oneone1995.mvolunteer.domain.Activity;
-import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
-import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
-import com.github.oneone1995.mvolunteer.domain.HomeActivity;
+import com.github.oneone1995.mvolunteer.domain.*;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
+import com.github.oneone1995.mvolunteer.mapper.VolunteerInfoMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,6 +26,9 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Resource
     private ActivityUserMapper activityUserMapper;
+
+    @Resource
+    private VolunteerInfoMapper volunteerInfoMapper;
 
     @Override
     public PageInfo<HomeActivity> getHomeActivityPageInfo(
@@ -157,5 +158,33 @@ public class ActivityServiceImpl implements ActivityService {
             return null;
         }
         return new PageInfo<>(activityDetailsList);
+    }
+
+    @Override
+    @Transactional
+    public String updateActivityStatusById(Integer id, Integer activityStatusId) {
+        //根据活动id查出活动
+        Activity activity = activityMapper.selectAllInfoByPrimaryKey(id);
+
+        if (activity == null) {
+            return "活动不存在";
+        }
+
+        if (activity.getActivityStatusId() == 3) {
+            return "不可更改";
+        }
+        //当活动存在且为可更改状态时，更新活动状态
+        activity.setActivityStatusId(activityStatusId);
+        //若活动状态更新为3时，即更新为活动结束时，还需更新参加此次活动的用户的工时
+        if (activityStatusId == 3) {
+            //更新活动表中的活动状态
+            activityMapper.updateByPrimaryKey(activity);
+            //查询报名此次活动并签到成功的志愿者id列表
+            List<Integer> userIds = activityUserMapper.selectAllByActivityId(id);
+            return volunteerInfoMapper.updateWorkingHoursByIdAndWorkingHours(
+                    userIds, activity.getWorkingHours()) > 0 ? "SUCCESS":"FAIL";
+
+        }
+        return activityMapper.updateByPrimaryKey(activity) > 0 ? "SUCCESS":"FAIL";
     }
 }
