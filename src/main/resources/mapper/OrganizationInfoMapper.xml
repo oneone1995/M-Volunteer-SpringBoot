@@ -54,11 +54,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, name, address_province, address_city, address_district, address_street, 
-    address, zip_code, founding_date, volunteer_number, principal_name, principal_telephone, 
-    principal_telephone_public, avatar
-    from organization_info
-    where id = #{id,jdbcType=INTEGER}
+    SELECT
+      organization_info.id,
+      `user`.email,
+      organization_info.`name`,
+      organization_info.founding_date,
+      organization_info.volunteer_number,
+      organization_info.avatar
+    FROM
+      organization_info
+      JOIN `user` ON `user`.id = organization_info.id
+    WHERE
+      organization_info.id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, address_province, address_city, address_district, address_street, 
