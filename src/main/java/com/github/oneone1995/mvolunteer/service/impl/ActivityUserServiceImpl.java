@@ -24,14 +24,22 @@ public class ActivityUserServiceImpl implements ActivityUserService {
         CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //获取当前用户的id
         activityUser.setUserId(currentUser.getId());
-        //设置面试状态为待面试
-        activityUser.setActivityUserStatusId(1);
-        //设置评分为0
-        activityUser.setStar(0.0);
-        //设置签到状态为未签到
-        activityUser.setSignInStatus(0);
 
-        return activityUserMapper.insert(activityUser) > 0;
+        //获取当前用户id和活动id在关系表中的记录id
+        Integer activityUserId = activityUserMapper.selectPrimaryKeyByUserIdAndActivityId(
+                activityUser.getActivityId(), activityUser.getUserId());
+        ////若已经报名，则不能再次报名，返回报名失败
+        if (activityUserId == null) {
+            //设置面试状态为待面试
+            activityUser.setActivityUserStatusId(1);
+            //设置评分为0
+            activityUser.setStar(0.0);
+            //设置签到状态为未签到
+            activityUser.setSignInStatus(0);
+
+            return activityUserMapper.insert(activityUser) > 0;
+        }
+        return false;
     }
 
     @Override
