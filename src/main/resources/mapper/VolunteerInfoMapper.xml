@@ -48,6 +48,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!-- 根据用户id数组和活动工时更新用户工时 -->
+  <update id="updateWorkingHoursByIdAndWorkingHours">
+    UPDATE
+      volunteer_info
+    SET
+      volunteer_info.working_hours = working_hours + #{workingHours}
+    WHERE id IN
+      <foreach collection="userIds" item="item" index="index" open="(" close=")" separator=",">
+          #{item}
+      </foreach>
+  </update>
+
   <!-- 根据id查询志愿者的指定信息 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
