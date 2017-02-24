@@ -9,7 +9,6 @@ import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,5 +144,18 @@ public class ActivityServiceImpl implements ActivityService {
             return null;
         }
         return new PageInfo<>(historicalActivities);
+    }
+
+    @Override
+    public PageInfo<ActivityDetails> getActivityPageInfoByOrganizationId(
+            Integer page, Integer rows, Integer id) {
+
+        PageHelper.startPage(page, rows);
+        List<ActivityDetails> activityDetailsList = activityMapper.selectByOrganizationId(id);
+
+        if (activityDetailsList == null || activityDetailsList.isEmpty()) {
+            return null;
+        }
+        return new PageInfo<>(activityDetailsList);
     }
 }
