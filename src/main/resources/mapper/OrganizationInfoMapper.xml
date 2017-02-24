@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.oneone1995.mvolunteer.mapper.OrganizationInfoMapper">
+  <resultMap id="BaseResultMap" type="com.github.oneone1995.mvolunteer.domain.OrganizationInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address_province" jdbcType="VARCHAR" property="addressProvince" />
+    <result column="address_city" jdbcType="VARCHAR" property="addressCity" />
+    <result column="address_district" jdbcType="VARCHAR" property="addressDistrict" />
+    <result column="address_street" jdbcType="VARCHAR" property="addressStreet" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="zip_code" jdbcType="VARCHAR" property="zipCode" />
+    <result column="founding_date" jdbcType="TIMESTAMP" property="foundingDate" />
+    <result column="volunteer_number" jdbcType="INTEGER" property="volunteerNumber" />
+    <result column="principal_name" jdbcType="VARCHAR" property="principalName" />
+    <result column="principal_telephone" jdbcType="VARCHAR" property="principalTelephone" />
+    <result column="principal_telephone_public" jdbcType="INTEGER" property="principalTelephonePublic" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from organization_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.github.oneone1995.mvolunteer.domain.OrganizationInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into organization_info (name, address_province, address_city, 
+      address_district, address_street, address, 
+      zip_code, founding_date, volunteer_number, 
+      principal_name, principal_telephone, principal_telephone_public, 
+      avatar)
+    values (#{name,jdbcType=VARCHAR}, #{addressProvince,jdbcType=VARCHAR}, #{addressCity,jdbcType=VARCHAR}, 
+      #{addressDistrict,jdbcType=VARCHAR}, #{addressStreet,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{zipCode,jdbcType=VARCHAR}, #{foundingDate,jdbcType=TIMESTAMP}, #{volunteerNumber,jdbcType=INTEGER}, 
+      #{principalName,jdbcType=VARCHAR}, #{principalTelephone,jdbcType=VARCHAR}, #{principalTelephonePublic,jdbcType=INTEGER}, 
+      #{avatar,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.github.oneone1995.mvolunteer.domain.OrganizationInfo">
+    update organization_info
+    set name = #{name,jdbcType=VARCHAR},
+      address_province = #{addressProvince,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_district = #{addressDistrict,jdbcType=VARCHAR},
+      address_street = #{addressStreet,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      founding_date = #{foundingDate,jdbcType=TIMESTAMP},
+      volunteer_number = #{volunteerNumber,jdbcType=INTEGER},
+      principal_name = #{principalName,jdbcType=VARCHAR},
+      principal_telephone = #{principalTelephone,jdbcType=VARCHAR},
+      principal_telephone_public = #{principalTelephonePublic,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, address_province, address_city, address_district, address_street, 
+    address, zip_code, founding_date, volunteer_number, principal_name, principal_telephone, 
+    principal_telephone_public, avatar
+    from organization_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, address_province, address_city, address_district, address_street, 
+    address, zip_code, founding_date, volunteer_number, principal_name, principal_telephone, 
+    principal_telephone_public, avatar
+    from organization_info
+  </select>
+</mapper>
