@@ -83,6 +83,7 @@
   <!-- 根据组织id查询该组织的志愿者 -->
   <select id="selectByOrganizationId" resultType="com.github.oneone1995.mvolunteer.domain.VolunteerDetails">
     SELECT
+      volunteer_info.id,
       volunteer_info.avatar,
       volunteer_info.`name`,
       volunteer_info.working_hours workingHours,
