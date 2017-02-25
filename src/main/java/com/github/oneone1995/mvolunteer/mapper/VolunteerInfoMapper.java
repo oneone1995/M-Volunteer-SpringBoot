@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.mapper;
 
+import com.github.oneone1995.mvolunteer.domain.VolunteerDetails;
 import com.github.oneone1995.mvolunteer.domain.VolunteerInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,12 @@ public interface VolunteerInfoMapper {
     int updateWorkingHoursByIdAndWorkingHours(
             @Param("userIds") List<Integer> userIds,
             @Param("workingHours") double workingHours);
+
+    /**
+     * 根据组织id查询该组织的志愿者
+     * @param organizationId    组织id
+     * @return  包含了证书状态的志愿者列表
+     */
+    List<VolunteerDetails> selectByOrganizationId(
+            @Param("organizationId") Integer organizationId);
 }

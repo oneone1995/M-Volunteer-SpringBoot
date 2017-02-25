@@ -80,4 +80,18 @@
     address_city, working_hours, avatar
     from volunteer_info
   </select>
+  <!-- 根据组织id查询该组织的志愿者 -->
+  <select id="selectByOrganizationId" resultType="com.github.oneone1995.mvolunteer.domain.VolunteerDetails">
+    SELECT
+      volunteer_info.avatar,
+      volunteer_info.`name`,
+      volunteer_info.working_hours workingHours,
+      certificate.certificate_status_id certificateStatusId
+    FROM
+      organization_volunteer
+      JOIN volunteer_info ON volunteer_info.id = organization_volunteer.volunteer_id
+      LEFT OUTER JOIN certificate ON certificate.user_id = organization_volunteer.volunteer_id
+    WHERE
+      organization_volunteer.organization_id = #{organizationId}
+  </select>
 </mapper>
