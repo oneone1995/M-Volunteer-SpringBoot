@@ -29,7 +29,8 @@
 
     <!-- 查询包装有志愿者信息的活动详情的ResultMap -->
     <resultMap id="ActivityResultMap"
-               type="com.github.oneone1995.mvolunteer.domain.ActivityDetails">
+                type="com.github.oneone1995.mvolunteer.domain.ActivityDetails"
+                extends="BaseResultMap">
         <!-- 活动信息 -->
         <id column="activity_id" property="id"/>
         <result column="name" property="name"/>
@@ -45,7 +46,6 @@
         <result column="principal_contact" property="principalContact"/>
         <result column="service_type" property="serviceType"/>
         <result column="distance" property="distance"/>
-        <result column="picture" property="picture"/>
 
         <!-- 志愿者信息 -->
         <collection property="volunteers" ofType="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
