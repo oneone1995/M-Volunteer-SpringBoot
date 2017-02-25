@@ -45,6 +45,7 @@
         <result column="principal_contact" property="principalContact"/>
         <result column="service_type" property="serviceType"/>
         <result column="distance" property="distance"/>
+        <result column="picture" property="picture"/>
 
         <!-- 志愿者信息 -->
         <collection property="volunteers" ofType="com.github.oneone1995.mvolunteer.domain.VolunteerInfo">
@@ -213,6 +214,8 @@
             activity.organization_id,
             organization_info.`name` organization,
             activity.description,
+            activity.recruit_person_number,
+            activity.picture,
             activity.address_street,
             activity.recruit_time,
             activity.time,
