@@ -50,6 +50,8 @@
       activity_id = #{activityId}
     AND
       user_id = #{userId}
+    AND
+      activity_user_status_id != 3
   </select>
 
   <!-- 根据活动id和签到状态返回活动参加该活动的用户id列表 -->
