@@ -61,7 +61,7 @@ public class ActivityController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_VOL')")
+    @PreAuthorize("hasRole('ROLE_VOL') or hasRole('ROLE_ORG')")
     public ResponseEntity<?> getActivityById(
             @PathVariable Integer id,
             @RequestParam(value = "coordLong") double coordLong,
