@@ -64,6 +64,7 @@ public class VolunteerController {
     }
 
     @GetMapping("/history")
+    @PreAuthorize("hasRole('ROLE_VOL')")
     public ResponseEntity<?> getHistoricalActivityOfCurrentUser(
             @RequestParam(value = "page") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows
