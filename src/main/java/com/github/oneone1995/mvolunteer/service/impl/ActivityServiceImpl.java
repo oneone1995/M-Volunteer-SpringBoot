@@ -118,6 +118,10 @@ public class ActivityServiceImpl implements ActivityService {
             codes.add(activity.getCode());
         }
 
+        //获取当前用户
+        CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        activity.setOrganizationId(currentUser.getId());
+
         return activityMapper.insertActivity(activity) > 0;
     }
 
