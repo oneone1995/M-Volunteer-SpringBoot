@@ -30,6 +30,7 @@ public class CertificateServiceImpl implements CertificateService {
         //查询当前用户的工时
         if (volunteerInfoMapper.selectByPrimaryKey(currentUser.getId()).getWorkingHours() >= 60) {
             certificate.setUserId(currentUser.getId());
+            certificate.setCertificateStatusId(1);
             return certificateMapper.insert(certificate) > 0 ? "SUCCESS": "ALREADY_ERROR";
         }
         return "INSUFFICIENT_ERROR";
