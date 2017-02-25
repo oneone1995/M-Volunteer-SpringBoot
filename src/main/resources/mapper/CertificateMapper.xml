@@ -53,6 +53,15 @@
       receiver_phone = #{receiverPhone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 根据志愿者id更新证书状态 -->
+  <update id="updateByVolunteerId">
+    UPDATE
+      certificate
+    SET
+      certificate.certificate_status_id = 2
+    WHERE
+      certificate.user_id = #{volunteerId}
+  </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, user_id, certificate_status_id, timestamp, address, receiver, receiver_phone
     from certificate
