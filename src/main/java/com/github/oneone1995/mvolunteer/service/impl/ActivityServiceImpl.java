@@ -179,10 +179,14 @@ public class ActivityServiceImpl implements ActivityService {
         if (activityStatusId == 3) {
             //更新活动表中的活动状态
             activityMapper.updateByPrimaryKey(activity);
+
             //查询报名此次活动并签到成功的志愿者id列表
             List<Integer> userIds = activityUserMapper.selectAllByActivityId(id);
+            if (userIds == null || userIds.isEmpty()) {
+                return "成功更改活动状态";
+            }
             return volunteerInfoMapper.updateWorkingHoursByIdAndWorkingHours(
-                    userIds, activity.getWorkingHours()) > 0 ? "SUCCESS":"FAIL";
+                    userIds, activity.getWorkingHours()) > 0 ? "成功更新活动状态并更新工时":"更新失败";
 
         }
         return activityMapper.updateByPrimaryKey(activity) > 0 ? "SUCCESS":"FAIL";
