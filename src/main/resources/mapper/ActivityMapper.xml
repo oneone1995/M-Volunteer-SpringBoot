@@ -99,6 +99,8 @@
         FROM
             activity_user
             RIGHT OUTER JOIN activity ON activity_id = activity.id
+        WHERE
+            activity.activity_status_id = 1
     </sql>
 
     <!-- 根据活动id分组并依时间戳排序的sql片段 -->
