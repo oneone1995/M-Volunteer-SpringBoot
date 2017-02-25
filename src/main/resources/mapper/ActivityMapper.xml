@@ -99,8 +99,6 @@
         FROM
             activity_user
             RIGHT OUTER JOIN activity ON activity_id = activity.id
-        WHERE
-            activity.activity_status_id = 1
     </sql>
 
     <!-- 根据活动id分组并依时间戳排序的sql片段 -->
@@ -114,6 +112,7 @@
     <!-- 根据活动名字模糊搜索的where条件sql片段 -->
     <sql id="conditionByActivityNameSql">
         <where>
+            AND activity.activity_status_id = 1
             <if test="activityName!=null">
                 AND activity.name LIKE '%${activityName}%'
             </if>
@@ -123,6 +122,7 @@
     <!-- 根据活动类别查询的where条件sql片段 -->
     <sql id="conditionByCategorySql">
         <where>
+            AND activity.activity_status_id = 1
             <if test="category!=null">
                 AND activity.service_type = #{category}
             </if>
@@ -181,6 +181,8 @@
         并根据参数中的经纬度求出距离并将其包装进HomeActivity中 -->
     <select id="selectAllOderByTime" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
         <include refid="selectActivitySql"/>
+        WHERE
+           activity.activity_status_id = 1
         <include refid="groupByAndOrderBySql"/>
     </select>
 
