@@ -18,7 +18,8 @@ public enum ResultStatus {
     CERTIFICATE_IS_EXIST(-10010, "证书已经申请过啦"),
     WORKING_HOURS_NOT_ENOUGH(-10011, "工时不够"),
     SIGN_UP_FAIL(-10012, "报名失败"),
-    CANCEL_FAIL(-10013, "取消失败");
+    CANCEL_FAIL(-10013, "取消失败"),
+    ACTIVITY_STATUS_UPDATE_FAIL(-10014,"活动状态更新失败");
 
     /**
      * 返回码
