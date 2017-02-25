@@ -4,9 +4,11 @@ import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
 import com.github.oneone1995.mvolunteer.domain.OrganizationInfo;
+import com.github.oneone1995.mvolunteer.domain.VolunteerDetails;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.oneone1995.mvolunteer.service.OrganizationService;
+import com.github.oneone1995.mvolunteer.service.VolunteerService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,9 @@ public class OrganizationController {
 
     @Resource
     private ActivityService activityService;
+
+    @Resource
+    private VolunteerService volunteerService;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ORG')")
@@ -62,4 +67,21 @@ public class OrganizationController {
         return new ResponseEntity<>(ResultModel.ok(activityDetailsPageInfo), HttpStatus.OK);
     }
 
+    @GetMapping("/volunteers")
+    @PreAuthorize("hasRole('ROLE_ORG')")
+    public ResponseEntity<?> getVolunteersOfCurrentOrg(
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows
+    ) {
+        CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer id = currentUser.getId();
+
+        PageInfo<VolunteerDetails> volunteerDetailsPageInfo = volunteerService.getVolunteerListPageInfoByOrganizationId(
+                page, rows, id);
+
+        if (volunteerDetailsPageInfo == null) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.ORGANIZATION_HAS_NO_VOLUNTEER), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Object>(ResultModel.ok(volunteerDetailsPageInfo), HttpStatus.OK);
+    }
 }
