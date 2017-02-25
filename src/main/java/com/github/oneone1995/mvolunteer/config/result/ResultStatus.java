@@ -9,7 +9,7 @@ public enum ResultStatus {
     USERNAME_OR_PASSWORD_ERROR(-1001, "用户名或密码错误"),
     USER_NOT_FOUND(-1002, "用户不存在"),
     USER_NOT_LOGIN(-1003, "用户未登录"),
-    ACTIVITY_NOT_FOUNT(-1004, "活动列表为空"),
+    ACTIVITY_NOT_FOUNT(-1004, "活动不存在"),
     FILE_IS_EMPTY(-1005, "文件为空"),
     FILE_UPLOAD_ERROR(-1006, "文件上传失败"),
     SIGN_IN_FAIL(-1007, "签到失败"),
@@ -19,7 +19,8 @@ public enum ResultStatus {
     WORKING_HOURS_NOT_ENOUGH(-10011, "工时不够"),
     SIGN_UP_FAIL(-10012, "报名失败"),
     CANCEL_FAIL(-10013, "取消失败"),
-    ACTIVITY_STATUS_UPDATE_FAIL(-10014,"活动状态更新失败");
+    ACTIVITY_STATUS_UPDATE_FAIL(-10014,"活动状态更新失败"),
+    ACTIVITY_STATUS_IMMUTABLE(-10015, "活动状态不可更改");
 
     /**
      * 返回码
