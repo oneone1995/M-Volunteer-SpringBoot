@@ -7,6 +7,7 @@ import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,5 +85,25 @@ public class ActivityController {
             return new ResponseEntity<>(ResultModel.error(ResultStatus.ACTIVITY_CREATE_FAIL), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(ResultModel.ok("创建活动成功"), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ORG')")
+    public ResponseEntity<?> putActivity(
+        @PathVariable Integer id,
+        @RequestParam(value = "activityStatusId") Integer activityStatusId
+    ) {
+        String result = activityService.updateActivityStatusById(id, activityStatusId);
+
+        if (result.equals("ACTIVITY_NOT_FOUNT")) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.ACTIVITY_NOT_FOUNT), HttpStatus.NOT_FOUND);
+        }
+        if (result.equals("IMMUTABLE")) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.ACTIVITY_STATUS_IMMUTABLE), HttpStatus.BAD_REQUEST);
+        }
+        if (result.equals("FAIL")) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.ACTIVITY_STATUS_UPDATE_FAIL), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(ResultModel.ok(result), HttpStatus.OK);
     }
 }
