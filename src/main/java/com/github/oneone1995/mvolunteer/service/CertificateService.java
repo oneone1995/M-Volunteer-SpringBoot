@@ -9,4 +9,7 @@ import com.github.oneone1995.mvolunteer.domain.Certificate;
 public interface CertificateService {
     //申请证书
     String applyForCertificate(Certificate certificate);
+
+    //修改证书状态
+    boolean modifyCertificateStatusByVolunteerId(Integer volunteerId);
 }

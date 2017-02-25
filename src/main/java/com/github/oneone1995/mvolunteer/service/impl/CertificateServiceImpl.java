@@ -34,4 +34,11 @@ public class CertificateServiceImpl implements CertificateService {
         }
         return "INSUFFICIENT_ERROR";
     }
+
+    @Override
+    @Transactional
+    public boolean modifyCertificateStatusByVolunteerId(Integer volunteerId) {
+        //更新证书状态
+        return certificateMapper.updateByVolunteerId(volunteerId) > 0;
+    }
 }
