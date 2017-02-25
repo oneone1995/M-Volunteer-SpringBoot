@@ -167,11 +167,11 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = activityMapper.selectAllInfoByPrimaryKey(id);
 
         if (activity == null) {
-            return "活动不存在";
+            return "ACTIVITY_NOT_FOUNT";
         }
 
         if (activity.getActivityStatusId() == 3) {
-            return "不可更改";
+            return "IMMUTABLE";
         }
         //当活动存在且为可更改状态时，更新活动状态
         activity.setActivityStatusId(activityStatusId);
@@ -183,10 +183,10 @@ public class ActivityServiceImpl implements ActivityService {
             //查询报名此次活动并签到成功的志愿者id列表
             List<Integer> userIds = activityUserMapper.selectAllByActivityId(id);
             if (userIds == null || userIds.isEmpty()) {
-                return "成功更改活动状态";
+                return "SUCCESS";
             }
             return volunteerInfoMapper.updateWorkingHoursByIdAndWorkingHours(
-                    userIds, activity.getWorkingHours()) > 0 ? "成功更新活动状态并更新工时":"更新失败";
+                    userIds, activity.getWorkingHours()) > 0 ? "SUCCESS":"FAIL";
 
         }
         return activityMapper.updateByPrimaryKey(activity) > 0 ? "SUCCESS":"FAIL";
