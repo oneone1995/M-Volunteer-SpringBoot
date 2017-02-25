@@ -78,6 +78,7 @@ public class ActivityController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ORG')")
     public ResponseEntity<?> postActivity(@RequestBody Activity activity) {
         boolean result = activityService.createActivity(activity);
 
