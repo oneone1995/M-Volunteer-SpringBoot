@@ -36,4 +36,17 @@ public class CertificateController {
         }
         return new ResponseEntity<>(ResultModel.ok(result), HttpStatus.OK);
     }
+
+    @PutMapping
+    @PreAuthorize("hasRole('ROLE_ORG')")
+    public ResponseEntity<?> putCertificate(
+            @RequestParam(value = "volunteerId") Integer volunteerId
+    ) {
+        boolean result = certificateService.modifyCertificateStatusByVolunteerId(volunteerId);
+
+        if (!result) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.CERTIFICATE_STATUS_UPDATE_FAIL), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Object>(ResultModel.ok("update success"), HttpStatus.OK);
+    }
 }
