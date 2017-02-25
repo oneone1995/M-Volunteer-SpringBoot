@@ -14,7 +14,7 @@
         <result column="service_object" jdbcType="VARCHAR" property="serviceObject" />
         <result column="recruit_time" jdbcType="VARCHAR" property="recruitTime" />
         <result column="recruit_person_number" jdbcType="INTEGER" property="recruitPersonNumber" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="activity_name" jdbcType="VARCHAR" property="name" />
         <result column="time" jdbcType="VARCHAR" property="time" />
         <result column="principal_name" jdbcType="VARCHAR" property="principalName" />
         <result column="principal_contact" jdbcType="VARCHAR" property="principalContact" />
@@ -33,7 +33,7 @@
                 extends="BaseResultMap">
         <!-- 活动信息 -->
         <id column="activity_id" property="id"/>
-        <result column="name" property="name"/>
+        <result column="activity_name" property="name"/>
         <result column="organization" property="organization"/>
         <result column="organization_id" property="organizationId"/>
         <result column="description" property="description"/>
@@ -210,7 +210,7 @@
     <select id="selectByPrimaryKey" resultMap="ActivityResultMap">
         SELECT
             activity.id activity_id,
-            activity.name,
+            activity.name activity_name,
             activity.organization_id,
             organization_info.`name` organization,
             activity.description,
