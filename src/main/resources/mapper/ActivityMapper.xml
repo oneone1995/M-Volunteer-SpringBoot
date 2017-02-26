@@ -355,6 +355,14 @@
             activity
     </select>
 
+    <!-- 根据活动id查询群号 -->
+    <select id="selectTribeId" resultType="java.lang.Integer">
+        SELECT
+            activity.tribe_id
+        FROM activity
+        WHERE id = #{activityId}
+    </select>
+
 
     <!-- 插入活动 -->
     <insert id="insertActivity" parameterType="com.github.oneone1995.mvolunteer.domain.Activity">

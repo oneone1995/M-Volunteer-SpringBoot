@@ -123,4 +123,12 @@ public interface ActivityMapper {
     Integer updateActivityTribeId(
             @Param("tribeId") Integer tribeId,
             @Param("activityId") Integer activityId);
+
+    /**
+     * 查询活动的群组群号
+     * @param activityId    活动id
+     * @return  群号
+     */
+    Integer selectTribeId(
+            @Param("activityId") Integer activityId);
 }
