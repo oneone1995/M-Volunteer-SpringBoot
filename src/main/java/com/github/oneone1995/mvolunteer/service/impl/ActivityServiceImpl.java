@@ -1,17 +1,27 @@
 package com.github.oneone1995.mvolunteer.service.impl;
 
-import com.github.oneone1995.mvolunteer.domain.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.oneone1995.mvolunteer.domain.Activity;
+import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
+import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
+import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.mapper.VolunteerInfoMapper;
+import com.github.oneone1995.mvolunteer.model.IMTribeModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
+import com.github.oneone1995.mvolunteer.utils.IMUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taobao.api.response.OpenimTribeCreateResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -21,6 +31,8 @@ import java.util.Set;
  */
 @Service
 public class ActivityServiceImpl implements ActivityService {
+    protected static Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
+
     @Resource
     private ActivityMapper activityMapper;
 
@@ -122,7 +134,24 @@ public class ActivityServiceImpl implements ActivityService {
         CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         activity.setOrganizationId(currentUser.getId());
 
-        return activityMapper.insertActivity(activity) > 0;
+        //如果活动创建成功
+        if (activityMapper.insertActivity(activity) > 0) {
+            //创建群组
+            OpenimTribeCreateResponse tribeCreateResponse = IMUtil.creteTribe(currentUser, activity.getName(), "欢迎加入" + activity.getName() + "志愿活动");
+            //获取response实体
+            logger.debug(tribeCreateResponse.getBody());
+            IMTribeModel tribeModel = null;
+            try {
+                tribeModel =  new ObjectMapper().readValue(tribeCreateResponse.getBody(), IMTribeModel.class);
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            }
+            //解析成功后获取群号,存入数据库
+            Integer tribeId = Integer.parseInt(String.valueOf(tribeModel.getOpenim_tribe_create_response().getTribe_info().getTribe_id()));
+            return activityMapper.updateActivityTribeId(tribeId, activity.getId()) > 0;
+        }
+
+        return false;
     }
 
     @Override
