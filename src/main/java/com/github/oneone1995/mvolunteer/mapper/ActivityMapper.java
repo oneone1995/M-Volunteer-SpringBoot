@@ -113,4 +113,14 @@ public interface ActivityMapper {
      * @return  当前登录的组织账号的活动列表
      */
     List<ActivityDetails> selectByOrganizationId(@Param("id") Integer id);
+
+    /**
+     * 根据活动id和群号更新指定活动的群号
+     * @param tribeId   群号
+     * @param activityId    活动id
+     * @return
+     */
+    Integer updateActivityTribeId(
+            @Param("tribeId") Integer tribeId,
+            @Param("activityId") Integer activityId);
 }
