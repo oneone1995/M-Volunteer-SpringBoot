@@ -6,7 +6,9 @@ import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.OpenImUser;
 import com.taobao.api.request.OpenimTribeCreateRequest;
+import com.taobao.api.request.OpenimTribeJoinRequest;
 import com.taobao.api.response.OpenimTribeCreateResponse;
+import com.taobao.api.response.OpenimTribeJoinResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,5 +71,31 @@ public class IMUtil {
             logger.error(e.getErrMsg());
         }
         return tribeCreateResponse;
+    }
+
+    public static OpenimTribeJoinResponse joinTribe(
+            CustomUserDetails currentUser,
+            Integer tribeId
+    ) {
+        TaobaoClient client = new DefaultTaobaoClient(API_URL, APP_KEY, APP_SECURITY);
+        OpenimTribeJoinRequest tribeJoinRequest = new OpenimTribeJoinRequest();
+        //=======必要的参数=======//
+        //用户信息
+        OpenImUser openImUser = new OpenImUser();
+        openImUser.setUid(currentUser.getUsername());
+        openImUser.setAppKey(APP_KEY);
+        openImUser.setTaobaoAccount(false);
+        tribeJoinRequest.setUser(openImUser);
+        //群号
+        tribeJoinRequest.setTribeId(Long.valueOf(tribeId));
+
+        //发送
+        OpenimTribeJoinResponse tribeJoinResponse = null;
+        try {
+            tribeJoinResponse = client.execute(tribeJoinRequest);
+        } catch (ApiException e) {
+            logger.error(e.getErrMsg());
+        }
+        return tribeJoinResponse;
     }
 }
