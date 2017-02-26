@@ -2,8 +2,13 @@ package com.github.oneone1995.mvolunteer.service.impl;
 
 import com.github.oneone1995.mvolunteer.domain.ActivityUser;
 import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
+import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityUserService;
+import com.github.oneone1995.mvolunteer.utils.IMUtil;
+import com.taobao.api.response.OpenimTribeJoinResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,8 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ActivityUserServiceImpl implements ActivityUserService {
+    protected static Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
+
     @Autowired
     private ActivityUserMapper activityUserMapper;
+
+    @Autowired
+    private ActivityMapper activityMapper;
 
     @Override
     @Transactional
@@ -37,7 +47,14 @@ public class ActivityUserServiceImpl implements ActivityUserService {
             //设置签到状态为未签到
             activityUser.setSignInStatus(0);
 
-            return activityUserMapper.insert(activityUser) > 0;
+            //如果报名成功，则加入对应的群组
+            if (activityUserMapper.insert(activityUser) > 0) {
+                //调用api加入群组
+                OpenimTribeJoinResponse tribeJoinResponse = IMUtil.joinTribe(currentUser, activityMapper.selectTribeId(activityUser.getActivityId()));
+                //获取response实体
+                logger.debug(tribeJoinResponse.getBody());
+                return true;
+            }
         }
         return false;
     }
