@@ -174,7 +174,7 @@ public class ActivityServiceImpl implements ActivityService {
             return "ACTIVITY_NOT_FOUNT";
         }
 
-        if (activity.getActivityStatusId() == 3) {
+        if (activity.getActivityStatusId() == 3 || activityStatusId == 1) {
             return "IMMUTABLE";
         }
         //当活动存在且为可更改状态时，更新活动状态
