@@ -11,16 +11,13 @@ import com.taobao.api.request.OpenimTribeQuitRequest;
 import com.taobao.api.response.OpenimTribeCreateResponse;
 import com.taobao.api.response.OpenimTribeJoinResponse;
 import com.taobao.api.response.OpenimTribeQuitResponse;
-import com.taobao.api.response.OpenimTribeSendmsgResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.oneone1995.mvolunteer.config.aliim.IMConstantConfig.API_URL;
-import static com.github.oneone1995.mvolunteer.config.aliim.IMConstantConfig.APP_KEY;
-import static com.github.oneone1995.mvolunteer.config.aliim.IMConstantConfig.APP_SECURITY;
+import static com.github.oneone1995.mvolunteer.config.aliim.IMConstantConfig.*;
 
 /**
  * Created by wangl on 2017/2/26.
