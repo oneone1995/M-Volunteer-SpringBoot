@@ -7,11 +7,31 @@ package com.github.oneone1995.mvolunteer.domain;
 public class VolunteerDetails extends VolunteerInfo{
     private Integer certificateStatusId;
 
+    private Integer interviewStatus;
+
+    private String activityName;
+
     public Integer getCertificateStatusId() {
         return certificateStatusId;
     }
 
     public void setCertificateStatusId(Integer certificateStatusId) {
         this.certificateStatusId = certificateStatusId;
+    }
+
+    public Integer getInterviewStatus() {
+        return interviewStatus;
+    }
+
+    public void setInterviewStatus(Integer interviewStatus) {
+        this.interviewStatus = interviewStatus;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
     }
 }
