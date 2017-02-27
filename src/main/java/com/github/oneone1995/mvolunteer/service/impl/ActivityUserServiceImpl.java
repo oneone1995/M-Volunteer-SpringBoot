@@ -2,10 +2,13 @@ package com.github.oneone1995.mvolunteer.service.impl;
 
 import com.github.oneone1995.mvolunteer.domain.ActivityUser;
 import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
+import com.github.oneone1995.mvolunteer.domain.VolunteerDetails;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityUserService;
 import com.github.oneone1995.mvolunteer.utils.IMUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.taobao.api.response.OpenimTribeJoinResponse;
 import com.taobao.api.response.OpenimTribeQuitResponse;
 import org.slf4j.Logger;
@@ -14,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by wangl on 2017/2/23.
@@ -84,5 +89,22 @@ public class ActivityUserServiceImpl implements ActivityUserService {
         }
 
         return false;
+    }
+
+    @Override
+    public PageInfo<VolunteerDetails> getInterviewList(Integer page, Integer rows) {
+        //获取当前用户
+        CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        //获取当前用户的id
+        Integer orgId = currentUser.getId();
+
+        PageHelper.startPage(page, rows);
+        List<VolunteerDetails> interviewList = activityUserMapper.selectInterviewList(orgId);
+
+        if (interviewList == null || interviewList.isEmpty()) {
+            return null;
+        }
+        return new PageInfo<>(interviewList);
     }
 }
