@@ -65,4 +65,22 @@
     AND
       activity_user.sign_in_status = 1
   </select>
+
+  <!-- 根据组织id查询该组织下需要面试的志愿者列表 -->
+  <select id="selectInterviewList" resultType="com.github.oneone1995.mvolunteer.domain.VolunteerDetails">
+    SELECT
+      `user`.username,
+      volunteer_info.avatar,
+      activity_user.activity_user_status_id interviewStatus,
+      activity.`name` activityName
+    FROM
+      activity_user
+      JOIN `user` ON `user`.id = activity_user.user_id
+      JOIN activity ON activity.id = activity_user.activity_id AND activity.organization_id = #{orgId}
+      JOIN volunteer_info ON volunteer_info.id = activity_user.user_id
+    WHERE
+      activity_user_status_id = 1
+    ORDER BY
+      activity.`timestamp`
+  </select>
 </mapper>
