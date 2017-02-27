@@ -1,6 +1,7 @@
 package com.github.oneone1995.mvolunteer.mapper;
 
 import com.github.oneone1995.mvolunteer.domain.ActivityUser;
+import com.github.oneone1995.mvolunteer.domain.VolunteerDetails;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +17,9 @@ public interface ActivityUserMapper {
 
     List<ActivityUser> selectAll();
 
-    int updateByPrimaryKey(ActivityUser record);
+    int updateByPrimaryKey(
+            @Param("activityUserStatusId") Integer activityUserStatusId,
+            @Param("id") Integer id);
 
     /**
      * 根据用户id和活动id查询出关系表中符合条件的记录的id
@@ -36,4 +39,12 @@ public interface ActivityUserMapper {
      */
     List<Integer> selectAllByActivityId(
             @Param("activityId") Integer id);
+
+    /**
+     * 查询面试列表
+     * @param orgId 组织id
+     * @return  需要面试的志愿者列表
+     */
+    List<VolunteerDetails> selectInterviewList(
+            @Param("orgId") Integer orgId);
 }

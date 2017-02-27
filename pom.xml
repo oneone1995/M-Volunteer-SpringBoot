@@ -117,6 +117,14 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.taobao.api</groupId>
+			<artifactId>taobao-sdk</artifactId>
+			<version>20170226</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/taobao-sdk-java-auto_1486975747295-20170226.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
