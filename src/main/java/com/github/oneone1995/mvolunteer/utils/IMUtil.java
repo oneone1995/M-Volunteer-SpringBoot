@@ -7,8 +7,10 @@ import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.OpenImUser;
 import com.taobao.api.request.OpenimTribeCreateRequest;
 import com.taobao.api.request.OpenimTribeJoinRequest;
+import com.taobao.api.request.OpenimTribeQuitRequest;
 import com.taobao.api.response.OpenimTribeCreateResponse;
 import com.taobao.api.response.OpenimTribeJoinResponse;
+import com.taobao.api.response.OpenimTribeQuitResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,5 +99,38 @@ public class IMUtil {
             logger.error(e.getErrMsg());
         }
         return tribeJoinResponse;
+    }
+
+
+    /**
+     * 退出群
+     * @param currentUser   当前用户
+     * @param tribeId   要退出的群的群号
+     * @return  访问阿里API接口的Response
+     */
+    public static OpenimTribeQuitResponse tribeQuitResponse(
+            CustomUserDetails currentUser,
+            Integer tribeId
+    ) {
+        TaobaoClient client = new DefaultTaobaoClient(API_URL, APP_KEY, APP_SECURITY);
+        OpenimTribeQuitRequest tribeQuitRequest = new OpenimTribeQuitRequest();
+        //=======必要的参数=======//
+        //用户信息
+        OpenImUser openImUser = new OpenImUser();
+        openImUser.setUid(currentUser.getUsername());
+        openImUser.setAppKey(APP_KEY);
+        openImUser.setTaobaoAccount(false);
+        tribeQuitRequest.setUser(openImUser);
+        //群号
+        tribeQuitRequest.setTribeId(Long.valueOf(tribeId));
+
+        //发送
+        OpenimTribeQuitResponse tribeQuitResponse = null;
+        try {
+            tribeQuitResponse = client.execute(tribeQuitRequest);
+        } catch (ApiException e) {
+            logger.error(e.getErrMsg());
+        }
+        return tribeQuitResponse;
     }
 }
