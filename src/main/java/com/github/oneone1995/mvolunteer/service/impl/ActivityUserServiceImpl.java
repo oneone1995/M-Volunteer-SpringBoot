@@ -107,4 +107,10 @@ public class ActivityUserServiceImpl implements ActivityUserService {
         }
         return new PageInfo<>(interviewList);
     }
+
+    @Override
+    @Transactional
+    public boolean modifyInterviewStatus(Integer id, Integer activityUserStatusId) {
+        return activityUserMapper.updateByPrimaryKey(activityUserStatusId, id) > 0;
+    }
 }

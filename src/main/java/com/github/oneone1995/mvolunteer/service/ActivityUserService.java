@@ -13,4 +13,6 @@ public interface ActivityUserService {
     boolean cancelActivityByActivityId(Integer activityId);
 
     PageInfo<VolunteerDetails> getInterviewList(Integer page, Integer rows);
+
+    boolean modifyInterviewStatus(Integer id, Integer activityUserStatusId);
 }
