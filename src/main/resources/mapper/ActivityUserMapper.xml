@@ -24,11 +24,8 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.github.oneone1995.mvolunteer.domain.ActivityUser">
     update activity_user
-    set activity_id = #{activityId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      activity_user_status_id = #{activityUserStatusId,jdbcType=INTEGER},
-      star = #{star,jdbcType=DOUBLE},
-      sign_in_status = #{signInStatus,jdbcType=INTEGER}
+    set
+      activity_user_status_id = #{activityUserStatusId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

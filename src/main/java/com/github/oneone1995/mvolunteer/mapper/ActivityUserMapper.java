@@ -17,7 +17,9 @@ public interface ActivityUserMapper {
 
     List<ActivityUser> selectAll();
 
-    int updateByPrimaryKey(ActivityUser record);
+    int updateByPrimaryKey(
+            @Param("activityUserStatusId") Integer activityUserStatusId,
+            @Param("id") Integer id);
 
     /**
      * 根据用户id和活动id查询出关系表中符合条件的记录的id
