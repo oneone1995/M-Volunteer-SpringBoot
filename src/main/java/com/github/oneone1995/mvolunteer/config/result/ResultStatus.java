@@ -23,7 +23,8 @@ public enum ResultStatus {
     ACTIVITY_STATUS_IMMUTABLE(-10015, "活动状态不可更改"),
     ORGANIZATION_HAS_NO_VOLUNTEER(-10016, "组织没有志愿者加入"),
     CERTIFICATE_STATUS_UPDATE_FAIL(-10017, "证书状态更新失败"),
-    INTERVIEW_IS_NULL(-10018, "面试列表为空");
+    INTERVIEW_IS_NULL(-10018, "面试列表为空"),
+    INTERVIEW_STATUS_UPDATE_FAIL(-10019, "面试状态修改失败");
 
     /**
      * 返回码
