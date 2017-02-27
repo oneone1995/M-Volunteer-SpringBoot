@@ -11,6 +11,7 @@ import com.taobao.api.request.OpenimTribeQuitRequest;
 import com.taobao.api.response.OpenimTribeCreateResponse;
 import com.taobao.api.response.OpenimTribeJoinResponse;
 import com.taobao.api.response.OpenimTribeQuitResponse;
+import com.taobao.api.response.OpenimTribeSendmsgResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,7 +109,7 @@ public class IMUtil {
      * @param tribeId   要退出的群的群号
      * @return  访问阿里API接口的Response
      */
-    public static OpenimTribeQuitResponse tribeQuitResponse(
+    public static OpenimTribeQuitResponse quitTribe(
             CustomUserDetails currentUser,
             Integer tribeId
     ) {

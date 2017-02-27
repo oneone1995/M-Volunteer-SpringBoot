@@ -82,7 +82,7 @@ public class ActivityUserServiceImpl implements ActivityUserService {
         ////根据记录id删除活动,如果退出成功,则退出相应群组
         if (activityUserMapper.deleteByPrimaryKey(id) > 0) {
             //调用api退出群组
-            OpenimTribeQuitResponse tribeQuitResponse = IMUtil.tribeQuitResponse(currentUser, activityMapper.selectTribeId(activityId));
+            OpenimTribeQuitResponse tribeQuitResponse = IMUtil.quitTribe(currentUser, activityMapper.selectTribeId(activityId));
             //获取response实体
             logger.debug(tribeQuitResponse.getBody());
             return true;
