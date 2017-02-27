@@ -62,4 +62,18 @@ public class ActivityUserController {
         }
         return new ResponseEntity<Object>(ResultModel.ok("取消成功"), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ORG')")
+    public ResponseEntity<?> putActivitityUser(
+            @PathVariable Integer id,
+            @RequestParam(value = "activityUserStatusId") Integer activityUserStatusId
+    ) {
+        boolean result = activityUserService.modifyInterviewStatus(id, activityUserStatusId);
+
+        if (!result) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.INTERVIEW_STATUS_UPDATE_FAIL), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Object>(ResultModel.ok("SUSSESS"), HttpStatus.OK);
+    }
 }
