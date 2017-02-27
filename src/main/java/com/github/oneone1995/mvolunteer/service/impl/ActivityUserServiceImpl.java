@@ -7,6 +7,7 @@ import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.service.ActivityUserService;
 import com.github.oneone1995.mvolunteer.utils.IMUtil;
 import com.taobao.api.response.OpenimTribeJoinResponse;
+import com.taobao.api.response.OpenimTribeQuitResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,15 @@ public class ActivityUserServiceImpl implements ActivityUserService {
                 activityId, userId
         );
 
-        //根据记录id删除活动
-        return activityUserMapper.deleteByPrimaryKey(id) > 0;
+        ////根据记录id删除活动,如果退出成功,则退出相应群组
+        if (activityUserMapper.deleteByPrimaryKey(id) > 0) {
+            //调用api退出群组
+            OpenimTribeQuitResponse tribeQuitResponse = IMUtil.tribeQuitResponse(currentUser, activityMapper.selectTribeId(activityId));
+            //获取response实体
+            logger.debug(tribeQuitResponse.getBody());
+            return true;
+        }
+
+        return false;
     }
 }
