@@ -2,8 +2,10 @@ package com.github.oneone1995.mvolunteer.web;
 
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 import com.github.oneone1995.mvolunteer.domain.ActivityUser;
+import com.github.oneone1995.mvolunteer.domain.VolunteerDetails;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.ActivityUserService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +22,20 @@ public class ActivityUserController {
 
     @Resource
     private ActivityUserService activityUserService;
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ORG')")
+    public ResponseEntity<?> getActivityUser(
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows
+    ) {
+        PageInfo<VolunteerDetails> interviewList = activityUserService.getInterviewList(page, rows);
+
+        if (interviewList == null) {
+            return new ResponseEntity<Object>(ResultModel.error(ResultStatus.INTERVIEW_IS_NULL), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Object>(ResultModel.ok(interviewList), HttpStatus.OK);
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_VOL')")
