@@ -11,6 +11,8 @@ public class VolunteerDetails extends VolunteerInfo{
 
     private String activityName;
 
+    private Integer activityUserId;
+
     public Integer getCertificateStatusId() {
         return certificateStatusId;
     }
@@ -33,5 +35,13 @@ public class VolunteerDetails extends VolunteerInfo{
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
+    }
+
+    public Integer getActivityUserId() {
+        return activityUserId;
+    }
+
+    public void setActivityUserId(Integer activityUserId) {
+        this.activityUserId = activityUserId;
     }
 }

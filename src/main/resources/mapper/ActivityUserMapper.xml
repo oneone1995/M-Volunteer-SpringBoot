@@ -69,6 +69,7 @@
   <!-- 根据组织id查询该组织下需要面试的志愿者列表 -->
   <select id="selectInterviewList" resultType="com.github.oneone1995.mvolunteer.domain.VolunteerDetails">
     SELECT
+      activity_user.id activityUserId,
       `user`.username,
       volunteer_info.avatar,
       activity_user.activity_user_status_id interviewStatus,
