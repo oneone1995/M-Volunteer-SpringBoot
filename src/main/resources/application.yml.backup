@@ -1,36 +1,43 @@
 #mybatis相关配置
 mybatis:
     #mybatis自动扫描javabean所在目录
-    type-aliases-package: com.github.oneone1995.mzhiyuan.domain
+    type-aliases-package: com.github.oneone1995.mvolunteer.domain
     #mybatis自动扫描mapper所在目录
     mapper-locations: classpath:mapper/*.xml
+
 
 spring:
   #spring数据源配置
   datasource:
     name: m_volunteer
     #数据库连接地址
-    url: jdbc:mysql://127.0.0.1:3306/m_volunteer
+    url: jdbc:mysql://localhost:3306/m_volunteer
     #数据库连接用户名和密码
     username: m_volunteer
     password: mvolunteer
     #使用数据连接池
     type: com.zaxxer.hikari.HikariDataSource
+  thymeleaf:
+    cache: false
 
 #日志配置
 logging:
     level:
         com.github.oneone1995: TRACE
 
-#分页插件配置
 pagehelper:
     helperDialect: mysql
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
 
-#静态资源配置
-upload.path: E:/myresources/public/img/
+#服务器地址及端口
+server:
+  port: 9090
 
+#上传文件相关配置
+#静态资源配置
+upload.path: /home/ubuntu/myresources/public/img/
 #访问目录
 upload.dir: /public/img/
+
