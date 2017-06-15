@@ -20,7 +20,7 @@ mvn spring-boot:run
 
 此时，你可以尝试发出一个 HTTP 请求。例如，利用浏览器向你的 Web 应用发出一个 HTTP GET 请求，在地址栏键入：
 
-```
+```http
 http://localhost:9090/swagger-ui.html
 ```
 你将会看到该项目所有的api接口以及参数，但因为找不到在swagger中配置headers的方法，所以部分需要带上token访问的接口无法直接在swagger中直接测试。
@@ -100,7 +100,7 @@ curl -s "http://localhost:9090/api/activity?page=1&rows=10&coordLong=120&coordLa
 
 正如我们所期待的，服务器返回了一个活动列表资源给客户端，如下：
 
-```
+```json
 ...
 {
 	"id": 9,
@@ -122,7 +122,7 @@ curl -s "http://localhost:9090/api/activity/1?coordLong=120&coordLat=30"
 
 我们收到如下的 JSON 字符串响应，告诉我们需要认证了才能访问这个资源：
 
-```
+```json
 {
   "error": "unauthorized",
   "error_description": "Full authentication is required to access this resource"
@@ -137,7 +137,7 @@ curl http://localhost:9090/oauth/token -X POST -u client:m_volunteer -d "grant_t
 
 授权服务器验证了我们的客户端和用户信息，验证成功后将我们需要的令牌（token）信息作为响应传回：
 
-```
+```json
 {
   "access_token": "363860cb-253e-40e2-a719-7e447f147f97",
   "token_type": "bearer",
@@ -154,9 +154,9 @@ curl "http://localhost:9090/api/activity/1?coordLong=120&coordLat=30" -X GET -H 
 ```
 
 相应成功返回:
-```
+```json
 {
-	"id": 1,
+    "id": 1,
     "addressStreet": "紫荆花路",
     "address": "西湖区紫荆花路9号紫庭南弄紫金庭园芦荻苑9幢3号商铺",
     "serviceType": "敬老助残",
@@ -202,8 +202,9 @@ curl http://localhost:9090/oauth/token -X POST -u client:m_volunteer -d "grant_t
 ### 集成spring-security
 
 使用基于方法的注解来进行方法的权限控制,加在特定角色才能访问的方法上：
-- ```@PreAuthorize("hasRole('ROLE_VOL')")```
-
+```java
+  @PreAuthorize("hasRole('ROLE_VOL')")
+```
 ### 静态资源配置
 
 项目涉及图片上传，静态资源配置需要重新配置，配置教程可参照博客[springboot静态资源处理](http://blog.csdn.net/catoop/article/details/50501706)。
@@ -226,4 +227,4 @@ curl http://localhost:9090/oauth/token -X POST -u client:m_volunteer -d "grant_t
 - 在后期编码中也直接使用了**JDBC**的关联查询而不是 **Mybatis** 自身支持的关联查询语法。(写着写着写忘了，join就撸上了....)
 - 搜索活动部分用的较为简单的like模糊搜索，并且没有加入分词
 
-引用知乎某个问题下面的回答(具体我忘了)，一个有规模的项目是不可能这么简单从数据库里拖数据往客户端或者前端丢个api就完事的，中间充斥着大量的业务逻辑、消息队列、缓存机制，这些名词在我开始面试之前我都没有听说过。虽然如此，但仍然是一个比较完整的app服务端项目，可以作为新入门学习demo,即便它只有简单的CURD，称不上一个有深度的web后端项目。这个项目我也仍然为之自豪，这是我学习路上进步最快的一段时间。最后，如果有时间的话，会将目前存在的缺陷都完善掉部分新功能的支持。
+引用知乎某个问题下面的回答(具体我忘了)，一个有规模的项目是不可能这么简单从数据库里拖数据往客户端或者前端丢个api就完事的，中间充斥着大量的业务逻辑、消息队列、缓存机制，这些名词在我开始面试之前我都没有听说过。虽然如此，但仍然是一个比较完整的app服务端项目，可以作为新入门学习demo,即便它只有简单的CURD，称不上一个有深度的web后端项目。这个项目我也仍然为之自豪，这是我学习路上进步最快的一段时间。最后，如果有时间的话，会将目前存在的缺陷都完善，并新增部分新功能的支持。
