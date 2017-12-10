@@ -22,6 +22,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/api/loginSuccess").authenticated()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/public/**").permitAll()
+                .antMatchers("/mvolunteer-chat/**").permitAll()
                 .antMatchers("/v2/api-docs", "/configuration/ui",
                         "/swagger-resources", "/configuration/security",
                         "/swagger-ui.html", "/webjars/**",
