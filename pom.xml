@@ -99,6 +99,13 @@
 			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
 
+		<!-- 工具包 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 		<!-- pageHelper -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
