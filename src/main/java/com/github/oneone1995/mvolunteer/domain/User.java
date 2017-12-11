@@ -12,6 +12,12 @@ public class User {
 
     private String email;
 
+    //头像
+    private String avatar;
+
+    //姓名，类似于昵称，但此项目中较为正式
+    private String name;
+
     public Integer getId() {
         return id;
     }
@@ -42,5 +48,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
