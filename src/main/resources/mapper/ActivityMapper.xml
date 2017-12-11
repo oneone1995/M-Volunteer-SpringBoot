@@ -349,7 +349,7 @@
 
 
     <!-- 查询出所有的活动代码 -->
-    <select id="selectAllCode" resultType="Integer">
+    <select id="selectAllCode" resultType="java.lang.Integer">
         SELECT
             code
         FROM
