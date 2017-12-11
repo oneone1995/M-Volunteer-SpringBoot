@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.oneone1995.mvolunteer.mapper.MomentMapper">
+  <resultMap id="BaseResultMap" type="com.github.oneone1995.mvolunteer.domain.moment.Moment">
+    <!-- 映射的圈子动态信息 -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+
+    <!-- 配置映射的关联的用户信息 association一对一映射 -->
+    <association property="author" javaType="com.github.oneone1995.mvolunteer.domain.User">
+      <id column="user_id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    </association>
+  </resultMap>
+
+
+  <!-- 插入圈子动态 -->
+  <insert id="insert" parameterType="com.github.oneone1995.mvolunteer.domain.moment.Moment">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into moment (user_id, content, images)
+    values (#{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, content, images, time
+    from moment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!-- 查询圈子动态集合，关联查询出动态作者的姓名和头像 -->
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+      moment.*,
+      volunteer_info.id userId,
+      volunteer_info.name name,
+      volunteer_info.avatar avatar
+    FROM moment, volunteer_info
+    WHERE moment.user_id = volunteer_info.id
+    UNION
+    SELECT
+      moment.*,
+      organization_info.id userId,
+      organization_info.name name,
+      organization_info.avatar avatar
+    FROM moment, organization_info
+    WHERE moment.user_id = organization_info.id
+  </select>
+</mapper>
