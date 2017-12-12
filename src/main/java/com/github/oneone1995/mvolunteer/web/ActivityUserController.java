@@ -65,7 +65,7 @@ public class ActivityUserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ORG')")
-    public ResponseEntity<?> putActivitityUser(
+    public ResponseEntity<?> putActivityUser(
             @PathVariable Integer id,
             @RequestParam(value = "activityUserStatusId") Integer activityUserStatusId
     ) {
