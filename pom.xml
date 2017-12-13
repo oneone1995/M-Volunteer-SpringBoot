@@ -125,6 +125,13 @@
 			<version>${springfox.version}</version>
 		</dependency>
 
+		<!-- okhttp3 -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>3.9.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.taobao.api</groupId>
 			<artifactId>taobao-sdk</artifactId>
