@@ -22,7 +22,10 @@ import static com.github.oneone1995.mvolunteer.config.aliim.IMConstantConfig.*;
 /**
  * Created by wangl on 2017/2/26.
  * IM相关的一些工具类
+ * @deprecated 改用环信即时通讯云
+ * @see com.github.oneone1995.mvolunteer.service.EasemobIMService
  */
+@Deprecated
 public class IMUtil {
 
     protected static Logger logger = LoggerFactory.getLogger(IMUtil.class);

@@ -3,7 +3,10 @@ package com.github.oneone1995.mvolunteer.model;
 /**
  * Created by wangl on 2017/2/26.
  * 群组创建对应的model
+ * @deprecated 改用环信即时通讯云
+ * @see com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel
  */
+@Deprecated
 public class IMTribeModel {
 
     /**

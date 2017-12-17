@@ -132,6 +132,7 @@
 			<version>3.9.1</version>
 		</dependency>
 
+		<!-- 不再使用 -->
 		<dependency>
 			<groupId>com.taobao.api</groupId>
 			<artifactId>taobao-sdk</artifactId>
