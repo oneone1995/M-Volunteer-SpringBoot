@@ -1,6 +1,5 @@
 package com.github.oneone1995.mvolunteer.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
@@ -8,20 +7,19 @@ import com.github.oneone1995.mvolunteer.domain.HomeActivity;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.mapper.VolunteerInfoMapper;
-import com.github.oneone1995.mvolunteer.model.IMTribeModel;
+import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
-import com.github.oneone1995.mvolunteer.utils.IMUtil;
+import com.github.oneone1995.mvolunteer.service.EasemobIMService;
+import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taobao.api.response.OpenimTribeCreateResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -30,8 +28,11 @@ import java.util.Set;
  * Created by wangl on 2017/2/18.
  */
 @Service
+@Slf4j
 public class ActivityServiceImpl implements ActivityService {
-    protected static Logger logger = LoggerFactory.getLogger(ActivityServiceImpl.class);
+    private static final String GROUP_BASE_NAME = "交流群";
+
+    private static final Integer GROUP_MAX_USER_BASE_NUMBER = 10;
 
     @Resource
     private ActivityMapper activityMapper;
@@ -41,6 +42,9 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Resource
     private VolunteerInfoMapper volunteerInfoMapper;
+
+    @Autowired
+    private EasemobIMService easemobIMService;
 
     @Override
     public PageInfo<HomeActivity> getHomeActivityPageInfo(
@@ -120,6 +124,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public boolean createActivity(Activity activity) {
+        //todo 弃用这种方式来生成随机码 准备采用预先生成随机码放redis的方案
         Set<Integer> codes = activityMapper.selectAllCode();
         //记录原来集合的大小
         int size = codes.size();
@@ -135,22 +140,28 @@ public class ActivityServiceImpl implements ActivityService {
         activity.setOrganizationId(currentUser.getId());
 
         //如果活动创建成功
+        //这里是考虑到第三方SDK群创建成功但是活动却插入失败，则会多建一个无用的群，但是如果先插入再建群，建群失败则可以事务回滚
         if (activityMapper.insertActivity(activity) > 0) {
             //创建群组
-            OpenimTribeCreateResponse tribeCreateResponse = IMUtil.creteTribe(currentUser, activity.getName(), "欢迎加入" + activity.getName() + "志愿活动");
-            //获取response实体
-            logger.debug(tribeCreateResponse.getBody());
-            IMTribeModel tribeModel = null;
+            // 1. 构造环信群组API交互model, 默认群名为活动名,群描述为活动名称加上"交流群"组成的字符串,群私有,不允许拉人,最大人数为活动招募人数加上10个可能会用到的
+            EasemobIMChatGroupModel chatGroupModel = new EasemobIMChatGroupModel(
+                    null,
+                    activity.getName(),
+                    activity.getName() + GROUP_BASE_NAME ,
+                    false,
+                    false,
+                    false,
+                    activity.getRecruitPersonNumber() + GROUP_MAX_USER_BASE_NUMBER,
+                    currentUser.getUsername());
+            //2. 调用环信API
             try {
-                tribeModel =  new ObjectMapper().readValue(tribeCreateResponse.getBody(), IMTribeModel.class);
-            } catch (IOException e) {
-                logger.error(e.getMessage());
+                String groupId = easemobIMService.createGroup(chatGroupModel);
+                //将群号存下来的目的是为了活动结束或者删除活动时把对应的群删了
+                return activityMapper.updateActivityTribeId(groupId, activity.getId()) > 0;
+            } catch (EasemobGroupCreateFailException e) {
+                throw new RuntimeException(e);
             }
-            //解析成功后获取群号,存入数据库
-            Integer tribeId = Integer.parseInt(String.valueOf(tribeModel.getOpenim_tribe_create_response().getTribe_info().getTribe_id()));
-            return activityMapper.updateActivityTribeId(tribeId, activity.getId()) > 0;
         }
-
         return false;
     }
 

@@ -121,7 +121,7 @@ public interface ActivityMapper {
      * @return
      */
     Integer updateActivityTribeId(
-            @Param("tribeId") Integer tribeId,
+            @Param("tribeId") String tribeId,
             @Param("activityId") Integer activityId);
 
     /**
