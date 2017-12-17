@@ -41,3 +41,10 @@ upload.path: /home/ubuntu/myresources/public/img/
 #访问目录
 upload.dir: /public/img/
 
+# 环信即时通讯云相关配置，参见com.github.oneone1995.mvolunteer.config.easemob.EasemobIMProperties
+easemob:
+  # 你的环信企业id
+  org_name: your_easemob_org_name
+  # 你的环信app名称
+  app_name: your_easemob_app_name
+

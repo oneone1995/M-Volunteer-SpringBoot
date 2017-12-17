@@ -132,6 +132,14 @@
 			<version>3.9.1</version>
 		</dependency>
 
+
+		<!-- 配置处理器。现在不清楚具体的，只知道可以将yml配置文件中的自定义配置映射到某个bean上，参考本项目中环信即时通讯云的配置 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
 		<!-- 不再使用 -->
 		<dependency>
 			<groupId>com.taobao.api</groupId>
