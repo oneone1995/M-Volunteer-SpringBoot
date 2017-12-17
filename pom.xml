@@ -125,10 +125,17 @@
 			<version>${springfox.version}</version>
 		</dependency>
 
-		<!-- okhttp3 -->
+		<!-- retrofit网络请求框架，作者未发布到maven中央仓库，先clone install以下地址的项目 -->
+		<!-- https://github.com/syhily/spring-boot-retrofit-support -->
+		<dependency>
+			<groupId>com.oneapm.touch.retrofit</groupId>
+			<artifactId>retrofit-spring-boot-starter</artifactId>
+			<version>1.0.8-SNAPSHOT</version>
+		</dependency>
+		<!-- 以上starter依赖下面的jar包，否则报类找不到错误 -->
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
+			<artifactId>logging-interceptor</artifactId>
 			<version>3.9.1</version>
 		</dependency>
 
@@ -139,7 +146,7 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 		<!-- 不再使用 -->
 		<dependency>
 			<groupId>com.taobao.api</groupId>
