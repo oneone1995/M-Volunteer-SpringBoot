@@ -48,3 +48,20 @@ easemob:
   # 你的环信app名称
   app_name: your_easemob_app_name
 
+# The http configuration part for integration with other system
+# 参考https://github.com/syhily/spring-boot-retrofit-support
+retrofit:
+  connection:
+    readTimeout: 10000
+    writeTimeout: 10000
+    connectTimeout: 10000
+    maxIdleConnections: 5 # The maximum number of idle connections for each address.
+    keepAliveDuration: 5 # The time (minutes) to live for each idle connections.
+    retryTimes: 5
+  endpoints:
+    # 环信API baseUrl
+    - identity: easemob
+      baseUrl: https://a1.easemob.com/
+    # 测试
+    - identity: hello
+      baseUrl: http://localhost:9090/api/
