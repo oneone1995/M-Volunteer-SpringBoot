@@ -26,7 +26,8 @@ public enum ResultStatus {
     INTERVIEW_IS_NULL(-10018, "面试列表为空"),
     INTERVIEW_STATUS_UPDATE_FAIL(-10019, "面试状态修改失败"),
     MOMENT_NOT_FOUNT(-10020, "动态不存在"),
-    MOMENT_CREATE_FAIL(-10021, "创建动态失败");
+    MOMENT_CREATE_FAIL(-10021, "创建动态失败"),
+    EASEMOB_GROUP_CREATE_FAIL(-10022, "环信群组创建失败"),
     INTERNAL_SERVER_ERROR(-10023, "系统内部错误");
 
     /**
