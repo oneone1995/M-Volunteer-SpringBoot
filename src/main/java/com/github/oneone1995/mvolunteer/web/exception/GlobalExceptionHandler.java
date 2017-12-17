@@ -28,4 +28,11 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         return new ResponseEntity<>(ResultModel.error(ResultStatus.MOMENT_CREATE_FAIL), HttpStatus.BAD_REQUEST);
     }
+
+    //runtime异常的异常处理器
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> internalServerErrorHandler(RuntimeException e) {
+        log.error(e.getMessage());
+        return new ResponseEntity<>(ResultModel.error(ResultStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

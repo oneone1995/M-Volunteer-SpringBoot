@@ -27,6 +27,7 @@ public enum ResultStatus {
     INTERVIEW_STATUS_UPDATE_FAIL(-10019, "面试状态修改失败"),
     MOMENT_NOT_FOUNT(-10020, "动态不存在"),
     MOMENT_CREATE_FAIL(-10021, "创建动态失败");
+    INTERNAL_SERVER_ERROR(-10023, "系统内部错误");
 
     /**
      * 返回码
