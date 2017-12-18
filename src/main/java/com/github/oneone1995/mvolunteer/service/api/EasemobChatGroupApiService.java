@@ -32,4 +32,21 @@ public interface EasemobChatGroupApiService {
             @Path("org_name") String orgName,
             @Path("app_name") String appName,
             @Body EasemobIMChatGroupModel chatGroupModel);
+
+    /**
+     * 通过retrofit请求环信即时通讯云创建群组API
+     * @param token 环信token
+     * @param orgName 环信企业ID
+     * @param appName 环信APP名称
+     * @param groupId 环信群组Id
+     * @param username 需要加入群组的用户
+     * @return retrofit包装的请求响应结果
+     */
+    @POST("{org_name}/{app_name}/chatgroups/{group_id}/users/{username}")
+    Call<ResponseBody> putUser2ChatGroup(
+            @Header("Authorization") String token,
+            @Path("org_name") String orgName,
+            @Path("app_name") String appName,
+            @Path("group_id") String groupId,
+            @Path("username") String username);
 }

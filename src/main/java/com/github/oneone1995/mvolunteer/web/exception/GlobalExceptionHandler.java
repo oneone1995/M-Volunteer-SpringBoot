@@ -31,7 +31,18 @@ public class GlobalExceptionHandler {
 
     //环信群组创建失败的异常处理器,客户端不需要明确知道该错误详情，返回系统内部错误即可
     @ExceptionHandler(EasemobGroupCreateFailException.class)
-    public ResponseEntity<?> easemobGroupCreateFailHandler(RuntimeException e) {
+    public ResponseEntity<?> easemobGroupCreateFailHandler(EasemobGroupCreateFailException e) {
+        return internalServerErrorHandler(e);
+    }
+
+    //添加用户至环信IM聊天群异常处理器,和环信群组创建失败异常一样，返回系统内部错误即可
+    @ExceptionHandler(PutUserToEasemobGroupFailException.class)
+    public ResponseEntity<?> putUserToEasemobGroupFailHandler(PutUserToEasemobGroupFailException e) {
+        return internalServerErrorHandler(e);
+    }
+
+    //系统内部错误的处理
+    private ResponseEntity<?> internalServerErrorHandler(RuntimeException e) {
         log.error(e.getMessage());
         return new ResponseEntity<>(ResultModel.error(ResultStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }

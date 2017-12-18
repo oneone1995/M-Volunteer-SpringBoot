@@ -2,6 +2,7 @@ package com.github.oneone1995.mvolunteer.service;
 
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
 import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailException;
+import com.github.oneone1995.mvolunteer.web.exception.PutUserToEasemobGroupFailException;
 
 /**
  * 环信即时通讯交互的服务接口。
@@ -9,6 +10,7 @@ import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailExce
  * 1. 志愿组织创建活动之后便创建群组
  * 2. 志愿者报名志愿活动并通过面试后加入对应的群组
  * @see EasemobIMChatGroupModel 与环信API交互实体
+ * @see com.github.oneone1995.mvolunteer.service.api.EasemobChatGroupApiService 环信即时通讯云API交互Service
  */
 public interface EasemobIMService {
 
@@ -19,4 +21,13 @@ public interface EasemobIMService {
      * @return 群组创建成功的群号
      */
     String createGroup(EasemobIMChatGroupModel chatGroupModel) throws EasemobGroupCreateFailException;
+
+    /**
+     * 将用户添加至环信群组
+     * @param groupId 环信IM群组id
+     * @param username 需要添加的用户username
+     * @return 添加成功与否的标志
+     * @throws PutUserToEasemobGroupFailException 添加用户至环信IM聊天群异常
+     */
+    boolean putUser2Group(String groupId, String username) throws PutUserToEasemobGroupFailException;
 }
