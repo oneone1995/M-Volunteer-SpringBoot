@@ -11,7 +11,9 @@ spring:
   datasource:
     name: m_volunteer
     #数据库连接地址
-    url: jdbc:mysql://localhost:3306/m_volunteer
+    # useAffectedRows参数表示用实际受影响的行数替代查找到的行数来返回数据
+    # useAffectedRows参考http://blog.csdn.net/z69183787/article/details/53144681
+    url: jdbc:mysql://localhost:3306/m_volunteer?useAffectedRows=true
     #数据库连接用户名和密码
     username: m_volunteer
     password: mvolunteer
