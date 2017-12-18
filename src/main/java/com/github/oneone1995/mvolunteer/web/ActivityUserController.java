@@ -82,15 +82,19 @@ public class ActivityUserController {
     /**
      * 修改面试状态接口，该API接口仅志愿组织(ROLE_ORG)有权访问
      * @param id 活动报名表id
+     * @param volunteerName 修改的志愿者username
+     * @param activityGroupId 活动对应的群组id
      * @param activityUserStatusId 面试状态id
      */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ORG')")
     public ResponseEntity<?> putActivityUser(
             @PathVariable Integer id,
+            @RequestParam(value = "volunteerName") String volunteerName,
+            @RequestParam(value = "groupId") String activityGroupId,
             @RequestParam(value = "activityUserStatusId") Integer activityUserStatusId
     ) {
-        boolean result = activityUserService.modifyInterviewStatus(id, activityUserStatusId);
+        boolean result = activityUserService.modifyInterviewStatus(id, volunteerName, activityGroupId, activityUserStatusId);
 
         if (!result) {
             return new ResponseEntity<Object>(ResultModel.error(ResultStatus.INTERVIEW_STATUS_UPDATE_FAIL), HttpStatus.BAD_REQUEST);

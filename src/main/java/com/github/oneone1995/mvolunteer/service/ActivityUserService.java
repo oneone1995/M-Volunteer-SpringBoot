@@ -31,8 +31,10 @@ public interface ActivityUserService {
     /**
      * 修改面试状态
      * @param id 活动报名表id
+     * @param volunteerName 修改的志愿者username
+     * @param activityGroupId 活动群组id
      * @param activityUserStatusId 需要修改的面试状态
      * @return 修改面试状态是否成功的标志
      */
-    boolean modifyInterviewStatus(Integer id, Integer activityUserStatusId);
+    boolean modifyInterviewStatus(Integer id, String volunteerName, String activityGroupId, Integer activityUserStatusId);
 }
