@@ -29,9 +29,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResultModel.error(ResultStatus.MOMENT_CREATE_FAIL), HttpStatus.BAD_REQUEST);
     }
 
-    //runtime异常的异常处理器
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> internalServerErrorHandler(RuntimeException e) {
+    //环信群组创建失败的异常处理器,客户端不需要明确知道该错误详情，返回系统内部错误即可
+    @ExceptionHandler(EasemobGroupCreateFailException.class)
+    public ResponseEntity<?> easemobGroupCreateFailHandler(RuntimeException e) {
         log.error(e.getMessage());
         return new ResponseEntity<>(ResultModel.error(ResultStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
