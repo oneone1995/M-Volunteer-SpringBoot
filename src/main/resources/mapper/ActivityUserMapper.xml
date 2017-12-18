@@ -52,7 +52,7 @@
   </select>
 
   <!-- 根据活动id和签到状态返回活动参加该活动的用户id列表 -->
-  <select id="selectAllByActivityId" resultType="Integer">
+  <select id="selectAllByActivityId" resultType="java.lang.Integer">
     SELECT
       activity_user.user_id
     FROM
