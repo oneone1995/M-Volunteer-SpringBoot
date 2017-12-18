@@ -26,6 +26,7 @@ public class ActivityUserController {
 
     /**
      * 分页获取面试管理列表接口,该API接口仅志愿组织(ROLE_ORG)有权访问
+     * @see com.github.oneone1995.mvolunteer.service.ActivityUserService 返回具体值参见业务接口
      * @param page 页数
      * @param rows 每页的条数
      */

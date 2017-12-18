@@ -18,6 +18,14 @@ public interface ActivityUserService {
 
     boolean cancelActivityByActivityId(Integer activityId);
 
+    /**
+     * 分页返回待面试的志愿者列表
+     * 其中志愿者信息包括了志愿者的面试状态id、活动报名表中的对应的记录id、所报名的活动id、活动名、活动群组id、志愿者姓名、志愿者头像
+     * @see com.github.oneone1995.mvolunteer.domain.VolunteerDetails
+     * @param page 页码
+     * @param rows 每页的数量
+     * @return 待面试的志愿者列表经PageInfo包装的结果
+     */
     PageInfo<VolunteerDetails> getInterviewList(Integer page, Integer rows);
 
     /**

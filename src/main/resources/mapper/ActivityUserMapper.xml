@@ -70,7 +70,9 @@
       `user`.username,
       volunteer_info.avatar,
       activity_user.activity_user_status_id interviewStatus,
-      activity.`name` activityName
+      activity_id activityId,
+      activity.`name` activityName,
+      activity.tribe_id groupId
     FROM
       activity_user
       JOIN `user` ON `user`.id = activity_user.user_id
