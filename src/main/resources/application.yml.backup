@@ -53,6 +53,11 @@ easemob:
   org_name: your_easemob_org_name
   # 你的环信app名称
   app_name: your_easemob_app_name
+    # 请求环信token时的OAuth参数配置
+    security:
+      grant_type: client_credentials
+      client_id: your_client_id
+      client_secret: your_secret
 
 # The http configuration part for integration with other system
 # 参考https://github.com/syhily/spring-boot-retrofit-support

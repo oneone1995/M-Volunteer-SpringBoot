@@ -1,8 +1,10 @@
 package com.github.oneone1995.mvolunteer.config.easemob;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,4 +24,22 @@ public class EasemobIMProperties {
 
     //环信服务体系中的app名字，环信管理后台可以查到
     private String appName;
+
+    @NestedConfigurationProperty
+    private Security security;
+
+    @Data
+    public static class Security {
+        //环信生成token的OAuth2授权方式，只在生成token的API中使用
+        @JsonProperty("grant_type")
+        private String grantType;
+
+        //环信服务体系中的client_id，只在生成token的API中使用
+        @JsonProperty("client_id")
+        private String clientId;
+
+        //环信服务体系中的client_secret，只在生成token的API中使用
+        @JsonProperty("client_secret")
+        private String clientSecret;
+    }
 }
