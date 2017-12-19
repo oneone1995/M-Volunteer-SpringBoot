@@ -139,6 +139,11 @@
 			<version>3.9.1</version>
 		</dependency>
 
+		<!-- redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
 
 		<!-- 配置处理器。现在不清楚具体的，只知道可以将yml配置文件中的自定义配置映射到某个bean上，参考本项目中环信即时通讯云的配置 -->
 		<dependency>

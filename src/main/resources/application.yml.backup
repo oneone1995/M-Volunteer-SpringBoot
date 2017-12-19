@@ -21,6 +21,10 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
   thymeleaf:
     cache: false
+  # redis配置
+  redis:
+    host: localhost
+    password: your_redis_password
 
 #日志配置
 logging:
