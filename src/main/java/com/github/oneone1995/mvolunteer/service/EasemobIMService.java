@@ -31,4 +31,11 @@ public interface EasemobIMService {
      * @throws PutUserToEasemobGroupFailException 添加用户至环信IM聊天群异常
      */
     boolean putUser2Group(String groupId, String username) throws PutUserToEasemobGroupFailException;
+
+    /**
+     * 获取环信token
+     * @see com.github.oneone1995.mvolunteer.config.easemob.EasemobIMProperties
+     * @return 环信token
+     */
+    String getEasemobToken();
 }

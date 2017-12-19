@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.service.api;
 
+import com.github.oneone1995.mvolunteer.config.easemob.EasemobIMProperties;
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
 import com.oneapm.touch.retrofit.boot.annotation.RetrofitService;
 import okhttp3.ResponseBody;
@@ -49,4 +50,18 @@ public interface EasemobApiService {
             @Path("app_name") String appName,
             @Path("group_id") String groupId,
             @Path("username") String username);
+
+    /**
+     * 通过retrofit请求环信即时通讯云生成环信token
+     * @param orgName 环信企业ID
+     * @param appName 环信APP名称
+     * @param easemobSecurity 环信OAuth2授权配置，包含grantType、client_key、client_secret
+     * @return retrofit包装的请求响应结果
+     */
+    @Headers({"Content-Type: application/json"})
+    @POST("{org_name}/{app_name}/token")
+    Call<ResponseBody> generateToken(
+            @Path("org_name") String orgName,
+            @Path("app_name") String appName,
+            @Body EasemobIMProperties.Security easemobSecurity);
 }
