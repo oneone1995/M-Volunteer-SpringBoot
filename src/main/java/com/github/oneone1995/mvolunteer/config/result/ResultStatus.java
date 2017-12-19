@@ -29,6 +29,7 @@ public enum ResultStatus {
     MOMENT_CREATE_FAIL(-10021, "创建动态失败"),
     EASEMOB_GROUP_CREATE_FAIL(-10022, "环信群组创建失败"),
     PUT_USER_TO_EASEMOB_GROUP_FAIL(-10024, "添加用户至环信群组失败"),
+    GENERATE_EASEMOB_TOKEN_FAIL(-10025, "生成环信token失败"),
     INTERNAL_SERVER_ERROR(-10023, "系统内部错误");
 
     /**

@@ -41,6 +41,12 @@ public class GlobalExceptionHandler {
         return internalServerErrorHandler(e);
     }
 
+    //生成环信token失败的异常处理器，和上两个异常一样，返回系统内部错误即可
+    @ExceptionHandler(GenerateEasemobTokenFailException.class)
+    public ResponseEntity<?> generateEasemobTokenFailHandler(GenerateEasemobTokenFailException e) {
+        return internalServerErrorHandler(e);
+    }
+
     //系统内部错误的处理
     private ResponseEntity<?> internalServerErrorHandler(RuntimeException e) {
         log.error(e.getMessage());
