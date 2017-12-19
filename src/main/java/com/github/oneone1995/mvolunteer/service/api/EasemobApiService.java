@@ -16,7 +16,7 @@ import retrofit2.http.*;
  * @see <a href="https://github.com/syhily/spring-boot-retrofit-support" />
  */
 @RetrofitService("easemob")
-public interface EasemobChatGroupApiService {
+public interface EasemobApiService {
 
     /**
      * 通过retrofit请求环信即时通讯云创建群组API

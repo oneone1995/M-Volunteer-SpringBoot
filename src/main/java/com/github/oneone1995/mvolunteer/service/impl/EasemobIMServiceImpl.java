@@ -5,7 +5,7 @@ import com.github.oneone1995.mvolunteer.config.easemob.EasemobIMProperties;
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
 import com.github.oneone1995.mvolunteer.service.EasemobIMService;
-import com.github.oneone1995.mvolunteer.service.api.EasemobChatGroupApiService;
+import com.github.oneone1995.mvolunteer.service.api.EasemobApiService;
 import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailException;
 import com.github.oneone1995.mvolunteer.web.exception.PutUserToEasemobGroupFailException;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class EasemobIMServiceImpl implements EasemobIMService {
     private EasemobIMProperties easemobProperties;
 
     @Autowired
-    private EasemobChatGroupApiService chatGroupApiService;
+    private EasemobApiService chatGroupApiService;
 
     @Autowired
     private ObjectMapper objectMapper;
