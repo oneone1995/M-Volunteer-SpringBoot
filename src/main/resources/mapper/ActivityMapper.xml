@@ -203,6 +203,7 @@
 
     <!-- 根据活动category查询对应的活动列表返回
          并根据参数中的经纬度求出距离并将其包装进HomeActivity中-->
+    <!-- 如果排序规则为0则按时间排序、若排序规则为1则按Geohash模糊搜索 -->
     <select id="selectByCategory" resultType="com.github.oneone1995.mvolunteer.domain.HomeActivity">
         <include refid="selectActivitySql"/>
         <include refid="conditionByCategorySql"/>
@@ -210,10 +211,10 @@
             <include refid="groupByAndOrderBySql"/>
         </if>
         <if test="collation==1">
+            AND geohash LIKE '${geohash}%'
             GROUP BY
             activity.id
-            ORDER BY
-            distance
+            DESC
         </if>
     </select>
 
@@ -379,6 +380,7 @@
             address,
             coord_long,
             coord_lat,
+            geohash,
             service_type,
             service_object,
             recruit_time,
@@ -403,6 +405,7 @@
             #{address,jdbcType=VARCHAR},
             #{coordLong,jdbcType=DOUBLE},
             #{coordLat,jdbcType=DOUBLE},
+            #{geohash, jdbcType=VARCHAR},
             #{serviceType,jdbcType=VARCHAR},
             #{serviceObject,jdbcType=VARCHAR},
             #{recruitTime,jdbcType=VARCHAR},

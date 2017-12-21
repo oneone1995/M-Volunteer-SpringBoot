@@ -1,5 +1,6 @@
 package com.github.oneone1995.mvolunteer.service.impl;
 
+import ch.hsr.geohash.GeoHash;
 import com.github.oneone1995.mvolunteer.domain.Activity;
 import com.github.oneone1995.mvolunteer.domain.ActivityDetails;
 import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
@@ -30,9 +31,17 @@ import java.util.Set;
 @Service
 @Slf4j
 public class ActivityServiceImpl implements ActivityService {
+    //建立环信群时群名的后缀
     private static final String GROUP_BASE_NAME = "交流群";
 
+    //建立环信群时群成员的额外人数(除了需要招募的志愿者人数之外的人数)
     private static final Integer GROUP_MAX_USER_BASE_NUMBER = 10;
+
+    //geohash字符串长度
+    private static final int GEOHASH_CHARACTERS_LENGTH = 12;
+
+    //geohash匹配前缀字符位数
+    private static final int GEOHASH_PREFIX_LENGTH = 5;
 
     @Resource
     private ActivityMapper activityMapper;
@@ -80,9 +89,13 @@ public class ActivityServiceImpl implements ActivityService {
             Integer page, Integer rows, double coordLong, double coordLat,
             String category, Integer collation, String district) {
 
+        String geohash = GeoHash.geoHashStringWithCharacterPrecision(coordLat, coordLong, GEOHASH_CHARACTERS_LENGTH);
+        log.info("geohash string build by latitude: {}, longitude: {}, geohash result : {}", coordLat, coordLong, geohash);
+
+        //todo 现在只是将移动设备的geohash做简单的MySQL前缀匹配,能找到离我最近的活动，但存在的问题是不能按距离排序以及geohash本身的边界问题
         PageHelper.startPage(page, rows);
         List<HomeActivity> categoryActivityList = activityMapper.selectByCategory(
-                coordLong, coordLat, category, collation, district);
+                coordLong, coordLat, category, collation, district, geohash.substring(0, GEOHASH_PREFIX_LENGTH));
 
         if (categoryActivityList == null || categoryActivityList.isEmpty())
             return null;
@@ -134,6 +147,10 @@ public class ActivityServiceImpl implements ActivityService {
             activity.setCode(new Random().nextInt(999999));
             codes.add(activity.getCode());
         }
+
+        //设置geohash值
+        activity.setGeohash(GeoHash.geoHashStringWithCharacterPrecision(
+                        activity.getCoordLat(), activity.getCoordLong(), GEOHASH_CHARACTERS_LENGTH));
 
         //获取当前用户
         CustomUserDetails currentUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

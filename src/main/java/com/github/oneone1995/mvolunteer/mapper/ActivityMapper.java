@@ -47,8 +47,7 @@ public interface ActivityMapper {
     List<HomeActivity> selectByCategory(
             @Param("coordLong") double coordLong, @Param("coordLat") double coordLat,
             @Param("category") String category, @Param("collation") Integer collation,
-            @Param("district") String district
-    );
+            @Param("district") String district, @Param("geohash") String geohash);
 
     /**
      * 根据活动id和经纬度返回活动详情的mapper接口

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by wangl on 2017/2/18.
+ * 活动相关API接口
  */
 @RestController
 @RequestMapping("/api/activity")
@@ -23,6 +24,13 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+    /**
+     * APP首页的活动列表分页获取接口
+     * @param page 页码
+     * @param rows 单页数量
+     * @param coordLong 经度
+     * @param coordLat 维度
+     */
     @GetMapping
     public ResponseEntity<?> getActivities(
             @RequestParam(value = "page") Integer page,
@@ -41,6 +49,16 @@ public class ActivityController {
     }
 
 
+    /**
+     * 根据活动所属类别分页获取符合规则的活动列表API接口
+     * @param page 页码
+     * @param rows 但也数量
+     * @param coordLong 当前经度
+     * @param coordLat 当前维度
+     * @param category 活动类别
+     * @param collation 排序规则 0为按时间排序、1为按距离排序
+     * @param district 按地区筛选
+     */
     @GetMapping("/category")
     public ResponseEntity<?> getActivitiesByCategory(
             @RequestParam(value = "page") Integer page,

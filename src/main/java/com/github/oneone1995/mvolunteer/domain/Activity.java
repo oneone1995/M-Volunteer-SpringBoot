@@ -1,6 +1,8 @@
 package com.github.oneone1995.mvolunteer.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
@@ -21,6 +23,11 @@ public class Activity {
     private Double coordLong;
 
     private Double coordLat;
+
+    //geohash字段，用于查找附近的活动
+    @Getter
+    @Setter
+    private String geohash;
 
     private String serviceType;
 
