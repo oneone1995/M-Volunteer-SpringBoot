@@ -22,7 +22,7 @@
         <result column="working_hours" jdbcType="DOUBLE" property="workingHours" />
         <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp" />
         <result column="picture" jdbcType="VARCHAR" property="picture" />
-        <result column="code" jdbcType="INTEGER" property="code" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
         <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
         <result column="description" jdbcType="LONGVARCHAR" property="description" />
     </resultMap>
@@ -417,7 +417,7 @@
             #{activityStatusId,jdbcType=INTEGER},
             #{workingHours,jdbcType=DOUBLE},
             #{picture,jdbcType=VARCHAR},
-            #{code,jdbcType=INTEGER},
+            #{code,jdbcType=VARCHAR},
             #{organizationId,jdbcType=INTEGER},
             #{description,jdbcType=LONGVARCHAR}
         )

@@ -53,7 +53,9 @@ public class Activity {
 
     private String picture;
 
-    private Integer code;
+    @Getter
+    @Setter
+    private String code;
 
     private Integer organizationId;
 
@@ -217,14 +219,6 @@ public class Activity {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 
     public Integer getOrganizationId() {
