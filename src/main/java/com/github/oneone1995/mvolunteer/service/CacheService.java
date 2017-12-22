@@ -11,4 +11,16 @@ public interface CacheService {
      * @return 环信token
      */
     String getEasemobToken();
+
+    /**
+     * 回收活动code随机码，将code码lpush到redis的list
+     * @param code 活动结束后待回收的随机码
+     */
+    void putRandomActivityCode(String code);
+
+    /**
+     * 从redis中获取一个随机码，rpop形式
+     * @return 用于活动随机码的code值
+     */
+    String getRandomActivityCode();
 }

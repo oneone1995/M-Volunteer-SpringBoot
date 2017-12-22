@@ -10,6 +10,7 @@ import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.mapper.VolunteerInfoMapper;
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
+import com.github.oneone1995.mvolunteer.service.CacheService;
 import com.github.oneone1995.mvolunteer.service.EasemobIMService;
 import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailException;
 import com.github.pagehelper.PageHelper;
@@ -43,6 +44,15 @@ public class ActivityServiceImpl implements ActivityService {
     //geohash匹配前缀字符位数
     private static final int GEOHASH_PREFIX_LENGTH = 5;
 
+    //活动状态标志，用于修改活动状态为 正在招募。注意实际上是不可将活动变为该状态
+    private static final int RECRUITING = 1;
+
+    //活动状态标志，用于修改活动状态为 活动进行
+    private static final int STRAT_ACTIVITY = 2;
+
+    //活动状态标志，用于修改活动状态为 活动结束
+    private static final int END_ACTIVITY = 3;
+
     @Resource
     private ActivityMapper activityMapper;
 
@@ -54,6 +64,9 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
     private EasemobIMService easemobIMService;
+
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     public PageInfo<HomeActivity> getHomeActivityPageInfo(
@@ -137,16 +150,9 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public boolean createActivity(Activity activity) {
-        //todo 弃用这种方式来生成随机码 准备采用预先生成随机码放redis的方案
-        Set<Integer> codes = activityMapper.selectAllCode();
-        //记录原来集合的大小
-        int size = codes.size();
 
-        //生成随机数直到set变大
-        while (codes.size() == size) {
-            activity.setCode(new Random().nextInt(999999));
-            codes.add(activity.getCode());
-        }
+        //从redis中取一个code来设置当前新发布活动的code值
+        activity.setCode(cacheService.getRandomActivityCode());
 
         //设置geohash值
         activity.setGeohash(GeoHash.geoHashStringWithCharacterPrecision(
@@ -231,24 +237,39 @@ public class ActivityServiceImpl implements ActivityService {
             return "ACTIVITY_NOT_FOUNT";
         }
 
-        if (activity.getActivityStatusId() == 3 || activityStatusId == 1) {
+        //下面两种情况不允许更改活动状态
+        //1. 需要更新状态的活动已经是结束活动状态 END_ACTIVITY
+        //2. 企图将活动状态改为招募志愿者状态 RECRUITING
+        if (activity.getActivityStatusId() == END_ACTIVITY || activityStatusId == RECRUITING) {
             return "IMMUTABLE";
         }
         //当活动存在且为可更改状态时，更新活动状态
         activity.setActivityStatusId(activityStatusId);
         //若活动状态更新为3时，即更新为活动结束时，还需更新参加此次活动的用户的工时
-        if (activityStatusId == 3) {
+        //2017.12.21 活动结束后回收活动的code码放回redis复用，并将数据库中原本存的code置零处理,如果将活动由招募状态更改为进行活动则不需要走下面的逻辑
+        if (activityStatusId == END_ACTIVITY) {
+            //回收code码
+            String code = activity.getCode();
+            activity.setCode("000000");
             //更新活动表中的活动状态
             activityMapper.updateByPrimaryKey(activity);
 
             //查询报名此次活动并签到成功的志愿者id列表
             List<Integer> userIds = activityUserMapper.selectAllByActivityId(id);
             if (userIds == null || userIds.isEmpty()) {
+                //没有人报名直接返回更新状态成功，但仍然需要将code回收
+                cacheService.putRandomActivityCode(code);
                 return "SUCCESS";
             }
-            return volunteerInfoMapper.updateWorkingHoursByIdAndWorkingHours(
-                    userIds, activity.getWorkingHours()) > 0 ? "SUCCESS":"FAIL";
 
+            if (volunteerInfoMapper.updateWorkingHoursByIdAndWorkingHours
+                    (userIds, activity.getWorkingHours()) > 0) {
+                //数据库操作均成功后才将code放回redis中
+                cacheService.putRandomActivityCode(code);
+                return "SUCCESS";
+            } else {
+                return "FAIL";
+            }
         }
         return activityMapper.updateByPrimaryKey(activity) > 0 ? "SUCCESS":"FAIL";
     }

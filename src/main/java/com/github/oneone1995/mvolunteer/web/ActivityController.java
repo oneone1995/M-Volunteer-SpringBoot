@@ -78,6 +78,12 @@ public class ActivityController {
         return new ResponseEntity<>(ResultModel.ok(categoryActivityPageInfo), HttpStatus.OK);
     }
 
+    /**
+     * 查看某个具体活动详情的api接口,需要鉴权才能访问，但不区分角色
+     * @param id 活动id
+     * @param coordLong 移动设备经度
+     * @param coordLat 移动设备维度
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_VOL') or hasRole('ROLE_ORG')")
     public ResponseEntity<?> getActivityById(
@@ -94,6 +100,10 @@ public class ActivityController {
         return new ResponseEntity<>(ResultModel.ok(activityDetails), HttpStatus.OK);
     }
 
+    /**
+     * 发布活动的api接口，只有拥有志愿组织权限(ROLE_ORG)才能使用
+     * @param activity 活动实体 {@link com.github.oneone1995.mvolunteer.domain.Activity}
+     */
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ORG')")
     public ResponseEntity<?> postActivity(@RequestBody Activity activity) {
@@ -105,6 +115,12 @@ public class ActivityController {
         return new ResponseEntity<>(ResultModel.ok("创建活动成功"), HttpStatus.OK);
     }
 
+    /**
+     * 修改活动状态API接口，只有拥有志愿组织权限(ROLE_ORG)才能使用
+     * @param id 需要修改状态的活动id
+     * @param activityStatusId 修改为什么状态 1为正在招募，2为活动进行，3为活动结束
+     * @return
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ORG')")
     public ResponseEntity<?> putActivity(
