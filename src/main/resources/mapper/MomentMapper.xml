@@ -50,5 +50,6 @@
       organization_info.avatar avatar
     FROM moment, organization_info
     WHERE moment.user_id = organization_info.id
+    ORDER BY time DESC
   </select>
 </mapper>
