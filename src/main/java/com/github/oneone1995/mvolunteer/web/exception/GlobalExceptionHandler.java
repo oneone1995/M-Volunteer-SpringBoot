@@ -47,6 +47,13 @@ public class GlobalExceptionHandler {
         return internalServerErrorHandler(e);
     }
 
+    //用户找不到异常
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> userNotFoundHandler(UserNotFoundException e) {
+        log.error(e.getMessage());
+        return new ResponseEntity<>(ResultModel.error(ResultStatus.USER_NOT_FOUND), HttpStatus.NOT_FOUND);
+    }
+
     //群组未找到异常
     @ExceptionHandler(GroupNotFoundException.class)
     public ResponseEntity<?> groupNotFoundHandler(GroupNotFoundException e) {

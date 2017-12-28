@@ -69,4 +69,23 @@
       `user`.username = #{username}
   </select>
 
+  <!-- 根据username查找user,不确定用户角色从志愿组织表和志愿者表中union结果 -->
+  <select id="selectByUsername" resultType="com.github.oneone1995.mvolunteer.domain.User">
+    SELECT
+      volunteer_info.id id,
+      user.username,
+      volunteer_info.name name,
+      volunteer_info.avatar avatar
+    FROM volunteer_info, user
+    WHERE user.id = volunteer_info.id AND username = #{username}
+    UNION
+    SELECT
+      organization_info.id id,
+      user.username,
+      organization_info.name name,
+      organization_info.avatar avatar
+    FROM organization_info, user
+    WHERE user.id = organization_info.id AND username = #{username}
+  </select>
+
 </mapper>

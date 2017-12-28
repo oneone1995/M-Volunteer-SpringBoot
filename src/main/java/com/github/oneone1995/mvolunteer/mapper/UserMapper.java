@@ -19,4 +19,11 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     CustomUserDetails selectCustomUserDetailsByUsername(String username);
+
+    /**
+     * 根据username查找用户返回
+     * @param username 查找参数username
+     * @return 找到的用户
+     */
+    User selectByUsername(String username);
 }
