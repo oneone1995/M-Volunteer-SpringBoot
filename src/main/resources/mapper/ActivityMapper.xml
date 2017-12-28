@@ -365,6 +365,14 @@
         WHERE id = #{activityId}
     </select>
 
+    <!-- 根据群组id查找活动图片当作头像，群组id必定唯一 -->
+    <select id="selectActivityPictureByTribeId" resultType="java.lang.String">
+        SELECT
+            activity.picture
+        FROM activity
+        WHERE activity.tribe_id = #{tribeId}
+    </select>
+
 
     <!-- 插入活动 -->
     <insert id="insertActivity" parameterType="com.github.oneone1995.mvolunteer.domain.Activity">

@@ -130,4 +130,12 @@ public interface ActivityMapper {
      */
     Integer selectTribeId(
             @Param("activityId") Integer activityId);
+
+    /**
+     * 根据群组id查找活动图片
+     * @param tribeId 群组id
+     * @return 活动图片
+     */
+    String selectActivityPictureByTribeId(
+            @Param("tribeId") String tribeId);
 }

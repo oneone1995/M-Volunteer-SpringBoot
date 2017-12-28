@@ -47,6 +47,12 @@ public class GlobalExceptionHandler {
         return internalServerErrorHandler(e);
     }
 
+    //群组未找到异常
+    @ExceptionHandler(GroupNotFoundException.class)
+    public ResponseEntity<?> groupNotFoundHandler(GroupNotFoundException e) {
+        log.error(e.getMessage());
+        return new ResponseEntity<>(ResultModel.error(ResultStatus.GROUP_NOT_FOUND), HttpStatus.NOT_FOUND);
+    }
     //系统内部错误的处理
     private ResponseEntity<?> internalServerErrorHandler(RuntimeException e) {
         log.error(e.getMessage());
