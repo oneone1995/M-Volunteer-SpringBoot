@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.oneone1995.mvolunteer.mapper.MomentCommentMapper">
+  <resultMap id="BaseResultMap" type="com.github.oneone1995.mvolunteer.domain.moment.MomentComment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="moment_id" jdbcType="INTEGER" property="momentId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+
+    <!-- 配置映射的关联的用户信息 association一对一映射 -->
+    <association property="user" javaType="com.github.oneone1995.mvolunteer.domain.User">
+      <id column="user_id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    </association>
+  </resultMap>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select moment_comment.id, moment_id, user_id, content, time,
+      volunteer_info.id userId,
+      volunteer_info.name name,
+      volunteer_info.avatar avatar
+    from moment_comment, volunteer_info
+    where moment_comment.id = #{id,jdbcType=INTEGER} and moment_comment.user_id = volunteer_info.id
+    union
+    select moment_comment.id, moment_id, user_id, content, time,
+      organization_info.id userId,
+      organization_info.name name,
+      organization_info.avatar avatar
+    from moment_comment, organization_info
+    where moment_comment.id = #{id,jdbcType=INTEGER} and moment_comment.user_id = organization_info.id
+  </select>
+
+  <insert id="insert" parameterType="com.github.oneone1995.mvolunteer.domain.moment.MomentComment">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into moment_comment (moment_id, user_id, content)
+    values (#{momentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectByMomentId" parameterType="java.lang.Integer"
+          resultMap="BaseResultMap">
+    SELECT
+      moment_comment.*,
+      volunteer_info.id userId,
+      volunteer_info.name name,
+      volunteer_info.avatar avatar
+    FROM moment_comment, volunteer_info
+    WHERE moment_comment.user_id = volunteer_info.id AND moment_id = #{momentId}
+    UNION
+    SELECT
+      moment_comment.*,
+      organization_info.id userId,
+      organization_info.name name,
+      organization_info.avatar avatar
+    FROM moment_comment, organization_info
+    WHERE moment_comment.user_id = organization_info.id AND moment_id = #{momentId}
+    ORDER BY time DESC
+  </select>
+</mapper>

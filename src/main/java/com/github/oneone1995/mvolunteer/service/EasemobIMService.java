@@ -1,9 +1,12 @@
 package com.github.oneone1995.mvolunteer.service;
 
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
+import com.github.oneone1995.mvolunteer.model.EasemobIMChatMessage;
 import com.github.oneone1995.mvolunteer.service.api.EasemobApiService;
 import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailException;
 import com.github.oneone1995.mvolunteer.web.exception.PutUserToEasemobGroupFailException;
+
+import java.util.concurrent.Future;
 
 /**
  * 环信即时通讯交互的服务接口。
@@ -38,4 +41,10 @@ public interface EasemobIMService {
      * @return 环信token
      */
     String getEasemobToken();
+
+    /**
+     * 异步发送群消息，无返回值
+     * @param groupMessage 环信群消息实体 {@link com.github.oneone1995.mvolunteer.model.EasemobIMChatMessage}
+     */
+    void sendEasemobGroupMessage(EasemobIMChatMessage groupMessage);
 }

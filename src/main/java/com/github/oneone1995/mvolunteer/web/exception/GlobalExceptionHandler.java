@@ -60,6 +60,13 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         return new ResponseEntity<>(ResultModel.error(ResultStatus.GROUP_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
+
+    //发送消息失败异常
+    @ExceptionHandler(SendEasemobMessageFailException.class)
+    public ResponseEntity<?> sendEasemobMessageFailHandler(SendEasemobMessageFailException e) {
+        return internalServerErrorHandler(e);
+    }
+
     //系统内部错误的处理
     private ResponseEntity<?> internalServerErrorHandler(RuntimeException e) {
         log.error(e.getMessage());

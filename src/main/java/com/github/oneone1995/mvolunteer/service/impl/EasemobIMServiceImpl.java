@@ -4,16 +4,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.oneone1995.mvolunteer.config.easemob.EasemobIMProperties;
 import com.github.oneone1995.mvolunteer.config.result.ResultStatus;
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
+import com.github.oneone1995.mvolunteer.model.EasemobIMChatMessage;
 import com.github.oneone1995.mvolunteer.service.CacheService;
 import com.github.oneone1995.mvolunteer.service.EasemobIMService;
 import com.github.oneone1995.mvolunteer.service.api.EasemobApiService;
 import com.github.oneone1995.mvolunteer.web.exception.EasemobGroupCreateFailException;
 import com.github.oneone1995.mvolunteer.web.exception.GenerateEasemobTokenFailException;
 import com.github.oneone1995.mvolunteer.web.exception.PutUserToEasemobGroupFailException;
+import com.github.oneone1995.mvolunteer.web.exception.SendEasemobMessageFailException;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -145,6 +148,42 @@ public class EasemobIMServiceImpl implements EasemobIMService {
         }
     }
 
+    @Override
+    @Async
+    public void sendEasemobGroupMessage(EasemobIMChatMessage groupMessage) {
+        log.info("send message, EasemobIMChatMessage:{}", groupMessage);
+
+        String token = cacheService.getEasemobToken();
+        Call<ResponseBody> call = easemobApiService.sendMessage(
+                token,
+                easemobProperties.getOrgName(),
+                easemobProperties.getAppName(),
+                groupMessage);
+
+        try {
+            //执行http请求发送消息
+            Response<ResponseBody> response = call.execute();
+            if (response.isSuccessful()) {
+                //成功发送消息
+                ResponseBody body = response.body();
+                assert body != null;
+
+                log.info("send message success : {}", body.string());
+            } else {
+                //发送消息失败
+                ResponseBody errorBody = response.errorBody();
+                assert errorBody != null;
+
+                log.error("send message fail by {}", errorBody.string());
+                throw new SendEasemobMessageFailException(ResultStatus.SEND_MESSAGE_FAIL.getMessage());
+            }
+        } catch (IOException e) {
+            //网络io异常造成的错误
+            log.error("send message fail by IOException:{}", e);
+            throw new SendEasemobMessageFailException(ResultStatus.SEND_MESSAGE_FAIL.getMessage());
+        }
+    }
+
     /**
      * 从环信群组服务返回的ResponseBody字符串中解析得到创建成功的群号
      * @param bodyJson 环信群组服务返回的ResponseBody字符串，json格式
@@ -158,6 +197,12 @@ public class EasemobIMServiceImpl implements EasemobIMService {
         return chatGroupModel.getGroupId();
     }
 
+    /**
+     * 从环信请求token服务返回的ResponseBody字符串中解析得到获得的access_token
+     * @param bodyJson 环信请求token服务返回的ResponseBody字符串，json格式
+     * @return access_token
+     * @throws IOException json解析失败时抛出的IOException
+     */
     private String parseAccessTokenFromEasemobResponseBody(String bodyJson) throws IOException {
         String accessToken = objectMapper.readTree(bodyJson).get("access_token").asText();
         log.info("json parsed, return access_token : {}", accessToken);

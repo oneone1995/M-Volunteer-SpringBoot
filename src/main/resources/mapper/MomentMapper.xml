@@ -28,9 +28,19 @@
   </insert>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, user_id, content, images, time
-    from moment
-    where id = #{id,jdbcType=INTEGER}
+    select moment.id, user_id, content, images, time,
+      volunteer_info.id userId,
+      volunteer_info.name name,
+      volunteer_info.avatar avatar
+    from moment, volunteer_info
+    where moment.id = #{id,jdbcType=INTEGER} and moment.user_id = volunteer_info.id
+    union
+    select moment.id, user_id, content, images, time,
+      organization_info.id userId,
+      organization_info.name name,
+      organization_info.avatar avatar
+    from moment, organization_info
+    where moment.id = #{id,jdbcType=INTEGER} and moment.user_id = organization_info.id
   </select>
 
   <!-- 查询圈子动态集合，关联查询出动态作者的姓名和头像 -->

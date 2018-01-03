@@ -9,6 +9,7 @@ import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
 import com.github.oneone1995.mvolunteer.mapper.VolunteerInfoMapper;
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
+import com.github.oneone1995.mvolunteer.model.EasemobIMChatMessage;
 import com.github.oneone1995.mvolunteer.service.ActivityService;
 import com.github.oneone1995.mvolunteer.service.CacheService;
 import com.github.oneone1995.mvolunteer.service.EasemobIMService;
@@ -17,6 +18,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * Created by wangl on 2017/2/18.
@@ -53,6 +58,15 @@ public class ActivityServiceImpl implements ActivityService {
     //活动状态标志，用于修改活动状态为 活动结束
     private static final int END_ACTIVITY = 3;
 
+    //环信消息目标类型
+    private static final String EASEMOB_MESSAGE_TARGET_TYPE = "chatgroups";
+
+    //环信文本消息类型
+    private static final String EASEMOB_TEXT_TYPE_MESSAGE = "txt";
+
+    //创建环信群组成功的系统消息
+    private static final String EASEMOB_GROUP_CREATED_SUCCESS_MESSAGE = "成功创建群组";
+
     @Resource
     private ActivityMapper activityMapper;
 
@@ -63,6 +77,7 @@ public class ActivityServiceImpl implements ActivityService {
     private VolunteerInfoMapper volunteerInfoMapper;
 
     @Autowired
+    @Lazy
     private EasemobIMService easemobIMService;
 
     @Autowired
@@ -179,6 +194,16 @@ public class ActivityServiceImpl implements ActivityService {
             //2. 调用环信API
             try {
                 String groupId = easemobIMService.createGroup(chatGroupModel);
+
+                // ====异步调用发送消息方法
+                easemobIMService.sendEasemobGroupMessage(
+                        new EasemobIMChatMessage(
+                                EASEMOB_MESSAGE_TARGET_TYPE,
+                                new String[]{groupId},
+                                new EasemobIMChatMessage.Message(EASEMOB_TEXT_TYPE_MESSAGE, EASEMOB_GROUP_CREATED_SUCCESS_MESSAGE),
+                                "admin"));
+                // 异步调用结束
+
                 //将群号存下来的目的是为了活动结束或者删除活动时把对应的群删了
                 return activityMapper.updateActivityTribeId(groupId, activity.getId()) > 0;
             } catch (EasemobGroupCreateFailException e) {

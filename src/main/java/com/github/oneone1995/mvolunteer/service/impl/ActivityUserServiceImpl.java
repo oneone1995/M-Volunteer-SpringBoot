@@ -5,6 +5,7 @@ import com.github.oneone1995.mvolunteer.domain.CustomUserDetails;
 import com.github.oneone1995.mvolunteer.domain.VolunteerDetails;
 import com.github.oneone1995.mvolunteer.mapper.ActivityMapper;
 import com.github.oneone1995.mvolunteer.mapper.ActivityUserMapper;
+import com.github.oneone1995.mvolunteer.model.EasemobIMChatMessage;
 import com.github.oneone1995.mvolunteer.service.ActivityUserService;
 import com.github.oneone1995.mvolunteer.service.EasemobIMService;
 import com.github.oneone1995.mvolunteer.web.exception.PutUserToEasemobGroupFailException;
@@ -27,6 +28,15 @@ import java.util.List;
 public class ActivityUserServiceImpl implements ActivityUserService {
     //面试通过
     private static final Integer INTERVIEW_PASSED = 2;
+
+    //环信消息目标类型
+    private static final String EASEMOB_MESSAGE_TARGET_TYPE = "chatgroups";
+
+    //环信文本消息类型
+    private static final String EASEMOB_TEXT_TYPE_MESSAGE = "txt";
+
+    //环信有人加入群组的系统消息
+    private static final String EASEMOB_GREET_MESSAGE = "欢迎";
 
     @Resource
     private ActivityUserMapper activityUserMapper;
@@ -111,7 +121,16 @@ public class ActivityUserServiceImpl implements ActivityUserService {
         if (activityUserMapper.updateByPrimaryKey(activityUserStatusId, id) > 0 && activityUserStatusId.equals(INTERVIEW_PASSED)) {
             //调用环信api进入活动对应的群组
             try {
-                return easemobIMService.putUser2Group(activityGroupId, volunteerName);
+                boolean putUser2GroupResult =  easemobIMService.putUser2Group(activityGroupId, volunteerName);
+                //异步调用
+                easemobIMService.sendEasemobGroupMessage(
+                        new EasemobIMChatMessage(
+                                EASEMOB_MESSAGE_TARGET_TYPE,
+                                new String[]{activityGroupId},
+                                new EasemobIMChatMessage.Message(EASEMOB_TEXT_TYPE_MESSAGE, EASEMOB_GREET_MESSAGE + volunteerName),
+                                "admin"));
+                //异步调用结束
+                return putUser2GroupResult;
             } catch (PutUserToEasemobGroupFailException e) {
                 throw new RuntimeException(e);
             }

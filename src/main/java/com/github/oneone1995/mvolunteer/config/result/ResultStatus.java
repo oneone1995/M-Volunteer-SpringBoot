@@ -27,10 +27,13 @@ public enum ResultStatus {
     INTERVIEW_STATUS_UPDATE_FAIL(-10019, "面试状态修改失败"),
     MOMENT_NOT_FOUNT(-10020, "动态不存在"),
     MOMENT_CREATE_FAIL(-10021, "创建动态失败"),
+    MOMENT_COMMENT_NOT_FOUNT(-10028, "评论不存在"),
+    MOMENT_COMMENT_CREATE_FAIL(-10029, "创建动态评论失败"),
     EASEMOB_GROUP_CREATE_FAIL(-10022, "环信群组创建失败"),
     PUT_USER_TO_EASEMOB_GROUP_FAIL(-10024, "添加用户至环信群组失败"),
     GENERATE_EASEMOB_TOKEN_FAIL(-10025, "生成环信token失败"),
-    GROUP_NOT_FOUND(-10016, "群组未找到"),
+    GROUP_NOT_FOUND(-10026, "群组未找到"),
+    SEND_MESSAGE_FAIL(-10027, "发送消息失败"),
     INTERNAL_SERVER_ERROR(-10023, "系统内部错误");
 
     /**

@@ -2,6 +2,7 @@ package com.github.oneone1995.mvolunteer.service.api;
 
 import com.github.oneone1995.mvolunteer.config.easemob.EasemobIMProperties;
 import com.github.oneone1995.mvolunteer.model.EasemobIMChatGroupModel;
+import com.github.oneone1995.mvolunteer.model.EasemobIMChatMessage;
 import com.oneapm.touch.retrofit.boot.annotation.RetrofitService;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -64,4 +65,20 @@ public interface EasemobApiService {
             @Path("org_name") String orgName,
             @Path("app_name") String appName,
             @Body EasemobIMProperties.Security easemobSecurity);
+
+    /**
+     * 发送消息
+     * @param token 环信token
+     * @param orgName 环信企业ID
+     * @param appName 环信APP名称
+     * @param message 与环信交互发消息实体
+     * @return retrofit包装的请求响应结果
+     */
+    @Headers({"Content-Type: application/json"})
+    @POST("{org_name}/{app_name}/messages")
+    Call<ResponseBody> sendMessage(
+            @Header("Authorization") String token,
+            @Path("org_name") String orgName,
+            @Path("app_name") String appName,
+            @Body EasemobIMChatMessage message);
 }

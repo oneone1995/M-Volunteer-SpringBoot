@@ -1,8 +1,11 @@
 package com.github.oneone1995.mvolunteer.web;
 
 import com.github.oneone1995.mvolunteer.domain.moment.Moment;
+import com.github.oneone1995.mvolunteer.domain.moment.MomentComment;
 import com.github.oneone1995.mvolunteer.model.ResultModel;
 import com.github.oneone1995.mvolunteer.service.MomentService;
+import com.github.oneone1995.mvolunteer.web.exception.MomentCommentCreateFailException;
+import com.github.oneone1995.mvolunteer.web.exception.MomentCommentNotFoundException;
 import com.github.oneone1995.mvolunteer.web.exception.MomentCreateFailException;
 import com.github.oneone1995.mvolunteer.web.exception.MomentNotFoundException;
 import com.github.pagehelper.PageInfo;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/moment")
@@ -62,5 +66,54 @@ public class MomentController {
         return ResponseEntity
                 .created(location)
                 .body(ResultModel.ok("创建动态成功"));
+    }
+
+    /**
+     * 发布动态评论
+     * @param momentId 动态id
+     */
+    @PostMapping("/{id}/comments")
+    @PreAuthorize("hasRole('ROLE_VOL') or hasRole('ROLE_ORG')")
+    public ResponseEntity<?> postMomentComment(
+            @PathVariable("id") Integer momentId,
+            @RequestBody MomentComment comment) throws MomentCommentCreateFailException {
+        momentService.createMomentComment(momentId, comment);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{commentId}")
+                .buildAndExpand(comment.getMomentId())
+                .toUri();
+
+
+        return ResponseEntity
+                .created(location)
+                .body(ResultModel.ok("评论成功"));
+    }
+
+    /**
+     * 获取动态的评论
+     * @param momentId 动态id
+     */
+    @GetMapping("/{id}/comments")
+    @PreAuthorize("hasRole('ROLE_VOL') or hasRole('ROLE_ORG')")
+    public ResponseEntity<?> getMomentComments(@PathVariable("id") Integer momentId) throws MomentCommentNotFoundException {
+        List<MomentComment> momentComments = momentService.getMomentCommentsByMomentId(momentId);
+
+        return new ResponseEntity<>(ResultModel.ok(momentComments), HttpStatus.OK);
+    }
+
+    /**
+     * 获取某动态下的某条评论
+     * @param momentId 动态id
+     * @param commentId 评论id
+     */
+    @GetMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<?> getMomentComment(
+            @PathVariable("id") Integer momentId,
+            @PathVariable("commentId") Integer commentId) throws MomentCommentNotFoundException {
+
+        MomentComment momentComment = momentService.getMomentCommentById(commentId);
+        return new ResponseEntity<>(ResultModel.ok(momentComment), HttpStatus.OK);
     }
 }
